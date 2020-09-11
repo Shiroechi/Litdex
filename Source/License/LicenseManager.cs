@@ -7,15 +7,6 @@ using Litdex.Utilities.Extension;
 
 using SHA1 = Litdex.Security.Hash.SHA1;
 
-//machine bingding:
-//	on setup get CPU id, Motherboard id, NIC, BIOS, HHD id, 
-
-//username 
-//	using username to validate key 
-
-//subscription
-//	username and time based, when expire
-
 namespace Litdex.License
 {
 	public class LicenseManager
@@ -34,6 +25,9 @@ namespace Litdex.License
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		~LicenseManager()
 		{
 
@@ -111,6 +105,11 @@ namespace Litdex.License
 			}
 		}
 
+		/// <summary>
+		/// Create Serial Number.
+		/// </summary>
+		/// <param name="username">Licensee username.</param>
+		/// <returns></returns>
 		private byte[] SerialNumberGenerator(string username)
 		{
 			IHash hash = new SHA1();
@@ -200,7 +199,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// After <see cref="WriteCertificate(Certificate, string)"/>, give serial number for validating the Lincesee username.
+		/// Get Serial Number based on <see cref="Certificate"/>.
 		/// </summary>
 		/// <param name="cert">Licensee <see cref="Certificate"/>.</param>
 		/// <returns></returns>
@@ -215,7 +214,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// After <see cref="WriteCertificate(Certificate, string)"/>, give serial number for validating the Lincesee username.
+		/// Get Serial Number based on licensee username.
 		/// </summary>
 		/// <param name="username">Licensee username.</param>
 		/// <returns></returns>
@@ -231,7 +230,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// Verify seriak number.
+		/// Verify serial number.
 		/// </summary>
 		/// <param name="username">Licensee username.</param>
 		/// <param name="serial_number">Licensee serial number.</param>

@@ -2,7 +2,6 @@
 using System.IO;
 
 using Litdex.Security.Hash;
-using Litdex.Utilities.Base;
 using Litdex.Utilities.Extension;
 
 //username, start date, end date => di enkripsi
@@ -160,7 +159,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// Get license key of the <see cref="Certificate"/>.
+		/// Get checksum of the <see cref="Certificate"/>.
 		/// </summary>
 		/// <returns></returns>
 		public string GetChecksum()
@@ -169,7 +168,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// Set start date of the <see cref="Certificate"/>.
+		/// Set start date of the <see cref="Certificate"/> in UTC format.
 		/// </summary>
 		/// <param name="date">Date time.</param>
 		public void SetStartDate(DateTime date)
@@ -199,7 +198,7 @@ namespace Litdex.License
 		}
 
 		/// <summary>
-		/// Set end date of the <see cref="Certificate"/>.
+		/// Set end date of the <see cref="Certificate"/> in UTC format.
 		/// </summary>
 		/// <param name="date">Date time.</param>
 		public void SetEndDate(DateTime date)
