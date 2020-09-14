@@ -1,9 +1,9 @@
 ﻿namespace Litdex.Security.RNG
 {
-    /// <summary>
-    /// Interface structure for Random Number Generator (RNG).
-    /// </summary>
-    public interface IRNG
+	/// <summary>
+	/// Interface structure for Random Number Generator (RNG).
+	/// </summary>
+	public interface IRNG
     {
 		/// <summary>
 		/// The name of the algorithm this generator implements.
@@ -17,10 +17,25 @@
 		void Reseed();
 
 		/// <summary>
-		/// Generate Boolean value from generator.
+		/// Generate <see cref="bool"/> value from generator.
 		/// </summary>
 		/// <returns></returns>
 		bool NextBoolean();
+
+		/// <summary>
+		/// Generate <see cref="byte"/> value from generator.
+		/// </summary>
+		/// <returns></returns>
+		byte NextByte();
+
+		/// <summary>
+		/// Generate <see cref="byte"/> value between 
+		/// lower bound and upper bound from generator.
+		/// </summary>
+		/// <param name="lower">Lower bound.</param>
+		/// <param name="upper">Upper bound.</param>
+		/// <returns>s</returns>
+		byte NextByte(byte lower, byte upper);
 
         /// <summary>
         /// Generate Integer value from generator.
@@ -45,7 +60,7 @@
 
 		/// <summary>
 		/// Generate Long value between 
-		/// lower bound and upper bound from generator.
+		/// lower bound and upper bound from generator. 
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
 		/// <param name="upper">Upper bound.</param>
@@ -73,5 +88,5 @@
 		/// <param name="length">Output length.</param>
 		/// <returns></returns>
 		byte[] GetBytes(int length);
-    }
+	}
 }

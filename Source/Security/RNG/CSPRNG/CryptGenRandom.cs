@@ -145,6 +145,22 @@ namespace Litdex.Security.RNG.CSPRNG
 			return this.NextInt() % 2 == 0;
 		}
 
+		public virtual byte NextByte()
+		{
+			return this.GetBytes(1)[0];
+		}
+
+		public virtual byte NextByte(byte lower, byte upper)
+		{
+			if (lower >= upper)
+			{
+				throw new Exception("The lower bound must not be greater than or equal to the upper bound.");
+			}
+
+			byte diff = (byte)(upper - lower + 1);
+			return (byte)(lower + (this.NextByte() % diff));
+		}
+
 		/// <summary>
 		/// Generate Integer value from generator.
 		/// </summary>

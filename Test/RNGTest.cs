@@ -41,6 +41,9 @@ namespace Litdex.Test
 
 			//------------------------------------------------------------
 
+			int[] items = new int[]
+			{ 156, 456, 15, 708, 201, 988, 221, 11, 308, 276 };
+
 			var list = RNGTest.GetList();
 
 			for (int i = 0; i < list.Length; i++)
