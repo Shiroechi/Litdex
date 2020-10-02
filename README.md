@@ -1,9 +1,10 @@
-# Litdex 
+# Litdex [![CodeFactor](https://www.codefactor.io/repository/github/shiroechi/litdex/badge)](https://www.codefactor.io/repository/github/shiroechi/litdex)
 
-## Badge 
+## Download 
 [![Nuget](https://img.shields.io/nuget/v/litdex)](https://www.nuget.org/packages/Litdex/)
-
-[![CodeFactor](https://www.codefactor.io/repository/github/shiroechi/litdex/badge)](https://www.codefactor.io/repository/github/shiroechi/litdex)
 
 ## Description
 My personal library
+
+## Donation
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X81SP2L)
