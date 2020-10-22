@@ -58,7 +58,7 @@ namespace Litdex.Security.RNG
 		{
 			if (lower >= upper)
 			{
-				throw new Exception("The lower bound must not be greater than or equal to the upper bound.");
+				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
 			byte diff = (byte)(upper - lower + 1);
@@ -74,7 +74,7 @@ namespace Litdex.Security.RNG
 		{
 			if (lower >= upper)
 			{
-				throw new Exception("The lower bound must not be greater than or equal to the upper bound.");
+				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
 			uint diff = upper - lower + 1;
@@ -118,7 +118,7 @@ namespace Litdex.Security.RNG
 		{
 			if (lower >= upper)
 			{
-				throw new Exception("The lower bound must not be greater than or equal to the upper bound.");
+				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
 			ulong diff = upper - lower + 1;
@@ -135,7 +135,7 @@ namespace Litdex.Security.RNG
 		{
 			if (lower >= upper)
 			{
-				throw new Exception("The lower bound must not be greater than or equal to the upper bound.");
+				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
 			double diff = upper - lower + 1;
@@ -146,7 +146,7 @@ namespace Litdex.Security.RNG
 		{
 			if (length <= 0)
 			{
-				throw new Exception("Bytes length can't lower than or equal to 0.");
+				throw new ArgumentException("Bytes length can't lower than or equal to 0.");
 			}
 
 			byte[] bytes = new byte[length];
