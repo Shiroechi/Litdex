@@ -78,7 +78,7 @@ namespace Litdex.Security.OTP
 		{
 			if ((length < this._MinLength) || (length > this._MaxLength)) 
 			{
-				throw new Exception("Output length must be between " + this._MinLength + " and " + this._MaxLength + ".");
+				throw new ArgumentException("Output length must be between " + this._MinLength + " and " + this._MaxLength + ".");
 			}
 
 			this._Counter = 0;

@@ -35,7 +35,7 @@ namespace Litdex.Network
         /// </returns>
         public static bool InternetConnecion()
         {
-			if(InternetConnection.CheckNetworkAdapter() == false)
+			if (InternetConnection.CheckNetworkAdapter() == false)
 			{
 				return false;
 			}

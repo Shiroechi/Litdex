@@ -207,7 +207,7 @@ namespace Litdex.License
 		{
 			if (cert == null) 
 			{
-				throw new Exception("Certificate can not null.");
+				throw new ArgumentException("Certificate can not null.");
 			}
 
 			return this.GetSerialNumber(cert.GetUsername());
@@ -222,7 +222,7 @@ namespace Litdex.License
 		{
 			if (username.Trim().Length <= 0)
 			{
-				throw new Exception("Username can't empty.");
+				throw new ArgumentException("Username can't empty.");
 			}
 
 			username = username.Trim().ToLower();

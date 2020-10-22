@@ -57,11 +57,11 @@ namespace Litdex.Security.OTP
 		{
 			if (time <= 0) //0 second
 			{
-				throw new Exception("Time valid can't lower or equal than 0 second.");
+				throw new ArgumentException("Time valid can't lower or equal than 0 second.");
 			}
 			else if(time > 600) //600 second => 10 minutes
 			{
-				throw new Exception("Time valid can't higher than 600 seconds.");
+				throw new ArgumentException("Time valid can't higher than 600 seconds.");
 			}
 
 			this._TimeFrame = time;

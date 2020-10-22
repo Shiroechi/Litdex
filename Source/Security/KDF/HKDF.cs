@@ -75,8 +75,9 @@ namespace Litdex.Security.KDF
 		{
 			if (prk.Length < this._MAC.GetHashLength())
 			{
-				throw new Exception("Pseudorandom key length is " + prk.Length +
-									" lower than " + this._MAC.GetHashLength());
+				throw new ArgumentException(
+					"Pseudorandom key length is " + prk.Length +
+					" lower than " + this._MAC.GetHashLength());
 			}
 			if (info == null)
 			{
@@ -84,11 +85,11 @@ namespace Litdex.Security.KDF
 			}
 			if (length < 0)
 			{
-				throw new Exception("Length can't be 0.");
+				throw new ArgumentException("Length can't be 0.");
 			}
 			if (length > this._MAC.GetHashLength() * 255)
 			{
-				throw new Exception("Length can't exceed " + this._MAC.GetHashLength() * 255);
+				throw new ArgumentException("Length can't exceed " + this._MAC.GetHashLength() * 255);
 			}
 
 			var resultBlock = new byte[0];

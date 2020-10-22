@@ -254,7 +254,7 @@ namespace Litdex.Security.MAC
 		{
 			if (this._Initilized == false)
 			{
-				throw new Exception("Please initialize the HMAC first.");
+				throw new NullReferenceException("Please initialize the HMAC first.");
 			}
 
 			this.hash.Update(input, start_index, length);

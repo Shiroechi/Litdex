@@ -91,7 +91,7 @@ namespace Litdex.License
 			}
 			catch
 			{
-				throw new Exception("Can not calculate SHA-3 checksum.");
+				throw new InvalidOperationException("Can not calculate SHA-3 checksum.");
 			}
 		}
 
