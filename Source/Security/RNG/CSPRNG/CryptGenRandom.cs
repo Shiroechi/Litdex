@@ -118,10 +118,6 @@ namespace Litdex.Security.RNG.CSPRNG
 
 		#region Public
 
-		/// <summary>
-		/// The name of the algorithm this generator implements.
-		/// </summary>
-		/// <returns></returns>
 		public string AlgorithmName()
 		{
 			return "CryptGenRandom";
@@ -136,10 +132,6 @@ namespace Litdex.Security.RNG.CSPRNG
 
 		}
 
-		/// <summary>
-		/// Generate Boolean value from generator.
-		/// </summary>
-		/// <returns></returns>
 		public bool NextBoolean()
 		{
 			return this.NextInt() % 2 == 0;
@@ -161,10 +153,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
-		/// <summary>
-		/// Generate Integer value from generator.
-		/// </summary>
-		/// <returns></returns>
 		public uint NextInt()
 		{
 			return (uint)this.Next();
@@ -181,10 +169,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextInt() % diff);
 		}
 
-		/// <summary>
-		/// Generate Long value from generator.
-		/// </summary>
-		/// <returns></returns>
 		public ulong NextLong()
 		{
 			return this.Next();
@@ -201,10 +185,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextLong() % diff);
 		}
 
-		/// <summary>
-		/// Generate Double value from generator.
-		/// </summary>
-		/// <returns></returns>
 		public double NextDouble()
 		{
 			return NextLong() * (1L << 53);
@@ -221,10 +201,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextDouble() % diff);
 		}
 
-		/// <summary>
-		/// Generate random byte[] value from generator.
-		/// </summary>
-		/// <param name="length">Length byte[].</param>
 		public byte[] GetBytes(int length = 512)
 		{
 			byte[] result = new byte[length];
