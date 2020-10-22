@@ -38,13 +38,13 @@
 		byte NextByte(byte lower, byte upper);
 
         /// <summary>
-        /// Generate Integer value from generator.
+        /// Generate <see cref="uint"/> value from generator.
         /// </summary>
         /// <returns></returns>
         uint NextInt();
 
 		/// <summary>
-		/// Generate Integer value between 
+		/// Generate <see cref="uint"/> value between 
 		/// lower bound and upper bound from generator.
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
@@ -53,13 +53,13 @@
 		uint NextInt(uint lower, uint upper);
 
 		/// <summary>
-		/// Generate Long value from generator. 
+		/// Generate <see cref="ulong"/> value from generator. 
 		/// </summary>
 		/// <returns></returns>
 		ulong NextLong();
 
 		/// <summary>
-		/// Generate Long value between 
+		/// Generate <see cref="ulong"/> value between 
 		/// lower bound and upper bound from generator. 
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
@@ -68,13 +68,13 @@
 		ulong NextLong(ulong lower, ulong upper);
 
 		/// <summary>
-		/// Generate Double value from generator.
+		/// Generate <see cref="double"/> value from generator.
 		/// </summary>
 		/// <returns></returns>
 		double NextDouble();
 
 		/// <summary>
-		/// Generate Double value between 
+		/// Generate <see cref="double"/> value between 
 		/// lower bound and upper bound from generator.
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
@@ -83,7 +83,7 @@
 		double NextDouble(double lower, double upper);
 		
 		/// <summary>
-		/// Generate random byte[] value from generator.
+		/// Generate random <see cref="byte"/>[] value from generator.
 		/// </summary>
 		/// <param name="length">Output length.</param>
 		/// <returns></returns>
