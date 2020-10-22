@@ -49,7 +49,7 @@
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
 		/// <param name="upper">Upper bound.</param>
-		/// <returns>s</returns>
+		/// <returns></returns>
 		uint NextInt(uint lower, uint upper);
 
 		/// <summary>
