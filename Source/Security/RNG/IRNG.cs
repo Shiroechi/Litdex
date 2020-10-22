@@ -34,7 +34,7 @@
 		/// </summary>
 		/// <param name="lower">Lower bound.</param>
 		/// <param name="upper">Upper bound.</param>
-		/// <returns>s</returns>
+		/// <returns></returns>
 		byte NextByte(byte lower, byte upper);
 
         /// <summary>
