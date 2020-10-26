@@ -1,4 +1,8 @@
-# Litdex [![CodeFactor](https://www.codefactor.io/repository/github/shiroechi/litdex/badge)](https://www.codefactor.io/repository/github/shiroechi/litdex)
+# Litdex 
+My personal library that contain hash algorithm and RNG.
+
+## Badges
+[![CodeFactor](https://www.codefactor.io/repository/github/shiroechi/litdex/badge)](https://www.codefactor.io/repository/github/shiroechi/litdex)
 
 ## Download 
 [![Nuget](https://img.shields.io/nuget/v/litdex)](https://www.nuget.org/packages/Litdex/)
