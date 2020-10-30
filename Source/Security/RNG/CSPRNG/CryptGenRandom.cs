@@ -153,6 +153,16 @@ namespace Litdex.Security.RNG.CSPRNG
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
+		public byte[] NextBytes(int length = 512)
+		{
+			var result = new byte[length];
+			using (var rngCsp = new RNGCryptoServiceProvider())
+			{
+				rngCsp.GetNonZeroBytes(result);
+			}
+			return result;
+		}
+
 		public uint NextInt()
 		{
 			return (uint)this.Next();

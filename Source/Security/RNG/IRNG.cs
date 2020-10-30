@@ -37,11 +37,18 @@
 		/// <returns></returns>
 		byte NextByte(byte lower, byte upper);
 
-        /// <summary>
-        /// Generate <see cref="uint"/> value from generator.
-        /// </summary>
-        /// <returns></returns>
-        uint NextInt();
+		/// <summary>
+		/// Generate random byte[] value from generator.
+		/// </summary>
+		/// <param name="length">Output length.</param>
+		/// <returns></returns>
+		byte[] NextBytes(int length);
+
+		/// <summary>
+		/// Generate <see cref="uint"/> value from generator.
+		/// </summary>
+		/// <returns></returns>
+		uint NextInt();
 
 		/// <summary>
 		/// Generate <see cref="uint"/> value between 

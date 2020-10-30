@@ -54,6 +54,23 @@ namespace Litdex.Security.RNG
 			return this.NextBytes(1)[0];
 		}
 
+		public virtual byte[] NextBytes(int length)
+		{
+			var sample = this.Next();
+			var data = new byte[length];
+
+			for (var i = 1; i <= length; i++)
+			{
+				if (i % 8 == 0)
+				{
+					sample = this.Next();
+				}
+				data[i - 1] = (byte)(sample);
+				sample >>= 8;
+			}
+			return data;
+		}
+
 		public virtual byte NextByte(byte lower, byte upper)
 		{
 			if (lower >= upper)
@@ -114,6 +131,7 @@ namespace Litdex.Security.RNG
 			return lower + (this.NextDouble() % diff);
 		}
 
+		[Obsolete]
 		public virtual byte[] GetBytes(int length)
 		{
 			if (length <= 0)
@@ -151,28 +169,6 @@ namespace Litdex.Security.RNG
 				}
 			}
 			return bytes;
-		}
-
-		/// <summary>
-		/// slower than <see cref="GetBytes(int)"/>
-		/// </summary>
-		/// <param name="length"></param>
-		/// <returns></returns>
-		public virtual byte[] NextBytes(int length)
-		{
-			var sample = this.Next();
-			var data = new byte[length];
-
-			for (var i = 1; i <= length; i++)
-			{
-				if (i % 8 == 0)
-				{
-					sample = this.Next();
-				}
-				data[i - 1] = (byte)(sample);
-				sample >>= 8;
-			}
-			return data;
 		}
 
 		/// <summary>

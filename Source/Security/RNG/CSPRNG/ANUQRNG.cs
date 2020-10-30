@@ -124,6 +124,17 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
+		public byte[] NextBytes(int length = 512)
+		{
+			if (length <= 0 || length > this._Max)
+			{
+				throw new ArgumentException("Length must be between 1 and " + this._Max + ".");
+			}
+
+			var result = this.Next(1, (ushort)length);
+			return result.DecodeBase16();
+		}
+
 		public uint NextInt()
 		{
 			return BitConverter.ToUInt32(this.Next(1, 8).DecodeBase16(), 0);

@@ -64,6 +64,28 @@ namespace Litdex.Security.RNG
 			byte diff = (byte)(upper - lower + 1);
 			return (byte)(lower + (this.NextByte() % diff));
 		}
+		
+		/// <summary>
+		/// Generate random byte[] value from generator.
+		/// </summary>
+		/// <param name="length">Output length.</param>
+		/// <returns></returns>
+		public virtual byte[] NextBytes(int length)
+		{
+			var sample = this.Next();
+			var data = new byte[length];
+
+			for (var i = 1; i <= length; i++)
+			{
+				if (i % 4 == 0)
+				{
+					sample = this.Next();
+				}
+				data[i - 1] = (byte)(sample);
+				sample >>= 8;
+			}
+			return data;
+		}
 
 		public virtual uint NextInt()
 		{
@@ -142,6 +164,7 @@ namespace Litdex.Security.RNG
 			return lower + (this.NextDouble() % diff);
 		}
 		
+		[Obsolete]
 		public virtual byte[] GetBytes(int length)
 		{
 			if (length <= 0)
@@ -179,28 +202,6 @@ namespace Litdex.Security.RNG
 				}
 			}
 			return bytes;
-		}
-
-		/// <summary>
-		/// Generate random byte[] value from generator.
-		/// </summary>
-		/// <param name="length">Output length.</param>
-		/// <returns></returns>
-		public virtual byte[] NextBytes(int length)
-		{
-			var sample = this.Next();
-			var data = new byte[length];
-
-			for (var i = 1; i <= length; i++)
-			{
-				if (i % 4 == 0)
-				{
-					sample = this.Next();
-				}
-				data[i - 1] = (byte)(sample);
-				sample >>= 8;
-			}
-			return data;
 		}
 
 		/// <summary>
