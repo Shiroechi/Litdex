@@ -21,8 +21,8 @@ namespace Litdex.Utilities.Extension
 		/// <returns></returns>
 		public static string HashCode(this object obj)
 		{
-			byte[] data = Objects.Serialize(obj);
-			SHA1 sha = new SHA1();
+			var data = Objects.Serialize(obj);
+			var sha = new SHA1();
 			return sha.ComputeHash(data).EncodeBase16();
 		}
 
@@ -33,7 +33,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns></returns>
 		public static string HashCode(this object obj, IHash hash)
 		{
-			byte[] data = Objects.Serialize(obj);
+			var data = Objects.Serialize(obj);
 			hash.Update(data, 0, data.Length);
 			data = new byte[hash.GetHashLength()];
 			hash.DoFinal(data, 0);
@@ -47,8 +47,8 @@ namespace Litdex.Utilities.Extension
 		/// <returns></returns>
 		public static long GetObjectAddress(this object obj)
 		{
-			System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(obj, System.Runtime.InteropServices.GCHandleType.WeakTrackResurrection);
-			long address = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle).ToInt64();
+			var handle = System.Runtime.InteropServices.GCHandle.Alloc(obj, System.Runtime.InteropServices.GCHandleType.WeakTrackResurrection);
+			var address = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle).ToInt64();
 			handle.Free();
 			return address;
 		}
@@ -60,8 +60,8 @@ namespace Litdex.Utilities.Extension
 		/// <returns></returns>
 		public static string GetObjectAddressString(this object obj)
 		{
-			System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(obj, System.Runtime.InteropServices.GCHandleType.WeakTrackResurrection);
-			string address = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle).ToString();
+			var handle = System.Runtime.InteropServices.GCHandle.Alloc(obj, System.Runtime.InteropServices.GCHandleType.WeakTrackResurrection);
+			var address = System.Runtime.InteropServices.GCHandle.ToIntPtr(handle).ToString();
 			handle.Free();
 			return address;
 		}
@@ -84,9 +84,9 @@ namespace Litdex.Utilities.Extension
 			{
 				return default(T);
 			}
-			
-			IFormatter formatter = new BinaryFormatter();
-			using (Stream stream = new MemoryStream())
+
+			var formatter = new BinaryFormatter();
+			using (var stream = new MemoryStream())
 			{
 				formatter.Serialize(stream, source);
 				stream.Seek(0, SeekOrigin.Begin);
@@ -111,7 +111,7 @@ namespace Litdex.Utilities.Extension
 				return false;
 			}
 
-			Type type = obj.GetType();
+			var type = obj.GetType();
 			return type.IsSerializable;
         }
 	}

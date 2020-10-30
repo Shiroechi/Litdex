@@ -400,11 +400,6 @@ namespace Litdex.Security.Hash
 
 		public byte[] ComputeHash(byte[] input, int start_index, int length)
 		{
-			if (length >= this.GetHashLength())
-			{
-				throw new Exception("Length can't bigger than 32.");
-			}
-
 			byte[] result = new byte[DigestLength];
 			this.Update(input, start_index, input.Length);
 			this.DoFinal(result);

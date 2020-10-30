@@ -144,7 +144,7 @@ namespace Litdex.Security.OTP
 		protected IEnumerable<long> ValidationCandidates(long initialFrame, long previous = 0, long future = 0)
 		{
 			yield return initialFrame;
-			for (int i = 1; i <= previous; i++)
+			for (var i = 1; i <= previous; i++)
 			{
 				//var val = initialFrame - this.FromSecondsToTicks(i);
 				//if (val < 0)
@@ -154,7 +154,7 @@ namespace Litdex.Security.OTP
 				yield return initialFrame - this.FromSecondsToTicks(i);
 			}
 
-			for (int i = 1; i <= future; i++)
+			for (var i = 1; i <= future; i++)
 			{
 				yield return initialFrame + this.FromSecondsToTicks(i);
 			}				
@@ -182,7 +182,7 @@ namespace Litdex.Security.OTP
 		public string Generate(byte[] key, long counter)
 		{
 			//convert ticks to seconds
-			long seconds = this.FromTickToSeconds(counter);
+			var seconds = this.FromTickToSeconds(counter);
 			return this.GeneratePassword(key, (ulong)seconds);
 		}
 
@@ -228,7 +228,7 @@ namespace Litdex.Security.OTP
 		public bool Verify2(string input, byte[] key, long ticks)
 		{
 			//previous time
-			for (int i = 0; i <= this._TimeFrame; i++) 
+			for (var i = 0; i <= this._TimeFrame; i++) 
 			{
 				if (input == this.Generate(key, ticks - this.FromSecondsToTicks(i))) 
 				{
@@ -237,7 +237,7 @@ namespace Litdex.Security.OTP
 			}
 
 			//future time
-			for (int i = 0; i <= this._TimeFrame; i++)
+			for (var i = 0; i <= this._TimeFrame; i++)
 			{
 				if (input == this.Generate(key, ticks + this.FromSecondsToTicks(1)))
 				{

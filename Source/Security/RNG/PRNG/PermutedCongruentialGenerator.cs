@@ -24,7 +24,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <param name="increment">Increment.</param>
 		public PermutedCongruentialGenerator(ulong seed = 0, ulong increment = 0)
 		{
-			if(seed <= 0 || increment <= 0)
+			if (seed <= 0 || increment <= 0) 
 			{
 				this.Reseed();
 			}
@@ -52,10 +52,10 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override ulong Next()
 		{
-			ulong oldseed = this._Seed;
+			var oldseed = this._Seed;
 			this._Seed = oldseed * 6364136223846793005 + (this._Increment | 1);
-			uint xorshifted = (uint)((oldseed >> 18) ^ oldseed) >> 27;
-			uint rot = (uint)(oldseed >> 59);
+			var xorshifted = (uint)((oldseed >> 18) ^ oldseed) >> 27;
+			var rot = (uint)(oldseed >> 59);
 			return (xorshifted >> (int)rot) | (xorshifted << (int)((-rot) & 31));
 		}
 
@@ -77,7 +77,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);

@@ -133,7 +133,7 @@ namespace Litdex.Network
 				return null;
 			}
 
-			IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+			var host = Dns.GetHostEntry(Dns.GetHostName());
 			return host.AddressList.FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
 		}
 

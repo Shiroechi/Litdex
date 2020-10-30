@@ -55,7 +55,7 @@ namespace Litdex.Security.KDF
 			if (salt == null)
 			{
 				salt = new byte[this._MAC.GetHashFunction().GetHashLength()];
-				for (int i = 0; i < salt.Length; i++)
+				for (var i = 0; i < salt.Length; i++)
 				{
 					salt[i] = 0;
 				}

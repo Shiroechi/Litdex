@@ -129,7 +129,7 @@ namespace Litdex.Security.MAC
 
 		private byte[] PadKey(byte[] key)
 		{
-			byte[] result = new byte[this.hash.GetByteLength()];
+			var result = new byte[this.hash.GetByteLength()];
 			Buffer.BlockCopy(key, 0, result, 0, key.Length);
 			return result;
 		}

@@ -29,7 +29,7 @@ namespace Litdex.Security.RNG.PRNG
 				this._Seed[0] = 0xF1EA5EED;
 				this._Seed[1] = this._Seed[2] = this._Seed[3] = seed;
 
-				for (int i = 0; i < 20; i++)
+				for (var i = 0; i < 20; i++)
 				{
 					this.Next();
 				}
@@ -53,7 +53,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override ulong Next()
 		{
-			ulong e = this._Seed[0] - this.Rotate(this._Seed[1], 7);
+			var e = this._Seed[0] - this.Rotate(this._Seed[1], 7);
 			this._Seed[0] = this._Seed[1] ^ this.Rotate(this._Seed[2], 13);
 			this._Seed[1] = this._Seed[2] + this.Rotate(this._Seed[3], 37);
 			this._Seed[2] = this._Seed[3] + e;
@@ -69,7 +69,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected ulong Rotate(ulong value, int shift)
 		{
-			return (((value) << (shift)) | ((value) >> (64 - (shift))));
+			return ((value) << (shift)) | ((value) >> (64 - (shift)));
 		}
 
 		#endregion Protected Method
@@ -93,7 +93,7 @@ namespace Litdex.Security.RNG.PRNG
 			ulong seed;
 			using (var rng = new RNGCryptoServiceProvider())
 			{
-				byte[] bytes = new byte[8];
+				var bytes = new byte[8];
 				rng.GetNonZeroBytes(bytes);
 				seed = BitConverter.ToUInt64(bytes, 0);
 			}
@@ -101,7 +101,7 @@ namespace Litdex.Security.RNG.PRNG
 			this._Seed[0] = 0xF1EA5EED;
 			this._Seed[1] = this._Seed[2] = this._Seed[3] = seed;
 
-			for (int i = 0; i < 20; i++)
+			for (var i = 0; i < 20; i++)
 			{
 				this.Next();
 			}

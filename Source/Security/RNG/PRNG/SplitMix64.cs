@@ -49,7 +49,7 @@ namespace Litdex.Security.RNG.PRNG
 		protected override ulong Next()
 		{
 			this._Seed = this._Seed + 0x9E3779B97F4A7C15UL;
-			ulong result = this._Seed;
+			var result = this._Seed;
 			result = (result ^ (result >> 30)) * 0xBF58476D1CE4E5B9UL;
 			result = (result ^ (result >> 27)) * 0x94D049BB133111EBUL;
 			return result ^ (result >> 31);
@@ -73,7 +73,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);

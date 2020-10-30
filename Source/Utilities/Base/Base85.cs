@@ -22,7 +22,7 @@ namespace Litdex.Utilities.Base
                 throw new ArgumentNullException("bytes");
             }
 			// preallocate a StringBuilder with enough room to store the encoded bytes
-			StringBuilder sb = new StringBuilder(bytes.Length * 5 / 4);
+			var sb = new StringBuilder(bytes.Length * 5 / 4);
 
 			// walk the bytes
 			int count = 0;
@@ -50,7 +50,7 @@ namespace Litdex.Utilities.Base
             {
                 EncodeValue(sb, value, 4 - count);
             }
-            string output = sb.ToString();
+			var output = sb.ToString();
             sb.Clear();
             return output;
 		}
@@ -68,7 +68,7 @@ namespace Litdex.Utilities.Base
             }
             byte[] result = null;
 			// preallocate a memory stream with enough capacity to hold the decoded data
-			using (MemoryStream stream = new MemoryStream(encoded.Length * 4 / 5))
+			using (var stream = new MemoryStream(encoded.Length * 4 / 5))
 			{
 				// walk the input string
 				int count = 0;
@@ -82,8 +82,7 @@ namespace Litdex.Utilities.Base
 					}
 					else if (ch < c_firstCharacter || ch > c_lastCharacter)
 					{
-                        throw new Exception("Invalid character <" + ch + "> in Ascii85 block.");
-                        //throw new FormatException("Invalid character '{0}' in Ascii85 block.".FormatInvariant(ch));
+                        throw new FormatException($"Invalid character '{ch}' in Ascii85 block.");
                     }
 					else
 					{
@@ -138,9 +137,9 @@ namespace Litdex.Utilities.Base
 		// Writes the Ascii85 characters for a 32-bit value to a StringBuilder.
 		private static void EncodeValue(StringBuilder sb, uint value, int paddingBytes)
 		{
-			char[] encoded = new char[5];
+			var encoded = new char[5];
 
-			for (int index = 4; index >= 0; index--)
+			for (var index = 4; index >= 0; index--)
 			{
 				encoded[index] = (char) ((value % 85) + c_firstCharacter);
 				value /= 85;

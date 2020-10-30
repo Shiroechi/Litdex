@@ -77,15 +77,15 @@ namespace Litdex.Security.RNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			uint diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.Next() % diff);
 		}
 
 		public virtual ulong NextLong()
 		{
-			byte[] bytes1 = BitConverter.GetBytes(this.Next());
-			byte[] bytes2 = BitConverter.GetBytes(this.Next());
-			byte[] bytes = new byte[8];
+			var bytes1 = BitConverter.GetBytes(this.Next());
+			var bytes2 = BitConverter.GetBytes(this.Next());
+			var bytes = new byte[8];
 
 			bytes[0] = bytes1[0];
 			bytes[1] = bytes1[1];
@@ -121,7 +121,7 @@ namespace Litdex.Security.RNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			ulong diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextLong() % diff);
 		}
 
@@ -138,7 +138,7 @@ namespace Litdex.Security.RNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			double diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextDouble() % diff);
 		}
 		
@@ -149,11 +149,11 @@ namespace Litdex.Security.RNG
 				throw new ArgumentException("Bytes length can't lower than or equal to 0.");
 			}
 
-			byte[] bytes = new byte[length];
+			var bytes = new byte[length];
 
-			int counter = 0;
-			int leftover = 0;
-			int current = bytes.Length;
+			var counter = 0;
+			var leftover = 0;
+			var current = bytes.Length;
 
 			while (counter != bytes.Length)
 			{
@@ -168,10 +168,10 @@ namespace Litdex.Security.RNG
 					leftover = current;
 				}
 
-				uint data = this.NextInt();
+				var data = this.NextInt();
 
 				//copy 4 byte from Integer to bytes array
-				for (int i = 0; i < leftover; i++)
+				for (var i = 0; i < leftover; i++)
 				{
 					bytes[counter] = (byte)data;
 					data >>= 8;
@@ -188,10 +188,10 @@ namespace Litdex.Security.RNG
 		/// <returns></returns>
 		public virtual byte[] NextBytes(int length)
 		{
-			uint sample = this.Next();
-			byte[] data = new byte[length];
+			var sample = this.Next();
+			var data = new byte[length];
 
-			for (int i = 1; i <= length; i++)
+			for (var i = 1; i <= length; i++)
 			{
 				if (i % 4 == 0)
 				{
@@ -223,7 +223,7 @@ namespace Litdex.Security.RNG
 		/// <returns></returns>
 		public virtual T[] Choice<T>(T[] items, int count)
 		{
-			List<T> temp = new List<T>(items);
+			var temp = new List<T>(items);
 			return this.Choice<T>(temp, count).ToArray();
 		}
 
@@ -253,7 +253,7 @@ namespace Litdex.Security.RNG
 		/// <returns></returns>
 		public virtual object[] Choice(object[] items, int count)
 		{
-			List<object> temp = new List<object>(items);
+			var temp = new List<object>(items);
 			return this.Choice(temp, count).ToArray();
 		}
 
@@ -286,9 +286,9 @@ namespace Litdex.Security.RNG
 				throw new Exception("Count can't lower than 1.");
 			}
 
-			List<T> selected = new List<T>();
+			var selected = new List<T>();
 
-			int index = (int)this.NextInt(0, (uint)(items.Count - 1));
+			var index = (int)this.NextInt(0, (uint)(items.Count - 1));
 
 			while (selected.Count < count)
 			{
@@ -339,9 +339,9 @@ namespace Litdex.Security.RNG
 				throw new Exception("Count can't lower than 1.");
 			}
 
-			List<object> selected = new List<object>();
+			var selected = new List<object>();
 
-			int index = (int)this.NextInt(0, (uint)items.Count - 1);
+			var index = (int)this.NextInt(0, (uint)items.Count - 1);
 
 			while (selected.Count < count)
 			{

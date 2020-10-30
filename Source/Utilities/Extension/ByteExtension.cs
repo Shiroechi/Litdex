@@ -118,7 +118,7 @@ namespace Litdex.Utilities.Extension
 
 		public static byte[] SubByte(this byte[] arr, int ffset, int length)
 		{
-			byte[] temp = new byte[length - ffset];
+			var temp = new byte[length - ffset];
 			Array.Copy(arr, ffset, temp, 0, length);
 			return temp;
 		}

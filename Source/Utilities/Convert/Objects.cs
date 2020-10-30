@@ -27,7 +27,7 @@ namespace Litdex.Utilities.Convert
             try
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                using (MemoryStream ms = new MemoryStream())
+                using (var ms = new MemoryStream())
                 {
                     bf.Serialize(ms, obj);
                     return ms.ToArray();
@@ -53,7 +53,7 @@ namespace Litdex.Utilities.Convert
 			
             try
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var ms = new MemoryStream())
                 {
                     BinaryFormatter bf = new BinaryFormatter();
                     ms.Write(bytes, 0, bytes.Length);

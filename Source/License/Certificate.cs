@@ -86,7 +86,7 @@ namespace Litdex.License
 		{
 			try
 			{
-				SHA3 sha3 = new SHA3(512);
+				var sha3 = new SHA3(512);
 				return sha3.ComputeHash(data).EncodeBase16();
 			}
 			catch

@@ -85,7 +85,7 @@ namespace Litdex.Security.OTP
 		/// <returns></returns>
 		public string Generate()
 		{
-			if(this._Key == null || this._Key.Length <= 0)
+			if (this._Key == null || this._Key.Length <= 0)
 			{
 				this.GenerateKey(32);
 			}

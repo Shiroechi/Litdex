@@ -46,22 +46,27 @@ namespace Litdex.License
 		/// <returns></returns>
 		private byte[] Encrypt(string data, byte[] key, byte[] iv)
 		{
-			using (RijndaelManaged rijndael = new RijndaelManaged())
+			using (var rijndael = new RijndaelManaged())
 			{
+#if NETCOREAPP2_1
+				rijndael.BlockSize = 128;
+				rijndael.KeySize = 128;
+#elif NETSTANDARD2_0
 				rijndael.BlockSize = 256;
 				rijndael.KeySize = 256;
+#endif
 				rijndael.Key = key;
 				rijndael.IV = iv;
 				rijndael.Mode = CipherMode.CBC;
 				rijndael.Padding = PaddingMode.PKCS7;
 
-				ICryptoTransform encryptor = rijndael.CreateEncryptor(rijndael.Key, rijndael.IV);
+				var encryptor = rijndael.CreateEncryptor(rijndael.Key, rijndael.IV);
 
-				using (MemoryStream msEncrypt = new MemoryStream())
+				using (var msEncrypt = new MemoryStream())
 				{
-					using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+					using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
 					{
-						using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+						using (var swEncrypt = new StreamWriter(csEncrypt))
 						{
 							//Write all data to the stream.
 							swEncrypt.Write(data);
@@ -81,22 +86,27 @@ namespace Litdex.License
 		/// <returns></returns>
 		private string Decrypt(byte[] data, byte[] key, byte[] iv)
 		{
-			using (RijndaelManaged rijndael = new RijndaelManaged())
+			using (var rijndael = new RijndaelManaged())
 			{
+#if NETCOREAPP2_1
+				rijndael.BlockSize = 128;
+				rijndael.KeySize = 128;
+#elif NETSTANDARD2_0
 				rijndael.BlockSize = 256;
 				rijndael.KeySize = 256;
+#endif
 				rijndael.Key = key;
 				rijndael.IV = iv;
 				rijndael.Mode = CipherMode.CBC;
 				rijndael.Padding = PaddingMode.PKCS7;
 
-				ICryptoTransform decryptor = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
+				var decryptor = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
 
-				using (MemoryStream msDecrypt = new MemoryStream(data))
+				using (var msDecrypt = new MemoryStream(data))
 				{
-					using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+					using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
 					{
-						using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+						using (var srDecrypt = new StreamReader(csDecrypt))
 						{
 							return srDecrypt.ReadToEnd();
 						}
@@ -112,7 +122,7 @@ namespace Litdex.License
 		/// <returns></returns>
 		private byte[] SerialNumberGenerator(string username)
 		{
-			IHash hash = new SHA1();
+			var hash = new SHA1();
 			return hash.ComputeHash(username).SubByte(0, 8);		
 		}
 
@@ -138,17 +148,20 @@ namespace Litdex.License
 			{
 				cert.CalculateChecksum();
 
-				string certificate_data = cert.CombineVariable();
+				var certificate_data = cert.CombineVariable();
 				certificate_data += ";" + cert.GetChecksum();
 
-				IHash blake2b = new Blake2b(256);
+#if NETCOREAPP2_1
+				var blake2b = new Blake2b(128);
+#elif NETSTANDARD2_0
+				var blake2b = new Blake2b(256);
+#endif
 				blake2b.Reset();
-				byte[] key = blake2b.ComputeHash(cert.GetUsername());
+				var key = blake2b.ComputeHash(cert.GetUsername());
 				blake2b.Reset();
-				byte[] iv = blake2b.ComputeHash(this.GetSerialNumber(cert).ToString());
+				var iv = blake2b.ComputeHash(this.GetSerialNumber(cert).ToString());
 				blake2b.Reset();
-
-				byte[] encrypted_data = this.Encrypt(certificate_data, key, iv);
+				var encrypted_data = this.Encrypt(certificate_data, key, iv);
 
 				File.WriteAllBytes(location, encrypted_data);
 
@@ -176,17 +189,17 @@ namespace Litdex.License
 
 			try
 			{
-				Certificate certificate = new Certificate();
+				var certificate = new Certificate();
 				
 				var encrypted_data = File.ReadAllBytes(location);
-				IHash blake2b = new Blake2b(256);
+				var blake2b = new Blake2b(256);
 				blake2b.Reset();
-				byte[] key = blake2b.ComputeHash(username);
+				var key = blake2b.ComputeHash(username);
 				blake2b.Reset();
-				byte[] iv = blake2b.ComputeHash(serial_number);
+				var iv = blake2b.ComputeHash(serial_number);
 				blake2b.Reset();
 
-				string decrypt_data = this.Decrypt(encrypted_data, key, iv);
+				var decrypt_data = this.Decrypt(encrypted_data, key, iv);
 				
 				certificate.SplitVariable(decrypt_data);
 

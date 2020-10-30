@@ -12,7 +12,7 @@
         /// </returns>
         public static bool IsPrime(short value)
         {
-            for (short i = 2; i < value; i++)
+            for (var i = 2; i < value; i++)
             {
                 if (value % i == 0)
                 {
@@ -32,7 +32,7 @@
         /// </returns>
         public static bool IsPrime(int value)
         {
-            for (int i = 2; i < value; i++)
+            for (var i = 2; i < value; i++)
             {
                 if (value % i == 0)
                 {
@@ -52,7 +52,7 @@
         /// </returns>
         public static bool IsPrime(uint value)
         {
-            for (uint i = 2; i < value; i++) 
+            for (var i = 2u; i < value; i++) 
             {
                 if (value % i == 0)
                 {
@@ -72,7 +72,7 @@
         /// </returns>
         public static bool IsPrime(long value)
         {
-            for (long i = 2; i < value; i++)
+            for (var i = 2; i < value; i++)
             {
                 if (value % i == 0)
                 {
@@ -92,7 +92,7 @@
         /// </returns>
         public static bool IsPrime(ulong value)
         {
-            for (ulong i = 2; i < value; i++)
+            for (var i = 2UL; i < value; i++)
             {
                 if (value % i == 0)
                 {

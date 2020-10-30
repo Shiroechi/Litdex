@@ -18,7 +18,7 @@ namespace Litdex.Security.RNG.PRNG
 
         public WyRng(ulong seed = 0)
 		{
-            if(seed != 0)
+            if (seed != 0) 
 			{
                 this._Seed = seed;
 			}
@@ -51,18 +51,18 @@ namespace Litdex.Security.RNG.PRNG
             lo = x * y;
 
             ulong x0 = (uint)x;
-            ulong x1 = x >> 32;
+            var x1 = x >> 32;
 
             ulong y0 = (uint)y;
-            ulong y1 = y >> 32;
+            var y1 = y >> 32;
 
-            ulong p11 = x1 * y1;
-            ulong p01 = x0 * y1;
-            ulong p10 = x1 * y0;
-            ulong p00 = x0 * y0;
+            var p11 = x1 * y1;
+            var p01 = x0 * y1;
+            var p10 = x1 * y0;
+            var p00 = x0 * y0;
 
             // 64-bit product + two 32-bit values
-            ulong middle = p10 + (p00 >> 32) + (uint)p01;
+            var middle = p10 + (p00 >> 32) + (uint)p01;
 
             // 64-bit product + two 32-bit values
             hi = p11 + (middle >> 32) + (p01 >> 32);
@@ -81,7 +81,7 @@ namespace Litdex.Security.RNG.PRNG
 
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);

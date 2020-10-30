@@ -100,10 +100,10 @@ namespace Litdex.Security.KDF
 		/// <returns></returns>
 		private byte[] DeriveKey(byte[] password, byte[] salt, int length, int iteration)
 		{
-			int hLen = this._HashFunction.GetHashLength();
-			int l = (length + hLen - 1) / hLen;
-			byte[] Buffer = new byte[4];
-			byte[] result = new byte[l * hLen];
+			var hLen = this._HashFunction.GetHashLength();
+			var l = (length + hLen - 1) / hLen;
+			var Buffer = new byte[4];
+			var result = new byte[l * hLen];
 
 			for (int i = 1; i <= l; i++)
 			{
@@ -112,7 +112,7 @@ namespace Litdex.Security.KDF
 				this.F(password, salt, iteration, Buffer, result, (i - 1) * hLen);
 			}
 
-			byte[] output = new byte[length];
+			var output = new byte[length];
 
 			System.Buffer.BlockCopy(result, 0, output, 0, length);
 
@@ -130,7 +130,7 @@ namespace Litdex.Security.KDF
 		/// <param name="offset">Output offset.</param>
 		private void F(byte[] password, byte[] salt, int iteration, byte[] buffer, byte[] result, int offset)
 		{
-			byte[] state = new byte[this._HashFunction.GetHashLength()];
+			var state = new byte[this._HashFunction.GetHashLength()];
 
 			this._MACFunction.Initialize(password);
 
@@ -144,13 +144,13 @@ namespace Litdex.Security.KDF
 
 			Array.Copy(state, 0, result, offset, state.Length);
 
-			for (int i = 1; i != iteration; i++)
+			for (var i = 1; i != iteration; i++)
 			{
 				this._MACFunction.Initialize(password);
 				this._MACFunction.Update(state, 0, state.Length);
 				this._MACFunction.DoFinal(state, 0);
 
-				for (int j = 0; j != state.Length; j++)
+				for (var j = 0; j != state.Length; j++)
 				{
 					result[offset + j] ^= state[j];
 				}

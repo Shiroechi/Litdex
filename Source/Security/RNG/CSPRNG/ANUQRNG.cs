@@ -78,12 +78,12 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 				throw new ArgumentException("Length must be between 1 and " + this._Max + ".");
 			}
 
-			string result = "";
+			var result = "";
 
 			using (var client = new WebClient())
 			{
 				var text = client.DownloadString(this.UrlBuilder(length, size));
-				int start = text.IndexOf("[");
+				var start = text.IndexOf("[");
 				result = text.Substring(start + 2, size);
 			}
 			return result;
@@ -120,7 +120,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			byte diff = (byte)(upper - lower + 1);
+			var diff = (byte)(upper - lower + 1);
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
@@ -136,7 +136,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			uint diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextInt() % diff);
 		}
 
@@ -152,7 +152,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			ulong diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextLong() % diff);
 		}
 
@@ -168,7 +168,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			double diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextDouble() % diff);
 		}
 
@@ -191,8 +191,8 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 	/// </summary>
 	public enum ANUType
 	{
-		UINT8,
-		UINT16,
+		//UINT8,
+		//UINT16,
 		HEX16
 	}
 }

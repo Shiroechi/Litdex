@@ -31,7 +31,7 @@ namespace Litdex.Security.RNG.PRNG
 				throw new Exception("The generator need 8 seed, your seed " + seed.Length);
 			}
 
-			for (int i = 0; i < 8; i++)
+			for (var i = 0; i < 8; i++)
 			{
 				this._State[i] = seed[i];
 			}
@@ -45,9 +45,9 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override ulong Next()
 		{
-			ulong result = RotateLeft(this._State[1] * 5, 7) * 9;
+			var result = RotateLeft(this._State[1] * 5, 7) * 9;
 
-			ulong t = this._State[1] << 11;
+			var t = this._State[1] << 11;
 
 			this._State[2] ^= this._State[0];
 			this._State[5] ^= this._State[1];
@@ -88,7 +88,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);
@@ -122,15 +122,15 @@ namespace Litdex.Security.RNG.PRNG
 							 0xb11ac47a7ba28c25, 0xf1be7667092bcc1c,
 							 0x53851efdb6df0aaf, 0x1ebbc8b23eaf25db };
 
-			ulong[] s = new ulong[8];
+			var s = new ulong[8];
 
-			for (int i = 0; i < 8; i++)
+			for (var i = 0; i < 8; i++)
 			{
-				for (int b = 0; b < 64; b++)
+				for (var b = 0; b < 64; b++)
 				{
 					if ((JUMP[i] & ((1UL) << b)) != 0)
 					{
-						for (int w = 0; w < 8; w++)
+						for (var w = 0; w < 8; w++)
 						{
 							s[w] ^= this._State[w];
 						}
@@ -139,7 +139,7 @@ namespace Litdex.Security.RNG.PRNG
 				}
 			}
 
-			for (int i = 0; i < 8; i++)
+			for (var i = 0; i < 8; i++)
 			{
 				this._State[i] = s[i];
 			}

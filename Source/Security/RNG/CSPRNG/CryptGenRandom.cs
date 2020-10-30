@@ -149,7 +149,7 @@ namespace Litdex.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			byte diff = (byte)(upper - lower + 1);
+			var diff = (byte)(upper - lower + 1);
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
@@ -165,7 +165,7 @@ namespace Litdex.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			uint diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextInt() % diff);
 		}
 
@@ -181,7 +181,7 @@ namespace Litdex.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			ulong diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextLong() % diff);
 		}
 
@@ -197,13 +197,13 @@ namespace Litdex.Security.RNG.CSPRNG
 				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
 			}
 
-			double diff = upper - lower + 1;
+			var diff = upper - lower + 1;
 			return lower + (this.NextDouble() % diff);
 		}
 
 		public byte[] GetBytes(int length = 512)
 		{
-			byte[] result = new byte[length];
+			var result = new byte[length];
 			using (var rngCsp = new RNGCryptoServiceProvider())
 			{
 				rngCsp.GetNonZeroBytes(result);

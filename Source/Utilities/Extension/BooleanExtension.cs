@@ -140,7 +140,7 @@
 		/// </returns>
 		public static bool IsAlphabetic<Template>(this Template value)
 		{
-			string line = value.ToString();
+			var line = value.ToString();
 			for (var i = 0; i < line.Length; i++)
 			{
 				if (char.IsLetter(line[i]) == false)

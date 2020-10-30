@@ -20,7 +20,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <param name="seed">Your seed.</param>
 		public JSF32(uint seed = 0)
 		{
-			if(seed == 0)
+			if (seed == 0) 
 			{
 				this.Reseed();
 			}
@@ -29,7 +29,7 @@ namespace Litdex.Security.RNG.PRNG
 				this._Seed[0] = Convert.ToUInt32(0xF1EA5EED);
 				this._Seed[1] = this._Seed[2] = this._Seed[3] = seed;
 
-				for (int i = 0; i < 20; i++)
+				for (var i = 0; i < 20; i++)
 				{
 					this.Next();
 				}
@@ -52,7 +52,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override uint Next()
 		{
-			uint e = this._Seed[0] - this.Rotate(this._Seed[1], 27);
+			var e = this._Seed[0] - this.Rotate(this._Seed[1], 27);
 			this._Seed[0] = this._Seed[1] ^ this.Rotate(this._Seed[2], 17);
 			this._Seed[1] = this._Seed[2] + this._Seed[3];
 			//this.Seed[1] = this.Seed[2] + this.Rotate(this.Seed[3], 11);
@@ -69,7 +69,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected uint Rotate(uint value, int shift)
 		{
-			return (((value) << (shift)) | ((value) >> (32 - (shift))));
+			return ((value) << (shift)) | ((value) >> (32 - (shift)));
 		}
 
 		#endregion Protected Method
@@ -93,7 +93,7 @@ namespace Litdex.Security.RNG.PRNG
 			uint seed;
 			using (var rng = new RNGCryptoServiceProvider())
 			{
-				byte[] bytes = new byte[4];
+				var bytes = new byte[4];
 				rng.GetNonZeroBytes(bytes);
 				seed = BitConverter.ToUInt32(bytes, 0);
 			}
@@ -101,7 +101,7 @@ namespace Litdex.Security.RNG.PRNG
 			this._Seed[0] = 0xF1EA5EED;
 			this._Seed[1] = this._Seed[2] = this._Seed[3] = seed;
 
-			for (int i = 0; i < 20; i++)
+			for (var i = 0; i < 20; i++)
 			{
 				this.Next();
 			}

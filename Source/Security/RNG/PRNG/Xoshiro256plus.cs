@@ -28,12 +28,12 @@ namespace Litdex.Security.RNG.PRNG
         public Xoshiro256plus(ulong[] seed)
         {
 			this._State = new ulong[4];
-            if(seed.Length < 4)
+			if (seed.Length < 4)
             {
-				throw new Exception("The generator need 4 seed, your seed " + seed.Length);
+				throw new ArgumentException("The generator need 4 seed, your seed " + seed.Length);
             }
 
-			for (int i = 0; i < 4; i++)
+			for (var i = 0; i < 4; i++)
 			{
 				this._State[i] = seed[i];
 			}
@@ -55,9 +55,9 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override ulong Next()
 		{
-			ulong result = this._State[0] + this._State[3];
+			var result = this._State[0] + this._State[3];
 
-			ulong t = this._State[1] << 17;
+			var t = this._State[1] << 17;
 
 			this._State[2] ^= this._State[0];
 			this._State[3] ^= this._State[1];
@@ -94,7 +94,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);
@@ -117,14 +117,14 @@ namespace Litdex.Security.RNG.PRNG
         {
             ulong[] JUMP = { 0x180ec6d33cfd0aba, 0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c };
 
-            ulong s0 = 0;
-            ulong s1 = 0;
-            ulong s2 = 0;
-            ulong s3 = 0;
+            var s0 = 0UL;
+            var s1 = 0UL;
+            var s2 = 0UL;
+            var s3 = 0UL;
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                for (int b = 0; b < 64; b++)
+                for (var b = 0; b < 64; b++)
                 {
                     if ((JUMP[i] & ((1UL) << b)) != 0 )
                     {

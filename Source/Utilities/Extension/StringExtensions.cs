@@ -11,8 +11,8 @@ namespace Litdex.Utilities.Extension
 	{
 		public static string FromBytes(byte[] bs)
         {
-            char[] cs = new char[bs.Length];
-            for (int i = 0; i < cs.Length; ++i)
+            var cs = new char[bs.Length];
+            for (var i = 0; i < cs.Length; ++i)
             {
                 cs[i] = System.Convert.ToChar(bs[i]);
             }
@@ -21,21 +21,21 @@ namespace Litdex.Utilities.Extension
 
 		public static string FromBytes(this ArraySegment<byte> bytesSegment)
         {
-            byte[] bytesArray = bytesSegment.Array;
-            int bytesLength = bytesSegment.Count;
-            int bytesOffset = bytesSegment.Offset;
+            var bytesArray = bytesSegment.Array;
+            var bytesLength = bytesSegment.Count;
+            var bytesOffset = bytesSegment.Offset;
 
             if (bytesLength % 2 != 0)
             {
                 throw new ArgumentException($"'{nameof(bytesSegment)}' must have even number of bytes", nameof(bytesSegment));
             }
 
-            char[] chars = new char[bytesLength / 2];
+            var chars = new char[bytesLength / 2];
             for (int i = 0; i < chars.Length; ++i)
             {
                 chars[i] = (char)(bytesArray[bytesOffset + i * 2] | (bytesArray[bytesOffset + i * 2 + 1] << 8));
             }
-            return new String(chars);
+            return new string(chars);
         }
 
         /// <summary>

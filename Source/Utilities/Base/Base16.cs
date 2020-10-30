@@ -42,9 +42,9 @@ namespace Litdex.Utilities.Base
 				return null;
 			}
 
-			char[] c = new char[data.Length * 2];
+			var c = new char[data.Length * 2];
 			int b;
-			for (int i = 0; i < data.Length; i++)
+			for (var i = 0; i < data.Length; i++)
 			{
 				b = data[i] >> 4;
 				c[i * 2] = (char)(55 + b + (((b - 10) >> 31) & -7));
@@ -66,9 +66,9 @@ namespace Litdex.Utilities.Base
 				return null;
 			}
 
-			char[] c = new char[data.Length * 2];
+			var c = new char[data.Length * 2];
 			int b;
-			for (int i = 0; i < data.Length; i++)
+			for (var i = 0; i < data.Length; i++)
 			{
 				b = data[i] >> 4;
 				c[i * 2] = (char)(87 + b + (((b - 10) >> 31) & -39));
@@ -95,7 +95,7 @@ namespace Litdex.Utilities.Base
 			}
 			var result = new byte[data.Length / 2];
 
-			for (int i = 0; i < result.Length; i++)
+			for (var i = 0; i < result.Length; i++)
 			{
 				result[i] = System.Convert.ToByte(data.Substring(i * 2, 2), 16);
 			}

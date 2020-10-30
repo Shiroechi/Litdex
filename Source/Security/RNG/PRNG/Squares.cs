@@ -22,7 +22,7 @@ namespace Litdex.Security.RNG.PRNG
 		public Squares(ulong ctr = 0, ulong key = 0)
 		{
 			this._Counter = ctr;
-			if(key != 0)
+			if (key != 0)
 			{
 				this._Key = key;
 			}
@@ -77,7 +77,7 @@ namespace Litdex.Security.RNG.PRNG
 			ulong key;
 			using (var rng = new RNGCryptoServiceProvider())
 			{
-				byte[] bytes = new byte[8];
+				var bytes = new byte[8];
 				rng.GetNonZeroBytes(bytes);
 				key = BitConverter.ToUInt64(bytes, 0);
 			}

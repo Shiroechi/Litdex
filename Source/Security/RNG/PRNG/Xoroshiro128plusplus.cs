@@ -37,9 +37,9 @@ namespace Litdex.Security.RNG.PRNG
 		/// <returns></returns>
 		protected override ulong Next()
 		{
-			ulong s0 = this._State1;
-			ulong s1 = this._State2;
-			ulong result = this.RotateLeft(s0 + s1, 17) + s0;
+			var s0 = this._State1;
+			var s1 = this._State2;
+			var result = this.RotateLeft(s0 + s1, 17) + s0;
 
 			s1 ^= s0;
 			this._State1 = this.RotateLeft(s0, 49) ^ s1 ^ (s1 << 21); // a, b
@@ -71,7 +71,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		public override void Reseed()
 		{
-			byte[] bytes = new byte[8];
+			var bytes = new byte[8];
 			using (var rng = new RNGCryptoServiceProvider())
 			{
 				rng.GetNonZeroBytes(bytes);
@@ -90,9 +90,9 @@ namespace Litdex.Security.RNG.PRNG
 			ulong[] JUMP = { 0x2bd7a6a6e99c2ddc, 0x0992ccaf6a6fca05 };
 			ulong seed1 = 0, seed2 = 0;
 
-			for (int i = 0; i < 2; i++)
+			for (var i = 0; i < 2; i++)
 			{
-				for (int b = 0; b < 64; b++)
+				for (var b = 0; b < 64; b++)
 				{
 					if ((JUMP[i] & (1UL << b)) != 0)
 					{
