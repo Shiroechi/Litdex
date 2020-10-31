@@ -37,6 +37,14 @@ namespace Litdex.Security.RNG.PRNG
 			}
 		}
 
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~Xoshiro512starstar()
+		{
+			this._State = null;
+		}
+
 		#region Protected Method
 
 		/// <summary>

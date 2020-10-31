@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-using Litdex.Utilities.Extension;
-
 namespace Litdex.Security.RNG.PRNG
 {
 	/// <summary>
@@ -42,7 +40,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		~JSF64()
 		{
-			this._Seed.Clear();
+			this._Seed = null;
 		}
 
 		#region	Protected Method

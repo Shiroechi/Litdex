@@ -118,7 +118,7 @@ namespace Litdex.Security.OTP
 		protected byte[] GenerateKey(int length, IRNG rng)
 		{
 			IRNG rnd = rng;
-			return rnd.GetBytes(length);
+			return rnd.NextBytes(length);
 		}
 
 		/// <summary>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-using Litdex.Utilities.Extension;
-
 namespace Litdex.Security.RNG.PRNG
 {
 	/// <summary>
@@ -44,7 +42,7 @@ namespace Litdex.Security.RNG.PRNG
 		/// </summary>
 		~Xoshiro256plusplus()
 		{
-			this._State.Clear();
+			this._State = null;
 		}
 
 		#region Protected Method

@@ -88,12 +88,5 @@
 		/// <param name="upper">Upper bound.</param>
 		/// <returns></returns>
 		double NextDouble(double lower, double upper);
-		
-		/// <summary>
-		/// Generate random <see cref="byte"/>[] value from generator.
-		/// </summary>
-		/// <param name="length">Output length.</param>
-		/// <returns></returns>
-		byte[] GetBytes(int length);
 	}
 }

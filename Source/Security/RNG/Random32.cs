@@ -72,16 +72,16 @@ namespace Litdex.Security.RNG
 		/// <returns></returns>
 		public virtual byte[] NextBytes(int length)
 		{
-			var sample = this.Next();
+			uint sample = 0;
 			var data = new byte[length];
 
-			for (var i = 1; i <= length; i++)
+			for (var i = 0; i < length; i++)
 			{
 				if (i % 4 == 0)
 				{
 					sample = this.Next();
 				}
-				data[i - 1] = (byte)(sample);
+				data[i - 1] = (byte)sample;
 				sample >>= 8;
 			}
 			return data;
@@ -164,46 +164,6 @@ namespace Litdex.Security.RNG
 			return lower + (this.NextDouble() % diff);
 		}
 		
-		[Obsolete]
-		public virtual byte[] GetBytes(int length)
-		{
-			if (length <= 0)
-			{
-				throw new ArgumentException("Bytes length can't lower than or equal to 0.");
-			}
-
-			var bytes = new byte[length];
-
-			var counter = 0;
-			var leftover = 0;
-			var current = bytes.Length;
-
-			while (counter != bytes.Length)
-			{
-				//calculate leftover
-				if (current >= 4)
-				{
-					current -= 4;
-					leftover = 4;
-				}
-				else
-				{
-					leftover = current;
-				}
-
-				var data = this.NextInt();
-
-				//copy 4 byte from Integer to bytes array
-				for (var i = 0; i < leftover; i++)
-				{
-					bytes[counter] = (byte)data;
-					data >>= 8;
-					counter++;
-				}
-			}
-			return bytes;
-		}
-
 		/// <summary>
 		/// Select one element randomly.
 		/// </summary>
