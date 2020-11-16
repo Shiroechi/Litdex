@@ -49,7 +49,7 @@ namespace Litdex.Security.RNG
 		/// <inheritdoc/>
 		public virtual bool NextBoolean()
 		{
-			return this.NextInt() % 2 == 0;
+			return this.Next() >> 63 == 0;
 		}
 
 		/// <inheritdoc/>
