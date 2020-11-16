@@ -88,31 +88,36 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			}
 			return result;
 		}
-		
+
 		#endregion Protected
 
 		#region Public
 
+		/// <inheritdoc/>
 		public string AlgorithmName()
 		{
 			return "ANU QRNG";
 		}
 
+		/// <inheritdoc/>
 		public void Reseed()
 		{
 			// do nothing
 		}
 
+		/// <inheritdoc/>
 		public bool NextBoolean()
 		{
 			return this.NextInt() % 2 == 0;
 		}
 
+		/// <inheritdoc/>
 		public virtual byte NextByte()
 		{
 			return this.GetBytes(1)[0];
 		}
 
+		/// <inheritdoc/>
 		public virtual byte NextByte(byte lower, byte upper)
 		{
 			if (lower >= upper)
@@ -124,6 +129,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
+		/// <inheritdoc/>
 		public byte[] NextBytes(int length = 512)
 		{
 			if (length <= 0 || length > this._Max)
@@ -135,11 +141,13 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return result.DecodeBase16();
 		}
 
+		/// <inheritdoc/>
 		public uint NextInt()
 		{
 			return BitConverter.ToUInt32(this.Next(1, 8).DecodeBase16(), 0);
 		}
 
+		/// <inheritdoc/>
 		public uint NextInt(uint lower, uint upper)
 		{
 			if (lower >= upper)
@@ -151,11 +159,13 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return lower + (this.NextInt() % diff);
 		}
 
+		/// <inheritdoc/>
 		public ulong NextLong()
 		{
 			return BitConverter.ToUInt64(this.Next(1, 16).DecodeBase16(), 0);
 		}
 
+		/// <inheritdoc/>
 		public ulong NextLong(ulong lower, ulong upper)
 		{
 			if (lower >= upper)
@@ -167,11 +177,13 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return lower + (this.NextLong() % diff);
 		}
 
+		/// <inheritdoc/>
 		public double NextDouble()
 		{
 			return NextLong() * (1L << 53);
 		}
 
+		/// <inheritdoc/>
 		public double NextDouble(double lower, double upper)
 		{
 			if (lower >= upper)
@@ -183,6 +195,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return lower + (this.NextDouble() % diff);
 		}
 
+		/// <inheritdoc/>
 		public byte[] GetBytes(int length = 512)
 		{
 			if (length <= 0 || length > this._Max)

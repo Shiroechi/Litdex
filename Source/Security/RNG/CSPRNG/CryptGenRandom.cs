@@ -118,30 +118,31 @@ namespace Litdex.Security.RNG.CSPRNG
 
 		#region Public
 
+		/// <inheritdoc/>
 		public string AlgorithmName()
 		{
 			return "CryptGenRandom";
 		}
 
-		/// <summary>
-		/// Reset generator.
-		/// do nothing.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Reseed()
 		{
 
 		}
 
+		/// <inheritdoc/>
 		public bool NextBoolean()
 		{
 			return this.NextInt() % 2 == 0;
 		}
 
+		/// <inheritdoc/>
 		public virtual byte NextByte()
 		{
 			return this.GetBytes(1)[0];
 		}
 
+		/// <inheritdoc/>
 		public virtual byte NextByte(byte lower, byte upper)
 		{
 			if (lower >= upper)
@@ -153,6 +154,7 @@ namespace Litdex.Security.RNG.CSPRNG
 			return (byte)(lower + (this.NextByte() % diff));
 		}
 
+		/// <inheritdoc/>
 		public byte[] NextBytes(int length = 512)
 		{
 			var result = new byte[length];
@@ -163,11 +165,13 @@ namespace Litdex.Security.RNG.CSPRNG
 			return result;
 		}
 
+		/// <inheritdoc/>
 		public uint NextInt()
 		{
 			return (uint)this.Next();
 		}
 
+		/// <inheritdoc/>
 		public uint NextInt(uint lower, uint upper)
 		{
 			if (lower >= upper)
@@ -179,11 +183,13 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextInt() % diff);
 		}
 
+		/// <inheritdoc/>
 		public ulong NextLong()
 		{
 			return this.Next();
 		}
 
+		/// <inheritdoc/>
 		public ulong NextLong(ulong lower, ulong upper)
 		{
 			if (lower >= upper)
@@ -195,11 +201,13 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextLong() % diff);
 		}
 
+		/// <inheritdoc/>
 		public double NextDouble()
 		{
 			return NextLong() * (1L << 53);
 		}
 
+		/// <inheritdoc/>
 		public double NextDouble(double lower, double upper)
 		{
 			if (lower >= upper)
@@ -211,6 +219,7 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextDouble() % diff);
 		}
 
+		/// <inheritdoc/>
 		public byte[] GetBytes(int length = 512)
 		{
 			var result = new byte[length];
