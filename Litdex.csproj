@@ -11,19 +11,20 @@
     <SignAssembly>false</SignAssembly>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.2.2</Version>
+    <Version>1.3.0</Version>
     <Description>My personal library.</Description>
     <Product></Product>
     <DelaySign>false</DelaySign>
     <RootNamespace>Litdex</RootNamespace>
     <AssemblyName>Litdex</AssemblyName>
-    <AssemblyVersion>1.2.2.0</AssemblyVersion>
-    <FileVersion>1.2.2.0</FileVersion>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
     <RepositoryUrl>https://github.com/Shiroechi/Litdex</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Shiroechi/Litdex</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH</PackageTags>
-    <PackageReleaseNotes>- remove obsolete method</PackageReleaseNotes>
+    <PackageReleaseNotes>* add xml documentation for rng
+* fix error in generating random bytes in PRNG.</PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
@@ -32,6 +33,10 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <DocumentationFile></DocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Project\C#\Litdex\Litdex\Litdex.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
