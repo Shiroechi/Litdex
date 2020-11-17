@@ -215,7 +215,6 @@ namespace Litdex.Security.RNG
 		/// <remarks>
 		/// More slower because need boxing/unboxing.
 		/// </remarks>
-		/// <typeparam name="T">Data type</typeparam>
 		/// <param name="items">Set of items to choose.</param>
 		/// <param name="count">The desired amount to select.</param>
 		/// <returns>Multiple random elements from the given sets.</returns>
