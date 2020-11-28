@@ -85,7 +85,7 @@ namespace Litdex.Security.RNG.CSPRNG
 			{
 				var text = client.DownloadString(this.UrlBuilder(length, size));
 				var start = text.IndexOf("[");
-				result = text.Substring(start + 2, size);
+				result = text.Substring(start + 2, size * 2);
 			}
 			return result;
 		}
