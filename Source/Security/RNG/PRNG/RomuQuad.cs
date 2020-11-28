@@ -70,7 +70,6 @@ namespace Litdex.Security.RNG
 			this._W = this._X = this._Y = this._Z = 0;
 		}
 
-
 		#endregion Constructor & Destructor
 
 		#region Protected Method
