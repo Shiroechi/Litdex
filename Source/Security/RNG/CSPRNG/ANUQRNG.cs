@@ -196,7 +196,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			return lower + (this.NextDouble() % diff);
 		}
 
-
 		/// <inheritdoc/>
 		public virtual T Choice<T>(T[] items)
 		{
