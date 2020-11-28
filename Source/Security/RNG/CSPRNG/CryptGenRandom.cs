@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace Litdex.Security.RNG.CSPRNG
@@ -220,14 +222,54 @@ namespace Litdex.Security.RNG.CSPRNG
 		}
 
 		/// <inheritdoc/>
-		public byte[] GetBytes(int length = 512)
+		public virtual T Choice<T>(T[] items)
 		{
-			var result = new byte[length];
-			using (var rngCsp = new RNGCryptoServiceProvider())
+			if (items.Length > int.MaxValue)
 			{
-				rngCsp.GetNonZeroBytes(result);
+				throw new ArgumentOutOfRangeException(nameof(items), $"The items length or size can't be greater than int.MaxValue or { int.MaxValue }.");
 			}
-			return result;
+
+			return items[(int)this.NextInt(0, (uint)(items.Length - 1))];
+		}
+
+		/// <inheritdoc/>
+		public virtual T[] Choice<T>(T[] items, int select)
+		{
+			if (select < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved is negative or less than 1.");
+			}
+
+			if (select > items.Length)
+			{
+				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved exceeds the items size.");
+			}
+
+			var selected = new List<T>();
+
+			while (selected.Count < select)
+			{
+				var index = this.NextInt(0, (uint)(items.Length - 1));
+
+				if (selected.Contains(items[index]) == false)
+				{
+					selected.Add(items[index]);
+				}
+			}
+
+			return selected.ToArray();
+		}
+
+		/// <inheritdoc/>
+		public virtual T Choice<T>(IList<T> items)
+		{
+			return this.Choice(items.ToArray());
+		}
+
+		/// <inheritdoc/>
+		public virtual T[] Choice<T>(IList<T> items, int select)
+		{
+			return this.Choice(items.ToArray(), select);
 		}
 
 		#endregion Public
