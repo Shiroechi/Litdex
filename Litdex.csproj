@@ -27,6 +27,7 @@
 - Add new method for RNG.
 - Fix some bug issues.</PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Copyright>Shiroechi</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
