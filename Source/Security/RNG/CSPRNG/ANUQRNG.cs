@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-using Litdex.Security.RNG;
 using Litdex.Utilities.Extension;
 
-namespace Litdex.Source.Security.RNG.CSPRNG
+namespace Litdex.Security.RNG.CSPRNG
 {
 	/// <summary>
 	/// Australian National University Quantum Random Number Generator. 
