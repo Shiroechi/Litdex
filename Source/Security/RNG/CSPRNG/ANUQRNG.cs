@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
-using Litdex.Security.RNG;
 using Litdex.Utilities.Extension;
 
-namespace Litdex.Source.Security.RNG.CSPRNG
+namespace Litdex.Security.RNG.CSPRNG
 {
 	/// <summary>
 	/// Australian National University Quantum Random Number Generator. 
@@ -84,7 +85,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			{
 				var text = client.DownloadString(this.UrlBuilder(length, size));
 				var start = text.IndexOf("[");
-				result = text.Substring(start + 2, size);
+				result = text.Substring(start + 2, size * 2);
 			}
 			return result;
 		}
@@ -114,7 +115,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 		/// <inheritdoc/>
 		public virtual byte NextByte()
 		{
-			return this.GetBytes(1)[0];
+			return this.NextBytes(1)[0];
 		}
 
 		/// <inheritdoc/>
@@ -180,7 +181,7 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 		/// <inheritdoc/>
 		public double NextDouble()
 		{
-			return NextLong() * (1L << 53);
+			return this.NextLong() * (1L << 53);
 		}
 
 		/// <inheritdoc/>
@@ -195,16 +196,62 @@ namespace Litdex.Source.Security.RNG.CSPRNG
 			return lower + (this.NextDouble() % diff);
 		}
 
+
 		/// <inheritdoc/>
-		public byte[] GetBytes(int length = 512)
+		public virtual T Choice<T>(T[] items)
 		{
-			if (length <= 0 || length > this._Max)
+			if (items.Length > int.MaxValue)
 			{
-				throw new ArgumentException("Length must be between 1 and " + this._Max + ".");
+				throw new ArgumentOutOfRangeException(nameof(items), $"The items length or size can't be greater than int.MaxValue or { int.MaxValue }.");
 			}
 
-			var result = this.Next(1, (ushort)length);
-			return result.DecodeBase16();
+			return items[(int)this.NextInt(0, (uint)(items.Length - 1))];
+		}
+
+		/// <inheritdoc/>
+		public virtual T[] Choice<T>(T[] items, int select)
+		{
+			if (select < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved is negative or less than 1.");
+			}
+
+			if (select > items.Length)
+			{
+				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved exceeds the items size.");
+			}
+
+			var selected = new List<T>();
+
+			while (selected.Count < select)
+			{
+				var index = this.NextInt(0, (uint)(items.Length - 1));
+
+				if (selected.Contains(items[index]) == false)
+				{
+					selected.Add(items[index]);
+				}
+			}
+
+			return selected.ToArray();
+		}
+
+		/// <inheritdoc/>
+		public virtual T Choice<T>(IList<T> items)
+		{
+			return this.Choice(items.ToArray());
+		}
+
+		/// <inheritdoc/>
+		public virtual T[] Choice<T>(IList<T> items, int select)
+		{
+			return this.Choice(items.ToArray(), select);
+		}
+
+		/// <inheritdoc/>
+		public override string ToString()
+		{
+			return this.AlgorithmName();
 		}
 
 		#endregion Public

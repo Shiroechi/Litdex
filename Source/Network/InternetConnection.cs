@@ -8,7 +8,7 @@ namespace Litdex.Network
 	/// <summary>
 	/// 
 	/// </summary>
-    public class InternetConnection
+	public class InternetConnection
     {
 		/// <summary>
 		/// Constructor.

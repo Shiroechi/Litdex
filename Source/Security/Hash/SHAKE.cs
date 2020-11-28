@@ -71,7 +71,7 @@ namespace Litdex.Security.Hash
 
 		public override string AlgorithmName()
 		{
-			return "SHAKE-" + fixedOutputLength;
+			return "SHAKE-" + this.fixedOutputLength;
 		}
 
 		public override int DoFinal(byte[] output)

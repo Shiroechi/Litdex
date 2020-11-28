@@ -24,9 +24,9 @@ namespace Litdex.Security.KDF
 	{
 		#region Member
 
-		private int _Iteration;
-		private IHash _HashFunction;
-		private IMAC _MACFunction;
+		private readonly int _Iteration;
+		private readonly IHash _HashFunction;
+		private readonly IMAC _MACFunction;
 
 		#endregion Member
 		

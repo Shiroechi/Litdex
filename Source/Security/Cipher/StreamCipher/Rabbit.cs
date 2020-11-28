@@ -35,12 +35,12 @@ namespace Litdex.Security.Cipher.StreamCipher
 		/// <summary>
 		/// State
 		/// </summary>
-		private int[] X = new int[8];
+		private readonly int[] X = new int[8];
 
 		/// <summary>
 		/// Counter
 		/// </summary>
-		private int[] C = new int[8];
+		private readonly int[] C = new int[8];
 		private byte b;
 		private int KeyIndex = 0;
 		private byte[] KeyStream = null;
@@ -52,7 +52,7 @@ namespace Litdex.Security.Cipher.StreamCipher
 		/// </summary>
 		public Rabbit()
 		{
-			b = 0;
+			this.b = 0;
 		}
 
 		/// <summary>
@@ -82,26 +82,26 @@ namespace Litdex.Security.Cipher.StreamCipher
 		/// <returns>Array of bytes.</returns>
 		private byte[] CreateKeyStream()
 		{
-			NextState();
+			this.NextState();
 			byte[] s = new byte[16];
 
 			//unroll
-			int x = X[6] ^ (int)((uint)X[3] >> 16) ^ X[1] << 16;
+			int x = this.X[6] ^ (int)((uint)this.X[3] >> 16) ^ this.X[1] << 16;
 			s[0] = (byte)(int)((uint)x >> 24);
 			s[1] = (byte)(x >> 16);
 			s[2] = (byte)(x >> 8);
 			s[3] = (byte)x;
-			x = X[4] ^ (int)((uint)X[1] >> 16) ^ X[7] << 16;
+			x = this.X[4] ^ (int)((uint)this.X[1] >> 16) ^ this.X[7] << 16;
 			s[4] = (byte)(int)((uint)x >> 24);
 			s[5] = (byte)(x >> 16);
 			s[6] = (byte)(x >> 8);
 			s[7] = (byte)x;
-			x = X[2] ^ (int)((uint)X[7] >> 16) ^ X[5] << 16;
+			x = this.X[2] ^ (int)((uint)this.X[7] >> 16) ^ this.X[5] << 16;
 			s[8] = (byte)(int)((uint)x >> 24);
 			s[9] = (byte)(x >> 16);
 			s[10] = (byte)(x >> 8);
 			s[11] = (byte)x;
-			x = X[0] ^ (int)((uint)X[5] >> 16) ^ X[3] << 16;
+			x = this.X[0] ^ (int)((uint)this.X[5] >> 16) ^ this.X[3] << 16;
 			s[12] = (byte)(int)((uint)x >> 24);
 			s[13] = (byte)(x >> 16);
 			s[14] = (byte)(x >> 8);
@@ -117,27 +117,27 @@ namespace Litdex.Security.Cipher.StreamCipher
 			/* counter update */
 			for (int j = 0; j < 8; ++j)
 			{
-				long t = (C[j] & 0xFFFFFFFFL) + (A[j] & 0xFFFFFFFFL) + b;
-				b = (byte)(int)((uint)t >> 32);
-				C[j] = (int)(t & 0xFFFFFFFF);
+				long t = (this.C[j] & 0xFFFFFFFFL) + (A[j] & 0xFFFFFFFFL) + this.b;
+				this.b = (byte)(int)((uint)t >> 32);
+				this.C[j] = (int)(t & 0xFFFFFFFF);
 			}
 			/* next state function */
 			int[] G = new int[8];
 			for (int j = 0; j < 8; ++j)
 			{
 				// TODO: reduce this to use 32 bits only
-				long t = X[j] + C[j] & 0xFFFFFFFFL;
+				long t = this.X[j] + this.C[j] & 0xFFFFFFFFL;
 				G[j] = (int)((t *= t) ^ (int)((uint)t >> 32));
 			}
 			/* unroll */
-			X[0] = G[0] + RotateLeft(G[7], 16) + RotateLeft(G[6], 16);
-			X[1] = G[1] + RotateLeft(G[0], 8) + G[7];
-			X[2] = G[2] + RotateLeft(G[1], 16) + RotateLeft(G[0], 16);
-			X[3] = G[3] + RotateLeft(G[2], 8) + G[1];
-			X[4] = G[4] + RotateLeft(G[3], 16) + RotateLeft(G[2], 16);
-			X[5] = G[5] + RotateLeft(G[4], 8) + G[3];
-			X[6] = G[6] + RotateLeft(G[5], 16) + RotateLeft(G[4], 16);
-			X[7] = G[7] + RotateLeft(G[6], 8) + G[5];
+			this.X[0] = G[0] + this.RotateLeft(G[7], 16) + this.RotateLeft(G[6], 16);
+			this.X[1] = G[1] + this.RotateLeft(G[0], 8) + G[7];
+			this.X[2] = G[2] + this.RotateLeft(G[1], 16) + this.RotateLeft(G[0], 16);
+			this.X[3] = G[3] + this.RotateLeft(G[2], 8) + G[1];
+			this.X[4] = G[4] + this.RotateLeft(G[3], 16) + this.RotateLeft(G[2], 16);
+			this.X[5] = G[5] + this.RotateLeft(G[4], 8) + G[3];
+			this.X[6] = G[6] + this.RotateLeft(G[5], 16) + this.RotateLeft(G[4], 16);
+			this.X[7] = G[7] + this.RotateLeft(G[6], 8) + G[5];
 		}
 
 		/// <summary>
@@ -152,15 +152,15 @@ namespace Litdex.Security.Cipher.StreamCipher
 			int index = 0;
 			while (index < message.Length)
 			{
-				if (KeyStream == null || KeyIndex == KeyStreamLength)
+				if (this.KeyStream == null || this.KeyIndex == this.KeyStreamLength)
 				{
-					KeyStream = CreateKeyStream();
-					KeyIndex = 0;
+					this.KeyStream = this.CreateKeyStream();
+					this.KeyIndex = 0;
 				}
 
-				for (; KeyIndex < KeyStreamLength && index < message.Length; ++KeyIndex)
+				for (; this.KeyIndex < this.KeyStreamLength && index < message.Length; ++this.KeyIndex)
 				{
-					message[index++] ^= KeyStream[KeyIndex];
+					message[index++] ^= this.KeyStream[this.KeyIndex];
 				}
 			}
 			return message;
@@ -173,11 +173,11 @@ namespace Litdex.Security.Cipher.StreamCipher
 		[Obsolete("Use Reset()")]
 		private void Clear()
 		{
-			b = 0;
-			KeyIndex = 0;
-			KeyStream = null;
-			Arrays.Fill(X, 0);
-			Arrays.Fill(C, 0);
+			this.b = 0;
+			this.KeyIndex = 0;
+			this.KeyStream = null;
+			Arrays.Fill(this.X, 0);
+			Arrays.Fill(this.C, 0);
 		}
 
 		/// <summary>
@@ -187,19 +187,19 @@ namespace Litdex.Security.Cipher.StreamCipher
 		private void SetupIV(short[] iv)
 		{
 			/* unroll */
-			C[0] ^= iv[1] << 16 | iv[0] & 0xFFFF;
-			C[1] ^= iv[3] << 16 | iv[1] & 0xFFFF;
-			C[2] ^= iv[3] << 16 | iv[2] & 0xFFFF;
-			C[3] ^= iv[2] << 16 | iv[0] & 0xFFFF;
-			C[4] ^= iv[1] << 16 | iv[0] & 0xFFFF;
-			C[5] ^= iv[3] << 16 | iv[1] & 0xFFFF;
-			C[6] ^= iv[3] << 16 | iv[2] & 0xFFFF;
-			C[7] ^= iv[2] << 16 | iv[0] & 0xFFFF;
+			this.C[0] ^= iv[1] << 16 | iv[0] & 0xFFFF;
+			this.C[1] ^= iv[3] << 16 | iv[1] & 0xFFFF;
+			this.C[2] ^= iv[3] << 16 | iv[2] & 0xFFFF;
+			this.C[3] ^= iv[2] << 16 | iv[0] & 0xFFFF;
+			this.C[4] ^= iv[1] << 16 | iv[0] & 0xFFFF;
+			this.C[5] ^= iv[3] << 16 | iv[1] & 0xFFFF;
+			this.C[6] ^= iv[3] << 16 | iv[2] & 0xFFFF;
+			this.C[7] ^= iv[2] << 16 | iv[0] & 0xFFFF;
 
-			NextState();
-			NextState();
-			NextState();
-			NextState();
+			this.NextState();
+			this.NextState();
+			this.NextState();
+			this.NextState();
 		}
 		
 		/// <summary>
@@ -209,36 +209,36 @@ namespace Litdex.Security.Cipher.StreamCipher
 		private void SetupKey(short[] key)
 		{
 			/* unroll */
-			X[0] = key[1] << 16 | key[0] & 0xFFFF;
-			X[1] = key[6] << 16 | key[5] & 0xFFFF;
-			X[2] = key[3] << 16 | key[2] & 0xFFFF;
-			X[3] = key[0] << 16 | key[7] & 0xFFFF;
-			X[4] = key[5] << 16 | key[4] & 0xFFFF;
-			X[5] = key[2] << 16 | key[1] & 0xFFFF;
-			X[6] = key[7] << 16 | key[6] & 0xFFFF;
-			X[7] = key[4] << 16 | key[3] & 0xFFFF;
+			this.X[0] = key[1] << 16 | key[0] & 0xFFFF;
+			this.X[1] = key[6] << 16 | key[5] & 0xFFFF;
+			this.X[2] = key[3] << 16 | key[2] & 0xFFFF;
+			this.X[3] = key[0] << 16 | key[7] & 0xFFFF;
+			this.X[4] = key[5] << 16 | key[4] & 0xFFFF;
+			this.X[5] = key[2] << 16 | key[1] & 0xFFFF;
+			this.X[6] = key[7] << 16 | key[6] & 0xFFFF;
+			this.X[7] = key[4] << 16 | key[3] & 0xFFFF;
 			/* unroll */
-			C[0] = key[4] << 16 | key[5] & 0xFFFF;
-			C[1] = key[1] << 16 | key[2] & 0xFFFF;
-			C[2] = key[6] << 16 | key[7] & 0xFFFF;
-			C[3] = key[3] << 16 | key[4] & 0xFFFF;
-			C[4] = key[0] << 16 | key[1] & 0xFFFF;
-			C[5] = key[5] << 16 | key[6] & 0xFFFF;
-			C[6] = key[2] << 16 | key[3] & 0xFFFF;
-			C[7] = key[7] << 16 | key[0] & 0xFFFF;
-			NextState();
-			NextState();
-			NextState();
-			NextState();
+			this.C[0] = key[4] << 16 | key[5] & 0xFFFF;
+			this.C[1] = key[1] << 16 | key[2] & 0xFFFF;
+			this.C[2] = key[6] << 16 | key[7] & 0xFFFF;
+			this.C[3] = key[3] << 16 | key[4] & 0xFFFF;
+			this.C[4] = key[0] << 16 | key[1] & 0xFFFF;
+			this.C[5] = key[5] << 16 | key[6] & 0xFFFF;
+			this.C[6] = key[2] << 16 | key[3] & 0xFFFF;
+			this.C[7] = key[7] << 16 | key[0] & 0xFFFF;
+			this.NextState();
+			this.NextState();
+			this.NextState();
+			this.NextState();
 			/* unroll */
-			C[0] ^= X[4];
-			C[1] ^= X[5];
-			C[2] ^= X[6];
-			C[3] ^= X[7];
-			C[4] ^= X[0];
-			C[5] ^= X[1];
-			C[6] ^= X[2];
-			C[7] ^= X[3];
+			this.C[0] ^= this.X[4];
+			this.C[1] ^= this.X[5];
+			this.C[2] ^= this.X[6];
+			this.C[3] ^= this.X[7];
+			this.C[4] ^= this.X[0];
+			this.C[5] ^= this.X[1];
+			this.C[6] ^= this.X[2];
+			this.C[7] ^= this.X[3];
 		}
 
 		/// <summary>
@@ -270,11 +270,11 @@ namespace Litdex.Security.Cipher.StreamCipher
 		/// </summary>
 		public void Reset()
 		{
-			b = 0;
-			KeyIndex = 0;
-			KeyStream = null;
-			Arrays.Fill(X, 0);
-			Arrays.Fill(C, 0);
+			this.b = 0;
+			this.KeyIndex = 0;
+			this.KeyStream = null;
+			Arrays.Fill(this.X, 0);
+			Arrays.Fill(this.C, 0);
 		}
 
 		/// <summary>

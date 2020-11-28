@@ -9,9 +9,15 @@ namespace Litdex.Security.RNG.PRNG
 	/// http://burtleburtle.net/bob/rand/smallprng.html
 	/// </summary>
 	public class JSF64 : Random64
-    {
+	{
+		#region Member
+
 		private ulong[] _Seed = new ulong[8];
-		
+
+		#endregion Member
+
+		#region Constructor & Destructor
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -43,6 +49,8 @@ namespace Litdex.Security.RNG.PRNG
 			this._Seed = null;
 		}
 
+		#endregion Constructor & Destructor
+
 		#region	Protected Method
 
 		/// <inheritdoc/>
@@ -70,7 +78,6 @@ namespace Litdex.Security.RNG.PRNG
 		#endregion Protected Method
 
 		#region	Public Method
-
 
 		/// <inheritdoc/>
 		public override string AlgorithmName()

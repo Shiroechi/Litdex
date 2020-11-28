@@ -21,14 +21,14 @@ namespace Litdex.Utilities.Number
 		internal static ushort BE_To_UInt16(byte[] bs)
 		{
 			uint n = (uint)bs[0] << 8
-				| (uint)bs[1];
+				| bs[1];
 			return (ushort)n;
 		}
 
 		internal static ushort BE_To_UInt16(byte[] bs, int off)
 		{
 			uint n = (uint)bs[off] << 8
-				| (uint)bs[off + 1];
+				| bs[off + 1];
 			return (ushort)n;
 		}
 
@@ -76,7 +76,7 @@ namespace Litdex.Utilities.Number
 			return (uint)bs[0] << 24
 				| (uint)bs[1] << 16
 				| (uint)bs[2] << 8
-				| (uint)bs[3];
+				| bs[3];
 		}
 
 		internal static uint BE_To_UInt32(byte[] bs, int off)
@@ -84,7 +84,7 @@ namespace Litdex.Utilities.Number
 			return (uint)bs[off] << 24
 				| (uint)bs[off + 1] << 16
 				| (uint)bs[off + 2] << 8
-				| (uint)bs[off + 3];
+				| bs[off + 3];
 		}
 
 		internal static void BE_To_UInt32(byte[] bs, int off, uint[] ns)
@@ -135,14 +135,14 @@ namespace Litdex.Utilities.Number
 		{
 			uint hi = BE_To_UInt32(bs);
 			uint lo = BE_To_UInt32(bs, 4);
-			return ((ulong)hi << 32) | (ulong)lo;
+			return ((ulong)hi << 32) | lo;
 		}
 
 		internal static ulong BE_To_UInt64(byte[] bs, int off)
 		{
 			uint hi = BE_To_UInt32(bs, off);
 			uint lo = BE_To_UInt32(bs, off + 4);
-			return ((ulong)hi << 32) | (ulong)lo;
+			return ((ulong)hi << 32) | lo;
 		}
 
 		internal static void BE_To_UInt64(byte[] bs, int off, ulong[] ns)
@@ -168,14 +168,14 @@ namespace Litdex.Utilities.Number
 
 		internal static ushort LE_To_UInt16(byte[] bs)
 		{
-			uint n = (uint)bs[0]
+			uint n = bs[0]
 				| (uint)bs[1] << 8;
 			return (ushort)n;
 		}
 
 		internal static ushort LE_To_UInt16(byte[] bs, int off)
 		{
-			uint n = (uint)bs[off]
+			uint n = bs[off]
 				| (uint)bs[off + 1] << 8;
 			return (ushort)n;
 		}
@@ -221,7 +221,7 @@ namespace Litdex.Utilities.Number
 
 		internal static uint LE_To_UInt32(byte[] bs)
 		{
-			return (uint)bs[0]
+			return bs[0]
 				| (uint)bs[1] << 8
 				| (uint)bs[2] << 16
 				| (uint)bs[3] << 24;
@@ -229,7 +229,7 @@ namespace Litdex.Utilities.Number
 
 		internal static uint LE_To_UInt32(byte[] bs, int off)
 		{
-			return (uint)bs[off]
+			return bs[off]
 				| (uint)bs[off + 1] << 8
 				| (uint)bs[off + 2] << 16
 				| (uint)bs[off + 3] << 24;
@@ -312,14 +312,14 @@ namespace Litdex.Utilities.Number
 		{
 			uint lo = LE_To_UInt32(bs);
 			uint hi = LE_To_UInt32(bs, 4);
-			return ((ulong)hi << 32) | (ulong)lo;
+			return ((ulong)hi << 32) | lo;
 		}
 
 		internal static ulong LE_To_UInt64(byte[] bs, int off)
 		{
 			uint lo = LE_To_UInt32(bs, off);
 			uint hi = LE_To_UInt32(bs, off + 4);
-			return ((ulong)hi << 32) | (ulong)lo;
+			return ((ulong)hi << 32) | lo;
 		}
 
 		internal static void LE_To_UInt64(byte[] bs, int off, ulong[] ns)

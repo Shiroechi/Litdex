@@ -29,13 +29,13 @@ namespace Litdex.Security.Hash
 		private const int DigestLength = 32;
 		private const int BYTE_LENGTH = 64;
 
-		private byte[] xBuf = new byte[4];
+		private readonly byte[] xBuf = new byte[4];
 		private int xBufOff;
 
 		private long byteCount;
 
 		private uint H1, H2, H3, H4, H5, H6, H7, H8;
-		private uint[] X = new uint[64];
+		private readonly uint[] X = new uint[64];
 		private int xOff;
 
 		#endregion Member
@@ -45,7 +45,7 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		public SHA256()
 		{
-			InitializeHashValue();
+			this.InitializeHashValue();
 		}
 		
 		/// <summary>
@@ -66,35 +66,35 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		private void InitializeHashValue()
 		{
-			H1 = 0x6a09e667;
-			H2 = 0xbb67ae85;
-			H3 = 0x3c6ef372;
-			H4 = 0xa54ff53a;
-			H5 = 0x510e527f;
-			H6 = 0x9b05688c;
-			H7 = 0x1f83d9ab;
-			H8 = 0x5be0cd19;
+			this.H1 = 0x6a09e667;
+			this.H2 = 0xbb67ae85;
+			this.H3 = 0x3c6ef372;
+			this.H4 = 0xa54ff53a;
+			this.H5 = 0x510e527f;
+			this.H6 = 0x9b05688c;
+			this.H7 = 0x1f83d9ab;
+			this.H8 = 0x5be0cd19;
 		}
 
 		private void ProcessWord(byte[] input, int inOff)
 		{
-			X[xOff] = BE_To_UInt32(input, inOff);
+			this.X[this.xOff] = this.BE_To_UInt32(input, inOff);
 
-			if (++xOff == 16)
+			if (++this.xOff == 16)
 			{
-				ProcessBlock();
+				this.ProcessBlock();
 			}
 		}
 
 		private void ProcessLength(long bitLength)
 		{
-			if (xOff > 14)
+			if (this.xOff > 14)
 			{
-				ProcessBlock();
+				this.ProcessBlock();
 			}
 
-			X[14] = (uint)((ulong)bitLength >> 32);
-			X[15] = (uint)((ulong)bitLength);
+			this.X[14] = (uint)((ulong)bitLength >> 32);
+			this.X[15] = (uint)((ulong)bitLength);
 		}
 
 		public void ProcessBlock()
@@ -104,105 +104,105 @@ namespace Litdex.Security.Hash
 			//
 			for (int ti = 16; ti <= 63; ti++)
 			{
-				X[ti] = Theta1(X[ti - 2]) + X[ti - 7] + Theta0(X[ti - 15]) + X[ti - 16];
+				this.X[ti] = this.Theta1(this.X[ti - 2]) + this.X[ti - 7] + this.Theta0(this.X[ti - 15]) + this.X[ti - 16];
 			}
 
 			//
 			// set up working variables.
 			//
-			uint a = H1;
-			uint b = H2;
-			uint c = H3;
-			uint d = H4;
-			uint e = H5;
-			uint f = H6;
-			uint g = H7;
-			uint h = H8;
+			uint a = this.H1;
+			uint b = this.H2;
+			uint c = this.H3;
+			uint d = this.H4;
+			uint e = this.H5;
+			uint f = this.H6;
+			uint g = this.H7;
+			uint h = this.H8;
 
 			int t = 0;
 			for (int i = 0; i < 8; ++i)
 			{
 				// t = 8 * i
-				h += Sum1Ch(e, f, g) + K[t] + X[t];
+				h += this.Sum1Ch(e, f, g) + this.K[t] + this.X[t];
 				d += h;
-				h += Sum0Maj(a, b, c);
+				h += this.Sum0Maj(a, b, c);
 				++t;
 
 				// t = 8 * i + 1
-				g += Sum1Ch(d, e, f) + K[t] + X[t];
+				g += this.Sum1Ch(d, e, f) + this.K[t] + this.X[t];
 				c += g;
-				g += Sum0Maj(h, a, b);
+				g += this.Sum0Maj(h, a, b);
 				++t;
 
 				// t = 8 * i + 2
-				f += Sum1Ch(c, d, e) + K[t] + X[t];
+				f += this.Sum1Ch(c, d, e) + this.K[t] + this.X[t];
 				b += f;
-				f += Sum0Maj(g, h, a);
+				f += this.Sum0Maj(g, h, a);
 				++t;
 
 				// t = 8 * i + 3
-				e += Sum1Ch(b, c, d) + K[t] + X[t];
+				e += this.Sum1Ch(b, c, d) + this.K[t] + this.X[t];
 				a += e;
-				e += Sum0Maj(f, g, h);
+				e += this.Sum0Maj(f, g, h);
 				++t;
 
 				// t = 8 * i + 4
-				d += Sum1Ch(a, b, c) + K[t] + X[t];
+				d += this.Sum1Ch(a, b, c) + this.K[t] + this.X[t];
 				h += d;
-				d += Sum0Maj(e, f, g);
+				d += this.Sum0Maj(e, f, g);
 				++t;
 
 				// t = 8 * i + 5
-				c += Sum1Ch(h, a, b) + K[t] + X[t];
+				c += this.Sum1Ch(h, a, b) + this.K[t] + this.X[t];
 				g += c;
-				c += Sum0Maj(d, e, f);
+				c += this.Sum0Maj(d, e, f);
 				++t;
 
 				// t = 8 * i + 6
-				b += Sum1Ch(g, h, a) + K[t] + X[t];
+				b += this.Sum1Ch(g, h, a) + this.K[t] + this.X[t];
 				f += b;
-				b += Sum0Maj(c, d, e);
+				b += this.Sum0Maj(c, d, e);
 				++t;
 
 				// t = 8 * i + 7
-				a += Sum1Ch(f, g, h) + K[t] + X[t];
+				a += this.Sum1Ch(f, g, h) + this.K[t] + this.X[t];
 				e += a;
-				a += Sum0Maj(b, c, d);
+				a += this.Sum0Maj(b, c, d);
 				++t;
 			}
 
-			H1 += a;
-			H2 += b;
-			H3 += c;
-			H4 += d;
-			H5 += e;
-			H6 += f;
-			H7 += g;
-			H8 += h;
+			this.H1 += a;
+			this.H2 += b;
+			this.H3 += c;
+			this.H4 += d;
+			this.H5 += e;
+			this.H6 += f;
+			this.H7 += g;
+			this.H8 += h;
 
 			//
 			// reset the offset and clean out the word buffer.
 			//
-			xOff = 0;
-			Array.Clear(X, 0, 16);
+			this.xOff = 0;
+			Array.Clear(this.X, 0, 16);
 		}
 
 		private void Finish()
 		{
-			long bitLength = (byteCount << 3);
+			long bitLength = (this.byteCount << 3);
 
 			//
 			// add the pad bytes.
 			//
-			Update((byte)128);
+			this.Update(128);
 
-			while (xBufOff != 0)
+			while (this.xBufOff != 0)
 			{
-				Update((byte)0);
+				this.Update(0);
 			}
 
-			ProcessLength(bitLength);
-			ProcessBlock();
+			this.ProcessLength(bitLength);
+			this.ProcessBlock();
 		}
 
 		private uint Sum1Ch(uint x, uint y, uint z)
@@ -232,7 +232,7 @@ namespace Litdex.Security.Hash
 			return (uint)bs[off] << 24
 				| (uint)bs[off + 1] << 16
 				| (uint)bs[off + 2] << 8
-				| (uint)bs[off + 3];
+				| bs[off + 3];
 		}
 
 		private void UInt32_To_BE(uint n, byte[] bs, int off)
@@ -284,10 +284,10 @@ namespace Litdex.Security.Hash
 			this.xBufOff = 0;
 			Array.Clear(this.xBuf, 0, this.xBuf.Length);
 
-			InitializeHashValue();
+			this.InitializeHashValue();
 
-			xOff = 0;
-			Array.Clear(X, 0, X.Length);
+			this.xOff = 0;
+			Array.Clear(this.X, 0, this.X.Length);
 		}
 
 		public int GetHashLength()
@@ -302,20 +302,20 @@ namespace Litdex.Security.Hash
 
 		public void Update(byte input)
 		{
-			xBuf[xBufOff++] = input;
+			this.xBuf[this.xBufOff++] = input;
 
-			if (xBufOff == xBuf.Length)
+			if (this.xBufOff == this.xBuf.Length)
 			{
-				this.ProcessWord(xBuf, 0);
-				xBufOff = 0;
+				this.ProcessWord(this.xBuf, 0);
+				this.xBufOff = 0;
 			}
 
-			byteCount++;
+			this.byteCount++;
 		}
 
 		public void Update(byte[] input)
 		{
-			this.Update(input, 0, (int)input.Length);
+			this.Update(input, 0, input.Length);
 		}
 
 		public void Update(string input)
@@ -331,15 +331,15 @@ namespace Litdex.Security.Hash
 			// fill the current word
 			//
 			int i = 0;
-			if (xBufOff != 0)
+			if (this.xBufOff != 0)
 			{
 				while (i < length)
 				{
-					xBuf[xBufOff++] = input[start_index + i++];
-					if (xBufOff == 4)
+					this.xBuf[this.xBufOff++] = input[start_index + i++];
+					if (this.xBufOff == 4)
 					{
-						this.ProcessWord(xBuf, 0);
-						xBufOff = 0;
+						this.ProcessWord(this.xBuf, 0);
+						this.xBufOff = 0;
 						break;
 					}
 				}
@@ -348,10 +348,10 @@ namespace Litdex.Security.Hash
 			//
 			// process whole words.
 			//
-			int limit = (((int)length - i) & ~3) + i;
+			int limit = ((length - i) & ~3) + i;
 			for (; i < limit; i += 4)
 			{
-				this.ProcessWord(input, (int)start_index + i);
+				this.ProcessWord(input, start_index + i);
 			}
 
 			//
@@ -359,10 +359,10 @@ namespace Litdex.Security.Hash
 			//
 			while (i < length)
 			{
-				xBuf[xBufOff++] = input[(int)start_index + i++];
+				this.xBuf[this.xBufOff++] = input[start_index + i++];
 			}
 
-			byteCount += length;
+			this.byteCount += length;
 		}
 
 		public int DoFinal(byte[] output)
@@ -374,16 +374,16 @@ namespace Litdex.Security.Hash
 		{
 			this.Finish();
 
-			UInt32_To_BE((uint)H1, output, start_index);
-			UInt32_To_BE((uint)H2, output, start_index + 4);
-			UInt32_To_BE((uint)H3, output, start_index + 8);
-			UInt32_To_BE((uint)H4, output, start_index + 12);
-			UInt32_To_BE((uint)H5, output, start_index + 16);
-			UInt32_To_BE((uint)H6, output, start_index + 20);
-			UInt32_To_BE((uint)H7, output, start_index + 24);
-			UInt32_To_BE((uint)H8, output, start_index + 28);
+			this.UInt32_To_BE(this.H1, output, start_index);
+			this.UInt32_To_BE(this.H2, output, start_index + 4);
+			this.UInt32_To_BE(this.H3, output, start_index + 8);
+			this.UInt32_To_BE(this.H4, output, start_index + 12);
+			this.UInt32_To_BE(this.H5, output, start_index + 16);
+			this.UInt32_To_BE(this.H6, output, start_index + 20);
+			this.UInt32_To_BE(this.H7, output, start_index + 24);
+			this.UInt32_To_BE(this.H8, output, start_index + 28);
 
-			Reset();
+			this.Reset();
 
 			return DigestLength;
 		}
