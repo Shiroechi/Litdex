@@ -9,7 +9,7 @@ namespace Litdex.Utilities.Base
 	/// </summary>
 	public static class Base91
     {
-        private static char[] EncodeTable = new char[]
+        private static readonly char[] EncodeTable = new char[]
         {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -70,17 +70,17 @@ namespace Litdex.Utilities.Base
                         b >>= 14;
                         n -= 14;
                     }
-                    output += (char)EncodeTable[v % 91];
-                    output += (char)EncodeTable[v / 91];
+                    output += EncodeTable[v % 91];
+                    output += EncodeTable[v / 91];
                 }
             }
 
             if (n != 0)
             {
-                output += (char)EncodeTable[b % 91];
+                output += EncodeTable[b % 91];
                 if (n > 7 || b > 90)
                 {
-                    output += (char)EncodeTable[b / 91];
+                    output += EncodeTable[b / 91];
                 }
             }
             return output;

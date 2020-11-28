@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Litdex.Utilities.Number;
 using Litdex.Utilities.Extension;
+using Litdex.Utilities.Number;
 
 // BLAKE2b-512("") = 
 // 786A02F742015903C6C6FD852552D272912F4740E15847618A86E217F71F5419D25E1031AFEE585313896444934EB04B903A685B1448B755D56F701AFE9BE2CE
@@ -51,24 +51,24 @@ namespace Litdex.Security.Hash
 		private const int BLOCK_LENGTH_BYTES = 128;// bytes
 
 		// General parameters:
-		private int digestLength = 64; // 1- 64 bytes
-		private int keyLength = 0; // 0 - 64 bytes for keyed hashing for MAC
-		private byte[] salt = null;// new byte[16];
-		private byte[] personalization = null;// new byte[16];
+		private readonly int digestLength = 64; // 1- 64 bytes
+		private readonly int keyLength = 0; // 0 - 64 bytes for keyed hashing for MAC
+		private readonly byte[] salt = null;// new byte[16];
+		private readonly byte[] personalization = null;// new byte[16];
 
 		/// <summary>
 		/// Key
 		/// </summary>
-		private byte[] key = null;
+		private readonly byte[] key = null;
 
 		// whenever this buffer overflows, it will be processed
 		// in the Compress() function.
 		// For performance issues, long messages will not use this buffer.
-		private byte[] buffer = null;// new byte[BLOCK_LENGTH_BYTES];
+		private readonly byte[] buffer = null;// new byte[BLOCK_LENGTH_BYTES];
 									 // Position of last inserted byte:
 		private int bufferPos = 0;// a value from 0 up to 128
 
-		private ulong[] internalState = new ulong[16]; // In the Blake2b paper it is
+		private readonly ulong[] internalState = new ulong[16]; // In the Blake2b paper it is
 													   // called: v
 		private ulong[] chainValue = null; // state vector, in the Blake2b paper it
 										   // is called: h
@@ -117,10 +117,10 @@ namespace Litdex.Security.Hash
 				throw new ArgumentException("BLAKE2b hash function restricted to one of [160, 256, 384, 512] bits only.");
 			}
 
-            buffer = new byte[BLOCK_LENGTH_BYTES];
-            keyLength = 0;
+			this.buffer = new byte[BLOCK_LENGTH_BYTES];
+			this.keyLength = 0;
             this.digestLength = digestSize / 8;
-            Init();
+			this.Init();
         }
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace Litdex.Security.Hash
 		/// <param name="key">A key up to 64 bytes or null.</param>
 		public Blake2b(byte[] key)
 		{
-			buffer = new byte[BLOCK_LENGTH_BYTES];
+			this.buffer = new byte[BLOCK_LENGTH_BYTES];
 			if (key != null)
 			{
 				this.key = new byte[key.Length];
@@ -140,11 +140,11 @@ namespace Litdex.Security.Hash
 					throw new ArgumentException("Keys > 64 are not supported.");
 				}
 
-				keyLength = key.Length;
-				Array.Copy(key, 0, buffer, 0, key.Length);
-				bufferPos = BLOCK_LENGTH_BYTES; // zero padding
+				this.keyLength = key.Length;
+				Array.Copy(key, 0, this.buffer, 0, key.Length);
+				this.bufferPos = BLOCK_LENGTH_BYTES; // zero padding
 			}
-			digestLength = 64;
+			this.digestLength = 64;
 			this.Init();
         }
 		
@@ -197,9 +197,9 @@ namespace Litdex.Security.Hash
 				this.key = new byte[key.Length];
 				Array.Copy(key, 0, this.key, 0, key.Length);
 
-				keyLength = key.Length;
-				Array.Copy(key, 0, buffer, 0, key.Length);
-				bufferPos = BLOCK_LENGTH_BYTES; // zero padding
+				this.keyLength = key.Length;
+				Array.Copy(key, 0, this.buffer, 0, key.Length);
+				this.bufferPos = BLOCK_LENGTH_BYTES; // zero padding
 			}
 
 			this.Init();
@@ -222,31 +222,31 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		private void Init()
 		{
-			if (chainValue == null)
+			if (this.chainValue == null)
 			{
-				chainValue = new ulong[8];
+				this.chainValue = new ulong[8];
 
-				chainValue[0] = blake2b_IV[0] ^ (ulong)(digestLength | (keyLength << 8) | 0x1010000);
-				
-				chainValue[1] = blake2b_IV[1];
-				chainValue[2] = blake2b_IV[2];
-				chainValue[3] = blake2b_IV[3];
-				chainValue[4] = blake2b_IV[4];
-				chainValue[5] = blake2b_IV[5];
+				this.chainValue[0] = this.blake2b_IV[0] ^ (ulong)(this.digestLength | (this.keyLength << 8) | 0x1010000);
 
-				if (salt != null)
+				this.chainValue[1] = this.blake2b_IV[1];
+				this.chainValue[2] = this.blake2b_IV[2];
+				this.chainValue[3] = this.blake2b_IV[3];
+				this.chainValue[4] = this.blake2b_IV[4];
+				this.chainValue[5] = this.blake2b_IV[5];
+
+				if (this.salt != null)
 				{
-					chainValue[4] ^= Pack.LE_To_UInt64(salt, 0);
-					chainValue[5] ^= Pack.LE_To_UInt64(salt, 8);
+					this.chainValue[4] ^= Pack.LE_To_UInt64(this.salt, 0);
+					this.chainValue[5] ^= Pack.LE_To_UInt64(this.salt, 8);
 				}
 
-				chainValue[6] = blake2b_IV[6];
-				chainValue[7] = blake2b_IV[7];
+				this.chainValue[6] = this.blake2b_IV[6];
+				this.chainValue[7] = this.blake2b_IV[7];
 
-				if (personalization != null)
+				if (this.personalization != null)
 				{
-					chainValue[6] ^= Pack.LE_To_UInt64(personalization, 0);
-					chainValue[7] ^= Pack.LE_To_UInt64(personalization, 8);
+					this.chainValue[6] ^= Pack.LE_To_UInt64(this.personalization, 0);
+					this.chainValue[7] ^= Pack.LE_To_UInt64(this.personalization, 8);
 				}
 			}
 		}
@@ -254,12 +254,12 @@ namespace Litdex.Security.Hash
 		private void InitializeInternalState()
 		{
 			// initialize v:
-			Array.Copy(chainValue, 0, internalState, 0, chainValue.Length);
-			Array.Copy(blake2b_IV, 0, internalState, chainValue.Length, 4);
-			internalState[12] = t0 ^ blake2b_IV[4];
-			internalState[13] = t1 ^ blake2b_IV[5];
-			internalState[14] = f0 ^ blake2b_IV[6];
-			internalState[15] = blake2b_IV[7];// ^ f1 with f1 = 0
+			Array.Copy(this.chainValue, 0, this.internalState, 0, this.chainValue.Length);
+			Array.Copy(this.blake2b_IV, 0, this.internalState, this.chainValue.Length, 4);
+			this.internalState[12] = this.t0 ^ this.blake2b_IV[4];
+			this.internalState[13] = this.t1 ^ this.blake2b_IV[5];
+			this.internalState[14] = this.f0 ^ this.blake2b_IV[6];
+			this.internalState[15] = this.blake2b_IV[7];// ^ f1 with f1 = 0
 		}
 
 		private void Compress(byte[] message, int messagePos)
@@ -275,35 +275,35 @@ namespace Litdex.Security.Hash
 			for (int round = 0; round < ROUNDS; round++)
 			{
 				// G apply to columns of internalState:m[blake2b_sigma[round][2 * blockPos]] /+1
-				this.G(m[blake2b_sigma[round, 0]], m[blake2b_sigma[round, 1]], 0, 4, 8, 12);
-				this.G(m[blake2b_sigma[round, 2]], m[blake2b_sigma[round, 3]], 1, 5, 9, 13);
-				this.G(m[blake2b_sigma[round, 4]], m[blake2b_sigma[round, 5]], 2, 6, 10, 14);
-				this.G(m[blake2b_sigma[round, 6]], m[blake2b_sigma[round, 7]], 3, 7, 11, 15);
+				this.G(m[this.blake2b_sigma[round, 0]], m[this.blake2b_sigma[round, 1]], 0, 4, 8, 12);
+				this.G(m[this.blake2b_sigma[round, 2]], m[this.blake2b_sigma[round, 3]], 1, 5, 9, 13);
+				this.G(m[this.blake2b_sigma[round, 4]], m[this.blake2b_sigma[round, 5]], 2, 6, 10, 14);
+				this.G(m[this.blake2b_sigma[round, 6]], m[this.blake2b_sigma[round, 7]], 3, 7, 11, 15);
 				
 				// G apply to diagonals of internalState:
-				this.G(m[blake2b_sigma[round, 8]], m[blake2b_sigma[round, 9]], 0, 5, 10, 15);
-				this.G(m[blake2b_sigma[round, 10]], m[blake2b_sigma[round, 11]], 1, 6, 11, 12);
-				this.G(m[blake2b_sigma[round, 12]], m[blake2b_sigma[round, 13]], 2, 7, 8, 13);
-				this.G(m[blake2b_sigma[round, 14]], m[blake2b_sigma[round, 15]], 3, 4, 9, 14);
+				this.G(m[this.blake2b_sigma[round, 8]], m[this.blake2b_sigma[round, 9]], 0, 5, 10, 15);
+				this.G(m[this.blake2b_sigma[round, 10]], m[this.blake2b_sigma[round, 11]], 1, 6, 11, 12);
+				this.G(m[this.blake2b_sigma[round, 12]], m[this.blake2b_sigma[round, 13]], 2, 7, 8, 13);
+				this.G(m[this.blake2b_sigma[round, 14]], m[this.blake2b_sigma[round, 15]], 3, 4, 9, 14);
 			}
 
 			// update chain values:
-			for (int offset = 0; offset < chainValue.Length; offset++)
+			for (int offset = 0; offset < this.chainValue.Length; offset++)
 			{
-				this.chainValue[offset] = chainValue[offset] ^ internalState[offset] ^ internalState[offset + 8];
+				this.chainValue[offset] = this.chainValue[offset] ^ this.internalState[offset] ^ this.internalState[offset + 8];
 			}
 		}
 
 		private void G(ulong m1, ulong m2, int posA, int posB, int posC, int posD)
 		{
-			this.internalState[posA] = internalState[posA] + internalState[posB] + m1;
-			this.internalState[posD] = Rotr64(internalState[posD] ^ internalState[posA], 32);
-			this.internalState[posC] = internalState[posC] + internalState[posD];
-			this.internalState[posB] = Rotr64(internalState[posB] ^ internalState[posC], 24); // replaces 25 of BLAKE
-			this.internalState[posA] = internalState[posA] + internalState[posB] + m2;
-			this.internalState[posD] = Rotr64(internalState[posD] ^ internalState[posA], 16);
-			this.internalState[posC] = internalState[posC] + internalState[posD];
-			this.internalState[posB] = Rotr64(internalState[posB] ^ internalState[posC], 63); // replaces 11 of BLAKE
+			this.internalState[posA] = this.internalState[posA] + this.internalState[posB] + m1;
+			this.internalState[posD] = this.Rotr64(this.internalState[posD] ^ this.internalState[posA], 32);
+			this.internalState[posC] = this.internalState[posC] + this.internalState[posD];
+			this.internalState[posB] = this.Rotr64(this.internalState[posB] ^ this.internalState[posC], 24); // replaces 25 of BLAKE
+			this.internalState[posA] = this.internalState[posA] + this.internalState[posB] + m2;
+			this.internalState[posD] = this.Rotr64(this.internalState[posD] ^ this.internalState[posA], 16);
+			this.internalState[posC] = this.internalState[posC] + this.internalState[posD];
+			this.internalState[posB] = this.Rotr64(this.internalState[posB] ^ this.internalState[posC], 63); // replaces 11 of BLAKE
 		}
 
 		private ulong Rotr64(ulong x, int rot)
@@ -351,10 +351,10 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		public virtual void ClearKey()
 		{
-			if (key != null)
+			if (this.key != null)
 			{
-				Array.Clear(key, 0, key.Length);
-				Array.Clear(buffer, 0, buffer.Length);
+				Array.Clear(this.key, 0, this.key.Length);
+				Array.Clear(this.buffer, 0, this.buffer.Length);
 			}
 		}
 
@@ -363,9 +363,9 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		public virtual void ClearSalt()
 		{
-			if (salt != null)
+			if (this.salt != null)
 			{
-				Array.Clear(salt, 0, salt.Length);
+				Array.Clear(this.salt, 0, this.salt.Length);
 			}
 		}
 
@@ -374,26 +374,26 @@ namespace Litdex.Security.Hash
 			int remainingLength = 0; // left bytes of buffer
 
 			// process the buffer if full else add to buffer:
-			remainingLength = BLOCK_LENGTH_BYTES - bufferPos;
+			remainingLength = BLOCK_LENGTH_BYTES - this.bufferPos;
 			if (remainingLength == 0)
 			{
 				// full buffer
-				t0 += BLOCK_LENGTH_BYTES;
-				if (t0 == 0)
+				this.t0 += BLOCK_LENGTH_BYTES;
+				if (this.t0 == 0)
 				{
 					// if message > 2^64
-					t1++;
+					this.t1++;
 				}
 
-				this.Compress(buffer, 0);
-				Array.Clear(buffer, 0, buffer.Length);// clear buffer
-				buffer[0] = input;
-				bufferPos = 1;
+				this.Compress(this.buffer, 0);
+				Array.Clear(this.buffer, 0, this.buffer.Length);// clear buffer
+				this.buffer[0] = input;
+				this.bufferPos = 1;
 			}
 			else
 			{
-				buffer[bufferPos] = input;
-				bufferPos++;
+				this.buffer[this.bufferPos] = input;
+				this.bufferPos++;
 				return;
 			}
 		}
@@ -417,31 +417,31 @@ namespace Litdex.Security.Hash
 
 			int remainingLength = 0; // left bytes of buffer
 
-			if (bufferPos != 0)
+			if (this.bufferPos != 0)
 			{
 				// commenced, incomplete buffer
 
 				// complete the buffer:
-				remainingLength = BLOCK_LENGTH_BYTES - bufferPos;
+				remainingLength = BLOCK_LENGTH_BYTES - this.bufferPos;
 				if (remainingLength < length)
 				{
 					// full buffer + at least 1 byte
-					Array.Copy(input, start_index, buffer, bufferPos, remainingLength);
-					t0 += BLOCK_LENGTH_BYTES;
-					if (t0 == 0)
+					Array.Copy(input, start_index, this.buffer, this.bufferPos, remainingLength);
+					this.t0 += BLOCK_LENGTH_BYTES;
+					if (this.t0 == 0)
 					{
 						// if message > 2^64
-						t1++;
+						this.t1++;
 					}
 
-					this.Compress(buffer, 0);
-					bufferPos = 0;
-					Array.Clear(buffer, 0, buffer.Length);// clear buffer
+					this.Compress(this.buffer, 0);
+					this.bufferPos = 0;
+					Array.Clear(this.buffer, 0, this.buffer.Length);// clear buffer
 				}
 				else
 				{
-					Array.Copy(input, start_index, buffer, bufferPos, length);
-					bufferPos += length;
+					Array.Copy(input, start_index, this.buffer, this.bufferPos, length);
+					this.bufferPos += length;
 					return;
 				}
 			}
@@ -452,18 +452,18 @@ namespace Litdex.Security.Hash
 			for (messagePos = start_index + remainingLength; messagePos < blockWiseLastPos; messagePos += BLOCK_LENGTH_BYTES)
 			{ // block wise 128 bytes
 			  // without buffer:
-				t0 += BLOCK_LENGTH_BYTES;
-				if (t0 == 0)
+				this.t0 += BLOCK_LENGTH_BYTES;
+				if (this.t0 == 0)
 				{
-					t1++;
+					this.t1++;
 				}
-				Compress(input, messagePos);
+				this.Compress(input, messagePos);
 			}
 
 			// fill the buffer with left bytes, this might be a full block
-			Array.Copy(input, messagePos, buffer, 0, start_index + length
+			Array.Copy(input, messagePos, this.buffer, 0, start_index + length
 				- messagePos);
-			bufferPos += start_index + length - messagePos;
+			this.bufferPos += start_index + length - messagePos;
 		}
 
 		public int DoFinal(byte[] output)
@@ -473,32 +473,32 @@ namespace Litdex.Security.Hash
 
 		public int DoFinal(byte[] output, int start_index)
 		{
-			f0 = 0xFFFFFFFFFFFFFFFFUL;
-			t0 += (ulong)bufferPos;
-			if (bufferPos > 0 && t0 == 0)
+			this.f0 = 0xFFFFFFFFFFFFFFFFUL;
+			this.t0 += (ulong)this.bufferPos;
+			if (this.bufferPos > 0 && this.t0 == 0)
 			{
-				t1++;
+				this.t1++;
 			}
 
-			this.Compress(buffer, 0);
-			Array.Clear(buffer, 0, buffer.Length);// Holds eventually the key if input is null
-			Array.Clear(internalState, 0, internalState.Length);
+			this.Compress(this.buffer, 0);
+			Array.Clear(this.buffer, 0, this.buffer.Length);// Holds eventually the key if input is null
+			Array.Clear(this.internalState, 0, this.internalState.Length);
 
-			for (int i = 0; i < chainValue.Length && (i * 8 < digestLength); i++)
+			for (int i = 0; i < this.chainValue.Length && (i * 8 < this.digestLength); i++)
 			{
-				byte[] bytes = Pack.UInt64_To_LE(chainValue[i]);
+				byte[] bytes = Pack.UInt64_To_LE(this.chainValue[i]);
 
-				if (i * 8 < digestLength - 8)
+				if (i * 8 < this.digestLength - 8)
 				{
 					Array.Copy(bytes, 0, output, start_index + i * 8, 8);
 				}
 				else
 				{
-					Array.Copy(bytes, 0, output, start_index + i * 8, digestLength - (i * 8));
+					Array.Copy(bytes, 0, output, start_index + i * 8, this.digestLength - (i * 8));
 				}
 			}
 
-			Array.Clear(chainValue, 0, chainValue.Length);
+			Array.Clear(this.chainValue, 0, this.chainValue.Length);
 
 			this.Reset();
 

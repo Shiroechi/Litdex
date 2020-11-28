@@ -3,8 +3,8 @@ using System.Text;
 
 namespace Litdex.Utilities.Arrays
 {
-    /// <summary> General array utilities.</summary>
-    public static class Arrays
+	/// <summary> General array utilities.</summary>
+	public static class Arrays
     {
         public static bool AreEqual(bool[] a, bool[] b)
         {

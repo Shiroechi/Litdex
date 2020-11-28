@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Litdex.Utilities.Number;
 using Litdex.Utilities.Extension;
+using Litdex.Utilities.Number;
 
 //SHA1("")
 //da39a3ee5e6b4b0d3255bfef95601890afd80709
@@ -24,14 +24,14 @@ namespace Litdex.Security.Hash
 		private const int DigestLength = 20;
 		private const int BYTE_LENGTH = 64;
 
-		private byte[] xBuf = new byte[4];
+		private readonly byte[] xBuf = new byte[4];
 		private int xBufOff;
 
 		private long byteCount;
 
 		private uint H1, H2, H3, H4, H5;
 
-		private uint[] X = new uint[80];
+		private readonly uint[] X = new uint[80];
 		private int xOff;
 
 		//
@@ -64,23 +64,23 @@ namespace Litdex.Security.Hash
 
 		private void ProcessWord(byte[] input, int inOff)
 		{
-			X[xOff] = Pack.BE_To_UInt32(input, inOff);
+			this.X[this.xOff] = Pack.BE_To_UInt32(input, inOff);
 
-			if (++xOff == 16)
+			if (++this.xOff == 16)
 			{
-				ProcessBlock();
+				this.ProcessBlock();
 			}
 		}
 
 		private void ProcessLength(long bitLength)
 		{
-			if (xOff > 14)
+			if (this.xOff > 14)
 			{
-				ProcessBlock();
+				this.ProcessBlock();
 			}
 
-			X[14] = (uint)((ulong)bitLength >> 32);
-			X[15] = (uint)((ulong)bitLength);
+			this.X[14] = (uint)((ulong)bitLength >> 32);
+			this.X[15] = (uint)((ulong)bitLength);
 		}
 
 		public void ProcessBlock()
@@ -90,18 +90,18 @@ namespace Litdex.Security.Hash
 			//
 			for (int i = 16; i < 80; i++)
 			{
-				uint t = X[i - 3] ^ X[i - 8] ^ X[i - 14] ^ X[i - 16];
-				X[i] = t << 1 | t >> 31;
+				uint t = this.X[i - 3] ^ this.X[i - 8] ^ this.X[i - 14] ^ this.X[i - 16];
+				this.X[i] = t << 1 | t >> 31;
 			}
 
 			//
 			// set up working variables.
 			//
-			uint A = H1;
-			uint B = H2;
-			uint C = H3;
-			uint D = H4;
-			uint E = H5;
+			uint A = this.H1;
+			uint B = this.H2;
+			uint C = this.H3;
+			uint D = this.H4;
+			uint E = this.H5;
 
 			//
 			// round 1
@@ -112,19 +112,19 @@ namespace Litdex.Security.Hash
 			{
 				// E = rotateLeft(A, 5) + F(B, C, D) + E + X[idx++] + Y1
 				// B = rotateLeft(B, 30)
-				E += (A << 5 | (A >> 27)) + F(B, C, D) + X[idx++] + Y1;
+				E += (A << 5 | (A >> 27)) + this.F(B, C, D) + this.X[idx++] + Y1;
 				B = B << 30 | (B >> 2);
 
-				D += (E << 5 | (E >> 27)) + F(A, B, C) + X[idx++] + Y1;
+				D += (E << 5 | (E >> 27)) + this.F(A, B, C) + this.X[idx++] + Y1;
 				A = A << 30 | (A >> 2);
 
-				C += (D << 5 | (D >> 27)) + F(E, A, B) + X[idx++] + Y1;
+				C += (D << 5 | (D >> 27)) + this.F(E, A, B) + this.X[idx++] + Y1;
 				E = E << 30 | (E >> 2);
 
-				B += (C << 5 | (C >> 27)) + F(D, E, A) + X[idx++] + Y1;
+				B += (C << 5 | (C >> 27)) + this.F(D, E, A) + this.X[idx++] + Y1;
 				D = D << 30 | (D >> 2);
 
-				A += (B << 5 | (B >> 27)) + F(C, D, E) + X[idx++] + Y1;
+				A += (B << 5 | (B >> 27)) + this.F(C, D, E) + this.X[idx++] + Y1;
 				C = C << 30 | (C >> 2);
 			}
 
@@ -135,19 +135,19 @@ namespace Litdex.Security.Hash
 			{
 				// E = rotateLeft(A, 5) + H(B, C, D) + E + X[idx++] + Y2
 				// B = rotateLeft(B, 30)
-				E += (A << 5 | (A >> 27)) + H(B, C, D) + X[idx++] + Y2;
+				E += (A << 5 | (A >> 27)) + this.H(B, C, D) + this.X[idx++] + Y2;
 				B = B << 30 | (B >> 2);
 
-				D += (E << 5 | (E >> 27)) + H(A, B, C) + X[idx++] + Y2;
+				D += (E << 5 | (E >> 27)) + this.H(A, B, C) + this.X[idx++] + Y2;
 				A = A << 30 | (A >> 2);
 
-				C += (D << 5 | (D >> 27)) + H(E, A, B) + X[idx++] + Y2;
+				C += (D << 5 | (D >> 27)) + this.H(E, A, B) + this.X[idx++] + Y2;
 				E = E << 30 | (E >> 2);
 
-				B += (C << 5 | (C >> 27)) + H(D, E, A) + X[idx++] + Y2;
+				B += (C << 5 | (C >> 27)) + this.H(D, E, A) + this.X[idx++] + Y2;
 				D = D << 30 | (D >> 2);
 
-				A += (B << 5 | (B >> 27)) + H(C, D, E) + X[idx++] + Y2;
+				A += (B << 5 | (B >> 27)) + this.H(C, D, E) + this.X[idx++] + Y2;
 				C = C << 30 | (C >> 2);
 			}
 
@@ -158,19 +158,19 @@ namespace Litdex.Security.Hash
 			{
 				// E = rotateLeft(A, 5) + G(B, C, D) + E + X[idx++] + Y3
 				// B = rotateLeft(B, 30)
-				E += (A << 5 | (A >> 27)) + G(B, C, D) + X[idx++] + Y3;
+				E += (A << 5 | (A >> 27)) + this.G(B, C, D) + this.X[idx++] + Y3;
 				B = B << 30 | (B >> 2);
 
-				D += (E << 5 | (E >> 27)) + G(A, B, C) + X[idx++] + Y3;
+				D += (E << 5 | (E >> 27)) + this.G(A, B, C) + this.X[idx++] + Y3;
 				A = A << 30 | (A >> 2);
 
-				C += (D << 5 | (D >> 27)) + G(E, A, B) + X[idx++] + Y3;
+				C += (D << 5 | (D >> 27)) + this.G(E, A, B) + this.X[idx++] + Y3;
 				E = E << 30 | (E >> 2);
 
-				B += (C << 5 | (C >> 27)) + G(D, E, A) + X[idx++] + Y3;
+				B += (C << 5 | (C >> 27)) + this.G(D, E, A) + this.X[idx++] + Y3;
 				D = D << 30 | (D >> 2);
 
-				A += (B << 5 | (B >> 27)) + G(C, D, E) + X[idx++] + Y3;
+				A += (B << 5 | (B >> 27)) + this.G(C, D, E) + this.X[idx++] + Y3;
 				C = C << 30 | (C >> 2);
 			}
 
@@ -181,51 +181,51 @@ namespace Litdex.Security.Hash
 			{
 				// E = rotateLeft(A, 5) + H(B, C, D) + E + X[idx++] + Y4
 				// B = rotateLeft(B, 30)
-				E += (A << 5 | (A >> 27)) + H(B, C, D) + X[idx++] + Y4;
+				E += (A << 5 | (A >> 27)) + this.H(B, C, D) + this.X[idx++] + Y4;
 				B = B << 30 | (B >> 2);
 
-				D += (E << 5 | (E >> 27)) + H(A, B, C) + X[idx++] + Y4;
+				D += (E << 5 | (E >> 27)) + this.H(A, B, C) + this.X[idx++] + Y4;
 				A = A << 30 | (A >> 2);
 
-				C += (D << 5 | (D >> 27)) + H(E, A, B) + X[idx++] + Y4;
+				C += (D << 5 | (D >> 27)) + this.H(E, A, B) + this.X[idx++] + Y4;
 				E = E << 30 | (E >> 2);
 
-				B += (C << 5 | (C >> 27)) + H(D, E, A) + X[idx++] + Y4;
+				B += (C << 5 | (C >> 27)) + this.H(D, E, A) + this.X[idx++] + Y4;
 				D = D << 30 | (D >> 2);
 
-				A += (B << 5 | (B >> 27)) + H(C, D, E) + X[idx++] + Y4;
+				A += (B << 5 | (B >> 27)) + this.H(C, D, E) + this.X[idx++] + Y4;
 				C = C << 30 | (C >> 2);
 			}
 
-			H1 += A;
-			H2 += B;
-			H3 += C;
-			H4 += D;
-			H5 += E;
+			this.H1 += A;
+			this.H2 += B;
+			this.H3 += C;
+			this.H4 += D;
+			this.H5 += E;
 
 			//
 			// reset start of the buffer.
 			//
-			xOff = 0;
-			Array.Clear(X, 0, 16);
+			this.xOff = 0;
+			Array.Clear(this.X, 0, 16);
 		}
 
 		private void Finish()
 		{
-			long bitLength = (byteCount << 3);
+			long bitLength = (this.byteCount << 3);
 
 			//
 			// add the pad bytes.
 			//
-			Update((byte)128);
+			this.Update(128);
 
-			while (xBufOff != 0)
+			while (this.xBufOff != 0)
 			{
-				Update((byte)0);
+				this.Update(0);
 			}
 
-			ProcessLength(bitLength);
-			ProcessBlock();
+			this.ProcessLength(bitLength);
+			this.ProcessBlock();
 		}
 
 		private uint F(uint u, uint v, uint w)
@@ -280,15 +280,15 @@ namespace Litdex.Security.Hash
 
 		public void Update(byte input)
 		{
-			xBuf[xBufOff++] = input;
+			this.xBuf[this.xBufOff++] = input;
 
-			if (xBufOff == xBuf.Length)
+			if (this.xBufOff == this.xBuf.Length)
 			{
-				ProcessWord(xBuf, 0);
-				xBufOff = 0;
+				this.ProcessWord(this.xBuf, 0);
+				this.xBufOff = 0;
 			}
 
-			byteCount++;
+			this.byteCount++;
 		}
 
 		public void Update(byte[] input)
@@ -309,15 +309,15 @@ namespace Litdex.Security.Hash
 			// fill the current word
 			//
 			int i = 0;
-			if (xBufOff != 0)
+			if (this.xBufOff != 0)
 			{
 				while (i < length)
 				{
-					xBuf[xBufOff++] = input[start_index + i++];
-					if (xBufOff == 4)
+					this.xBuf[this.xBufOff++] = input[start_index + i++];
+					if (this.xBufOff == 4)
 					{
-						ProcessWord(xBuf, 0);
-						xBufOff = 0;
+						this.ProcessWord(this.xBuf, 0);
+						this.xBufOff = 0;
 						break;
 					}
 				}
@@ -326,10 +326,10 @@ namespace Litdex.Security.Hash
 			//
 			// process whole words.
 			//
-			int limit = (((int)length - i) & ~3) + i;
+			int limit = ((length - i) & ~3) + i;
 			for (; i < limit; i += 4)
 			{
-				ProcessWord(input, (int)start_index + i);
+				this.ProcessWord(input, start_index + i);
 			}
 
 			//
@@ -337,10 +337,10 @@ namespace Litdex.Security.Hash
 			//
 			while (i < length)
 			{
-				xBuf[xBufOff++] = input[(int)start_index + i++];
+				this.xBuf[this.xBufOff++] = input[start_index + i++];
 			}
 
-			byteCount += length;
+			this.byteCount += length;
 		}
 
 		public int DoFinal(byte[] output)
@@ -352,11 +352,11 @@ namespace Litdex.Security.Hash
 		{
 			this.Finish();
 
-			Pack.UInt32_To_BE(H1, output, start_index);
-			Pack.UInt32_To_BE(H2, output, start_index + 4);
-			Pack.UInt32_To_BE(H3, output, start_index + 8);
-			Pack.UInt32_To_BE(H4, output, start_index + 12);
-			Pack.UInt32_To_BE(H5, output, start_index + 16);
+			Pack.UInt32_To_BE(this.H1, output, start_index);
+			Pack.UInt32_To_BE(this.H2, output, start_index + 4);
+			Pack.UInt32_To_BE(this.H3, output, start_index + 8);
+			Pack.UInt32_To_BE(this.H4, output, start_index + 12);
+			Pack.UInt32_To_BE(this.H5, output, start_index + 16);
 
 			this.Reset();
 

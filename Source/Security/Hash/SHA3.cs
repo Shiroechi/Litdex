@@ -70,7 +70,7 @@ namespace Litdex.Security.Hash
 
 		public override int DoFinal(byte[] output, int start_index)
 		{
-			AbsorbBits(0x02, 2);
+			this.AbsorbBits(0x02, 2);
 			return base.DoFinal(output, start_index);
 		}
 

@@ -1,6 +1,6 @@
 ﻿namespace Litdex.Utilities.Number
 {
-    public static class Prime
+	public static class Prime
     {
         /// <summary>
         /// Check the value is prime or not.

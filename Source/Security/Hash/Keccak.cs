@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 
-using Litdex.Utilities.Number;
 using Litdex.Utilities.Extension;
+using Litdex.Utilities.Number;
 
 namespace Litdex.Security.Hash
 {
@@ -26,7 +26,7 @@ namespace Litdex.Security.Hash
 			0x8000000080008081UL, 0x8000000000008080UL, 0x0000000080000001UL, 0x8000000080008008UL
 		};
 
-		private ulong[] state = new ulong[25];
+		private readonly ulong[] state = new ulong[25];
 		protected byte[] dataQueue = new byte[192];
 		protected int rate;
 		protected int bitsInQueue;
@@ -69,7 +69,7 @@ namespace Litdex.Security.Hash
 				case 288:
 				case 384:
 				case 512:
-					InitSponge(1600 - (bitLength << 1));
+					this.InitSponge(1600 - (bitLength << 1));
 					break;
 				default:
 					throw new ArgumentException("Must be one of 128, 224, 256, 288, 384, or 512.", "bitLength");
@@ -84,8 +84,8 @@ namespace Litdex.Security.Hash
 			}
 
 			this.rate = rate;
-			Array.Clear(state, 0, state.Length);
-			Utilities.Arrays.Arrays.Fill(this.dataQueue, (byte)0);
+			Array.Clear(this.state, 0, this.state.Length);
+			Utilities.Arrays.Arrays.Fill(this.dataQueue, 0);
 			this.bitsInQueue = 0;
 			this.squeezing = false;
 			this.fixedOutputLength = (1600 - rate) >> 1;
@@ -93,43 +93,43 @@ namespace Litdex.Security.Hash
 
 		private void PadAndSwitchToSqueezingPhase()
 		{
-			Debug.Assert(bitsInQueue < rate);
+			Debug.Assert(this.bitsInQueue < this.rate);
 
-			dataQueue[bitsInQueue >> 3] |= (byte)(1U << (bitsInQueue & 7));
+			this.dataQueue[this.bitsInQueue >> 3] |= (byte)(1U << (this.bitsInQueue & 7));
 
-			if (++bitsInQueue == rate)
+			if (++this.bitsInQueue == this.rate)
 			{
-				KeccakAbsorb(dataQueue, 0);
-				bitsInQueue = 0;
+				this.KeccakAbsorb(this.dataQueue, 0);
+				this.bitsInQueue = 0;
 			}
 
 			{
-				int full = bitsInQueue >> 6, partial = bitsInQueue & 63;
+				int full = this.bitsInQueue >> 6, partial = this.bitsInQueue & 63;
 				int off = 0;
 				for (int i = 0; i < full; ++i)
 				{
-					state[i] ^= Pack.LE_To_UInt64(dataQueue, off);
+					this.state[i] ^= Pack.LE_To_UInt64(this.dataQueue, off);
 					off += 8;
 				}
 				if (partial > 0)
 				{
 					ulong mask = (1UL << partial) - 1UL;
-					state[full] ^= Pack.LE_To_UInt64(dataQueue, off) & mask;
+					this.state[full] ^= Pack.LE_To_UInt64(this.dataQueue, off) & mask;
 				}
-				state[(rate - 1) >> 6] ^= (1UL << 63);
+				this.state[(this.rate - 1) >> 6] ^= (1UL << 63);
 			}
 
-			KeccakPermutation();
+			this.KeccakPermutation();
 
-			KeccakExtract();
-			bitsInQueue = rate;
+			this.KeccakExtract();
+			this.bitsInQueue = this.rate;
 
-			squeezing = true;
+			this.squeezing = true;
 		}
 
 		private void KeccakAbsorb(byte[] data, int off)
 		{
-			int count = rate >> 6;
+			int count = this.rate >> 6;
 			for (int i = 0; i < count; ++i)
 			{
 				this.state[i] ^= Pack.LE_To_UInt64(data, off);
@@ -146,7 +146,7 @@ namespace Litdex.Security.Hash
 
 		private void KeccakPermutation()
 		{
-			ulong[] A = state;
+			ulong[] A = this.state;
 
 			ulong a00 = A[0], a01 = A[1], a02 = A[2], a03 = A[3], a04 = A[4];
 			ulong a05 = A[5], a06 = A[6], a07 = A[7], a08 = A[8], a09 = A[9];
@@ -260,12 +260,12 @@ namespace Litdex.Security.Hash
 
 		protected void Absorb(byte[] data, int off, int len)
 		{
-			if ((bitsInQueue & 7) != 0)
+			if ((this.bitsInQueue & 7) != 0)
 			{
 				throw new InvalidOperationException("Attempt to absorb with odd length queue.");
 			}
 
-			if (squeezing)
+			if (this.squeezing)
 			{
 				throw new InvalidOperationException("Attempt to absorb while squeezing.");
 			}
@@ -288,7 +288,7 @@ namespace Litdex.Security.Hash
 				else
 				{
 					int partialBlock = System.Math.Min(rateBytes - bytesInQueue, len - count);
-					Array.Copy(data, off + count, dataQueue, bytesInQueue, partialBlock);
+					Array.Copy(data, off + count, this.dataQueue, bytesInQueue, partialBlock);
 
 					bytesInQueue += partialBlock;
 					count += partialBlock;
@@ -321,7 +321,7 @@ namespace Litdex.Security.Hash
 			}
 
 			int mask = (1 << bits) - 1;
-			this.dataQueue[bitsInQueue >> 3] = (byte)(data & mask);
+			this.dataQueue[this.bitsInQueue >> 3] = (byte)(data & mask);
 
 			// NOTE: After this, bitsInQueue is no longer a multiple of 8, so no more absorbs will work
 			this.bitsInQueue += bits;
@@ -346,10 +346,10 @@ namespace Litdex.Security.Hash
 				{
 					this.KeccakPermutation();
 					this.KeccakExtract();
-					this.bitsInQueue = rate;
+					this.bitsInQueue = this.rate;
 				}
-				int partialBlock = (int)System.Math.Min((long)this.bitsInQueue, outputLength - i);
-				Array.Copy(dataQueue, (this.rate - this.bitsInQueue) >> 3, output, offset + (int)(i >> 3), partialBlock >> 3);
+				int partialBlock = (int)System.Math.Min(this.bitsInQueue, outputLength - i);
+				Array.Copy(this.dataQueue, (this.rate - this.bitsInQueue) >> 3, output, offset + (int)(i >> 3), partialBlock >> 3);
 				this.bitsInQueue -= partialBlock;
 				i += partialBlock;
 			}
@@ -388,7 +388,7 @@ namespace Litdex.Security.Hash
 
 		public virtual void Reset()
 		{
-			this.InitLength(fixedOutputLength);
+			this.InitLength(this.fixedOutputLength);
 		}
 
 		public int GetHashLength()
@@ -428,7 +428,7 @@ namespace Litdex.Security.Hash
 
 		public virtual int DoFinal(byte[] output, int start_index)
 		{
-			this.Squeeze(output, start_index, fixedOutputLength);
+			this.Squeeze(output, start_index, this.fixedOutputLength);
 
 			this.Reset();
 

@@ -206,7 +206,7 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <inheritdoc/>
 		public double NextDouble()
 		{
-			return NextLong() * (1L << 53);
+			return this.NextLong() * (1L << 53);
 		}
 
 		/// <inheritdoc/>

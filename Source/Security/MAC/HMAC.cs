@@ -16,10 +16,10 @@ namespace Litdex.Security.MAC
 		#region Member
 
 		private bool _Initilized;
-		private const byte IPAD = (byte)0x36;
-		private const byte OPAD = (byte)0x5C;
+		private const byte IPAD = 0x36;
+		private const byte OPAD = 0x5C;
 
-		private IHash hash;
+		private readonly IHash hash;
 
 		private readonly int DigestSize;
 		private readonly int BlockSize;
@@ -154,7 +154,7 @@ namespace Litdex.Security.MAC
 		/// </summary>
 		public virtual string AlgorithmName()
 		{
-			return hash.AlgorithmName() + "/HMAC";
+			return this.hash.AlgorithmName() + "/HMAC";
 		}
 
 		/// <summary>
@@ -171,7 +171,7 @@ namespace Litdex.Security.MAC
 			}
 			else
 			{
-				this.Initialize(KeyValue);
+				this.Initialize(this.KeyValue);
 			}
 
 			//if (this.InnerPadding.Length >= 0 || this.InnerPadding != null)
@@ -215,7 +215,7 @@ namespace Litdex.Security.MAC
 
 		protected virtual IHash GetUnderlyingDigest()
 		{
-			return hash;
+			return this.hash;
 		}
 
 		protected virtual int GetMacSize()

@@ -13,7 +13,7 @@ namespace Litdex.Security.KDF
 	{
 		#region Member
 
-		private IMAC _MAC;
+		private readonly IMAC _MAC;
 
 		#endregion Member
 
