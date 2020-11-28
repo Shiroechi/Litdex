@@ -141,7 +141,7 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <inheritdoc/>
 		public virtual byte NextByte()
 		{
-			return this.GetBytes(1)[0];
+			return this.NextBytes(1)[0];
 		}
 
 		/// <inheritdoc/>
