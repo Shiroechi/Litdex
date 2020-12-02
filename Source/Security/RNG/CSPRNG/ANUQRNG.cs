@@ -38,11 +38,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			this._Type = type;
 		}
 
-		~ANUQRNG()
-		{
-
-		}
-
 		#endregion Constrcutor & Destructor
 
 		#region Protected
