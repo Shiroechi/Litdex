@@ -202,7 +202,7 @@ namespace Litdex.Security.OTP
 
 			// compute custom offset 
 			int offset = result[result.Length - 1] & 0x0F;
-			if ((0 <= custom_offset) && (custom_offset < (result.Length - 4)))
+			if ((custom_offset <= 0) && (custom_offset < (result.Length - 4)))
 			{
 				offset = custom_offset;
 			}
