@@ -169,7 +169,7 @@ namespace Litdex.Network
 
                     result = gateway.Address;
                     break;
-                };
+                }
             }
 			
             return result.ToString();

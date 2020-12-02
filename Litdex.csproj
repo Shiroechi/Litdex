@@ -11,22 +11,22 @@
     <SignAssembly>false</SignAssembly>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Description>My personal library.</Description>
     <Product></Product>
     <DelaySign>false</DelaySign>
     <RootNamespace>Litdex</RootNamespace>
     <AssemblyName>Litdex</AssemblyName>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <FileVersion>2.1.0.0</FileVersion>
     <RepositoryUrl>https://github.com/Shiroechi/Litdex</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Shiroechi/Litdex</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH</PackageTags>
-    <PackageReleaseNotes>- Add new RNG algorithm.
-- Add new method for RNG.
-- Fix some bug issues.</PackageReleaseNotes>
+    <PackageReleaseNotes>- Integrate Litdex.Security.RNG v2.2.0</PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Copyright>Shiroechi</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -39,5 +39,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>D:\Project\C#\Litdex\Litdex\Litdex.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

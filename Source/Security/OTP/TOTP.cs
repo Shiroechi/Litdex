@@ -135,7 +135,6 @@ namespace Litdex.Security.OTP
 			return seconds * this._TicksToSeconds;
 		}
 
-
 		/// <summary>
 		/// Gets an enumberable of all the possible validation candidates
 		/// </summary>

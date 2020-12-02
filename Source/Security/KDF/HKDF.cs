@@ -89,7 +89,7 @@ namespace Litdex.Security.KDF
 			}
 			if (length > this._MAC.GetHashLength() * 255)
 			{
-				throw new ArgumentException("Length can't exceed " + this._MAC.GetHashLength() * 255);
+				throw new ArgumentException("Length can't exceed " + (this._MAC.GetHashLength() * 255));
 			}
 
 			var resultBlock = new byte[0];

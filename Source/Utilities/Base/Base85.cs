@@ -17,10 +17,10 @@ namespace Litdex.Utilities.Base
 		/// <returns>An Ascii85-encoded string representing the input byte array.</returns>
 		public static string Encode(byte[] bytes)
 		{
-            if (bytes == null)
-            {
-                throw new ArgumentNullException("bytes");
-            }
+			if (bytes == null)
+			{
+				throw new ArgumentNullException("bytes");
+			}
 			// preallocate a StringBuilder with enough room to store the encoded bytes
 			var sb = new StringBuilder(bytes.Length * 5 / 4);
 
@@ -45,14 +45,14 @@ namespace Litdex.Utilities.Base
 				}
 			}
 
-            // encode any remaining bytes (that weren't a multiple of 4)
-            if (count > 0)
-            {
-                EncodeValue(sb, value, 4 - count);
-            }
+			// encode any remaining bytes (that weren't a multiple of 4)
+			if (count > 0)
+			{
+				EncodeValue(sb, value, 4 - count);
+			}
 			var output = sb.ToString();
-            sb.Clear();
-            return output;
+			sb.Clear();
+			return output;
 		}
 
 		/// <summary>
@@ -62,11 +62,11 @@ namespace Litdex.Utilities.Base
 		/// <returns>The decoded byte array.</returns>
 		public static byte[] Decode(string encoded)
 		{
-            if (encoded == null)
-            {
-                throw new ArgumentNullException("encoded");
-            }
-            byte[] result = null;
+			if (encoded == null)
+			{
+				throw new ArgumentNullException("encoded");
+			}
+			byte[] result = null;
 			// preallocate a memory stream with enough capacity to hold the decoded data
 			using (var stream = new MemoryStream(encoded.Length * 4 / 5))
 			{
@@ -82,8 +82,8 @@ namespace Litdex.Utilities.Base
 					}
 					else if (ch < c_firstCharacter || ch > c_lastCharacter)
 					{
-                        throw new FormatException($"Invalid character '{ch}' in Ascii85 block.");
-                    }
+						throw new FormatException($"Invalid character '{ch}' in Ascii85 block.");
+					}
 					else
 					{
 						// build a 32-bit value from the input characters
@@ -131,7 +131,7 @@ namespace Litdex.Utilities.Base
 
 				result = stream.ToArray();
 			}
-            return result;
+			return result;
 		}
 
 		// Writes the Ascii85 characters for a 32-bit value to a StringBuilder.

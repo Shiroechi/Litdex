@@ -249,7 +249,7 @@ namespace Litdex.Security.Cipher.StreamCipher
 		/// <returns></returns>
 		private int RotateLeft(int value, int shift)
 		{
-			return value << shift | (int)((uint)value >> 32 - shift);
+			return (value << shift) | (int)((uint)value >> (32 - shift));
 		}
 
 		#endregion Private

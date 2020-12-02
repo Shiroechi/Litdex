@@ -16,7 +16,7 @@ namespace Litdex.Security.RNG.CSPRNG
 	/// website: https://qrng.anu.edu.au/
 	/// </para>
 	/// </summary>
-	public class ANUQRNG : IRNG
+	public class ANUQRNG
 	{
 		#region Member
 
@@ -36,11 +36,6 @@ namespace Litdex.Security.RNG.CSPRNG
 		{
 			this._BaseUrl = "https://qrng.anu.edu.au/API/jsonI.php?";
 			this._Type = type;
-		}
-
-		~ANUQRNG()
-		{
-
 		}
 
 		#endregion Constrcutor & Destructor
@@ -195,7 +190,6 @@ namespace Litdex.Security.RNG.CSPRNG
 			var diff = upper - lower + 1;
 			return lower + (this.NextDouble() % diff);
 		}
-
 
 		/// <inheritdoc/>
 		public virtual T Choice<T>(T[] items)

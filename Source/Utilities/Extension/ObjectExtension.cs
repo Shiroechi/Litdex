@@ -112,6 +112,6 @@ namespace Litdex.Utilities.Extension
 
 			var type = obj.GetType();
 			return type.IsSerializable;
-        }
+		}
 	}
 }
