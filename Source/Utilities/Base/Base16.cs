@@ -49,7 +49,7 @@ namespace Litdex.Utilities.Base
 				b = data[i] >> 4;
 				c[i * 2] = (char)(55 + b + (((b - 10) >> 31) & -7));
 				b = data[i] & 0xF;
-				c[i * 2 + 1] = (char)(55 + b + (((b - 10) >> 31) & -7));
+				c[(i * 2) + 1] = (char)(55 + b + (((b - 10) >> 31) & -7));
 			}
 			return new string(c);
 		}
@@ -73,7 +73,7 @@ namespace Litdex.Utilities.Base
 				b = data[i] >> 4;
 				c[i * 2] = (char)(87 + b + (((b - 10) >> 31) & -39));
 				b = data[i] & 0xF;
-				c[i * 2 + 1] = (char)(87 + b + (((b - 10) >> 31) & -39));
+				c[(i * 2) + 1] = (char)(87 + b + (((b - 10) >> 31) & -39));
 			}
 			return new string(c);
 		}
