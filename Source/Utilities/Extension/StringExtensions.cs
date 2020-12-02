@@ -33,7 +33,7 @@ namespace Litdex.Utilities.Extension
             var chars = new char[bytesLength / 2];
             for (int i = 0; i < chars.Length; ++i)
             {
-                chars[i] = (char)(bytesArray[bytesOffset + i * 2] | (bytesArray[bytesOffset + i * 2 + 1] << 8));
+                chars[i] = (char)(bytesArray[bytesOffset + (i * 2)] | (bytesArray[bytesOffset + i * 2 + 1] << 8));
             }
             return new string(chars);
         }
