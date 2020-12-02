@@ -16,7 +16,7 @@ namespace Litdex.Security.RNG.CSPRNG
 	/// website: https://qrng.anu.edu.au/
 	/// </para>
 	/// </summary>
-	public class ANUQRNG : IRNG
+	public class ANUQRNG
 	{
 		#region Member
 
