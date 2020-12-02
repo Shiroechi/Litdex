@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 
 namespace Litdex.Security.RNG.CSPRNG
@@ -8,8 +6,8 @@ namespace Litdex.Security.RNG.CSPRNG
 	/// <summary>
 	/// C# Windows built in CSPRNG
 	/// </summary>
-	public class CryptGenRandom : IRNG
-    {
+	public class CryptGenRandom : Random
+	{
 		#region Deprecated
 
 		/// <summary>
@@ -18,15 +16,15 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <returns>INT value.</returns>
 		[Obsolete]
 		public static uint GetInt()
-        {
-            byte[] result = new byte[4];
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetNonZeroBytes(result);
-                rngCsp.Dispose();
-            }
-            return BitConverter.ToUInt32(result, 0);
-        }
+		{
+			byte[] result = new byte[4];
+			using (var rngCsp = new RNGCryptoServiceProvider())
+			{
+				rngCsp.GetNonZeroBytes(result);
+				rngCsp.Dispose();
+			}
+			return BitConverter.ToUInt32(result, 0);
+		}
 
 		/// <summary>
 		/// Get Long value from generator.
@@ -34,16 +32,16 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <returns></returns>
 		[Obsolete]
 		public static ulong GetLong()
-        {
-            ulong result;
-            using (var a = new RNGCryptoServiceProvider())
-            {
-                var b = new byte[8];
-                a.GetNonZeroBytes(b);
-                result = BitConverter.ToUInt64(b, 0);
-            }
-            return result;
-        }
+		{
+			ulong result;
+			using (var a = new RNGCryptoServiceProvider())
+			{
+				var b = new byte[8];
+				a.GetNonZeroBytes(b);
+				result = BitConverter.ToUInt64(b, 0);
+			}
+			return result;
+		}
 
 		/// <summary>
 		/// Get byte[] from generator.
@@ -52,14 +50,14 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <returns>byte[]</returns>
 		[Obsolete]
 		public static byte[] GetByte(int size = 512)
-        {
-            byte[] result = new byte[size];
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetNonZeroBytes(result);
-            }
-            return result;
-        }
+		{
+			byte[] result = new byte[size];
+			using (var rngCsp = new RNGCryptoServiceProvider())
+			{
+				rngCsp.GetNonZeroBytes(result);
+			}
+			return result;
+		}
 
 		/// <summary>
 		/// Get CSPRNG string.
@@ -68,21 +66,21 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <returns>string</returns>
 		[Obsolete]
 		public static string GetString(int size = 512)
-        {
-            byte[] result = new byte[size];
-            using (var rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetNonZeroBytes(result);
-                rngCsp.Dispose();
-            }
+		{
+			byte[] result = new byte[size];
+			using (var rngCsp = new RNGCryptoServiceProvider())
+			{
+				rngCsp.GetNonZeroBytes(result);
+				rngCsp.Dispose();
+			}
 
-            string data = "";
-            for (int i = 0; i < result.Length; i++)
-            {
-                data += Convert.ToChar(result[i]);
-            }
-            return data;
-        }
+			string data = "";
+			for (int i = 0; i < result.Length; i++)
+			{
+				data += Convert.ToChar(result[i]);
+			}
+			return data;
+		}
 
 		#endregion Deprecated
 
@@ -98,66 +96,28 @@ namespace Litdex.Security.RNG.CSPRNG
 
 		#endregion Constructor
 
-		#region Private
-
-		/// <summary>
-		/// Generate next random number.
-		/// </summary>
-		/// <returns></returns>
-		private ulong Next()
-		{
-			ulong result;
-			using (var generator = new RNGCryptoServiceProvider())
-			{
-				var bytes = new byte[8];
-				generator.GetNonZeroBytes(bytes);
-				result = BitConverter.ToUInt64(bytes, 0);
-			}
-			return result;
-		}
-
-		#endregion Private
-
 		#region Public
 
 		/// <inheritdoc/>
-		public string AlgorithmName()
+		public override string AlgorithmName()
 		{
 			return "CryptGenRandom";
 		}
 
 		/// <inheritdoc/>
-		public void Reseed()
+		public override void Reseed()
 		{
 
 		}
 
 		/// <inheritdoc/>
-		public bool NextBoolean()
+		public override bool NextBoolean()
 		{
-			return this.NextInt() % 2 == 0;
+			return this.NextBytes(1)[0] >> 7 == 0;
 		}
 
 		/// <inheritdoc/>
-		public virtual byte NextByte()
-		{
-			return this.NextBytes(1)[0];
-		}
-
-		/// <inheritdoc/>
-		public virtual byte NextByte(byte lower, byte upper)
-		{
-			if (lower >= upper)
-			{
-				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
-			}
-
-			var diff = (byte)(upper - lower + 1);
-			return (byte)(lower + (this.NextByte() % diff));
-		}
-
-		/// <inheritdoc/>
-		public byte[] NextBytes(int length = 512)
+		public override byte[] NextBytes(int length = 512)
 		{
 			var result = new byte[length];
 			using (var rngCsp = new RNGCryptoServiceProvider())
@@ -168,108 +128,30 @@ namespace Litdex.Security.RNG.CSPRNG
 		}
 
 		/// <inheritdoc/>
-		public uint NextInt()
+		public override uint NextInt()
 		{
-			return (uint)this.Next();
+			var bytes = this.NextBytes(4);
+			uint a = bytes[0];
+			uint b = bytes[1];
+			uint c = bytes[2];
+			uint d = bytes[3];
+			return (a << 24) | (b << 16) | (c << 8) | d;
 		}
 
 		/// <inheritdoc/>
-		public uint NextInt(uint lower, uint upper)
+		public override ulong NextLong()
 		{
-			if (lower >= upper)
-			{
-				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
-			}
-
-			var diff = upper - lower + 1;
-			return lower + (this.NextInt() % diff);
-		}
-
-		/// <inheritdoc/>
-		public ulong NextLong()
-		{
-			return this.Next();
-		}
-
-		/// <inheritdoc/>
-		public ulong NextLong(ulong lower, ulong upper)
-		{
-			if (lower >= upper)
-			{
-				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
-			}
-
-			var diff = upper - lower + 1;
-			return lower + (this.NextLong() % diff);
-		}
-
-		/// <inheritdoc/>
-		public double NextDouble()
-		{
-			return this.NextLong() * (1L << 53);
-		}
-
-		/// <inheritdoc/>
-		public double NextDouble(double lower, double upper)
-		{
-			if (lower >= upper)
-			{
-				throw new ArgumentException("The lower bound must not be greater than or equal to the upper bound.");
-			}
-
-			var diff = upper - lower + 1;
-			return lower + (this.NextDouble() % diff);
-		}
-
-		/// <inheritdoc/>
-		public virtual T Choice<T>(T[] items)
-		{
-			if (items.Length > int.MaxValue)
-			{
-				throw new ArgumentOutOfRangeException(nameof(items), $"The items length or size can't be greater than int.MaxValue or { int.MaxValue }.");
-			}
-
-			return items[(int)this.NextInt(0, (uint)(items.Length - 1))];
-		}
-
-		/// <inheritdoc/>
-		public virtual T[] Choice<T>(T[] items, int select)
-		{
-			if (select < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved is negative or less than 1.");
-			}
-
-			if (select > items.Length)
-			{
-				throw new ArgumentOutOfRangeException(nameof(select), $"The number of elements to be retrieved exceeds the items size.");
-			}
-
-			var selected = new List<T>();
-
-			while (selected.Count < select)
-			{
-				var index = this.NextInt(0, (uint)(items.Length - 1));
-
-				if (selected.Contains(items[index]) == false)
-				{
-					selected.Add(items[index]);
-				}
-			}
-
-			return selected.ToArray();
-		}
-
-		/// <inheritdoc/>
-		public virtual T Choice<T>(IList<T> items)
-		{
-			return this.Choice(items.ToArray());
-		}
-
-		/// <inheritdoc/>
-		public virtual T[] Choice<T>(IList<T> items, int select)
-		{
-			return this.Choice(items.ToArray(), select);
+			var bytes = this.NextBytes(8);
+			uint a = bytes[0];
+			uint b = bytes[1];
+			uint c = bytes[2];
+			uint d = bytes[3];
+			uint e = bytes[4];
+			uint f = bytes[5];
+			uint g = bytes[6];
+			uint h = bytes[7];
+			return (a << 56) | (b << 48) | (c << 40) | (d << 32) | 
+				(e << 24) | (f << 16) | (g << 8) | h;
 		}
 
 		#endregion Public
