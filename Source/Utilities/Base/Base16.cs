@@ -93,12 +93,19 @@ namespace Litdex.Utilities.Base
 			{
 				throw new Exception("The hex string is invalid because it has an odd length");
 			}
+
 			var result = new byte[data.Length / 2];
 
-			for (var i = 0; i < result.Length; i++)
+			for (int i = 0; i < result.Length; i++)
 			{
-				result[i] = System.Convert.ToByte(data.Substring(i * 2, 2), 16);
+				int high = data[i * 2];
+				int low = data[i * 2 + 1];
+				high = (high & 0xf) + ((high & 0x40) >> 6) * 9;
+				low = (low & 0xf) + ((low & 0x40) >> 6) * 9;
+
+				result[i] = (byte)((high << 4) | low);
 			}
+
 			return result;
 		}	
 	}
