@@ -52,7 +52,7 @@
 		/// </returns>
 		public static bool IsPrime(uint value)
 		{
-			for (var i = 2u; i < value; i++) 
+			for (var i = 2u; i < value; i++)
 			{
 				if (value % i == 0)
 				{
