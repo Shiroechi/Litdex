@@ -20,7 +20,7 @@ namespace Litdex.Security.Hash
 	/// Following the naming conventions used in the C source code to enable easy review of the implementation.
 	/// </remarks>
 	public class SHA3 : Keccak
-    {
+	{
 		/// <summary>
 		/// Constructor.
 		/// </summary>
