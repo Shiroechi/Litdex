@@ -123,7 +123,7 @@ namespace Litdex.License
 		private byte[] SerialNumberGenerator(string username)
 		{
 			var hash = new SHA1();
-			return hash.ComputeHash(username).SubByte(0, 8);		
+			return hash.ComputeHash(username).SubByte(0, 8);
 		}
 
 		#endregion Private Method
@@ -190,7 +190,7 @@ namespace Litdex.License
 			try
 			{
 				var certificate = new Certificate();
-				
+
 				var encrypted_data = File.ReadAllBytes(location);
 				var blake2b = new Blake2b(256);
 				blake2b.Reset();
@@ -200,7 +200,7 @@ namespace Litdex.License
 				blake2b.Reset();
 
 				var decrypt_data = this.Decrypt(encrypted_data, key, iv);
-				
+
 				certificate.SplitVariable(decrypt_data);
 
 				return certificate;
@@ -218,7 +218,7 @@ namespace Litdex.License
 		/// <returns></returns>
 		public string GetSerialNumber(Certificate cert)
 		{
-			if (cert == null) 
+			if (cert == null)
 			{
 				throw new ArgumentException("Certificate can not null.");
 			}
@@ -250,7 +250,7 @@ namespace Litdex.License
 		/// <returns></returns>
 		public bool VerifySerialNumber(string username, string serial_number)
 		{
-			if (this.GetSerialNumber(username) == serial_number) 
+			if (this.GetSerialNumber(username) == serial_number)
 			{
 				return true;
 			}
