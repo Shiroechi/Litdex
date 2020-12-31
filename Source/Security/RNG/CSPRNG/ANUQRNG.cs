@@ -50,7 +50,7 @@ namespace Litdex.Security.RNG.CSPRNG
 		/// <returns></returns>
 		protected string UrlBuilder(ushort length = 1, ushort size = 1024)
 		{
-			return this._BaseUrl + 
+			return this._BaseUrl +
 				"length=" + length +
 				"&type=" + this._Type.ToString().ToLower() +
 				"&size=" + size;
