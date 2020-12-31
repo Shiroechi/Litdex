@@ -18,7 +18,7 @@ namespace Litdex.Security.Hash
 	/// is the "endianness" of the word processing!
 	/// </summary>
 	public class SHA1 : IHash
-    {
+	{
 		#region Member
 
 		private const int DigestLength = 20;
@@ -48,10 +48,10 @@ namespace Litdex.Security.Hash
 		/// Default constructor.
 		/// </summary>
 		public SHA1()
-        {
-            this.Reset();
-        }
-		
+		{
+			this.Reset();
+		}
+
 		/// <summary>
 		/// Destructor.
 		/// </summary>
@@ -244,7 +244,7 @@ namespace Litdex.Security.Hash
 		}
 
 		#endregion Private
-		
+
 		#region Public
 
 		public string AlgorithmName()
