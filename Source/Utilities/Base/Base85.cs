@@ -5,16 +5,20 @@ using System.Text;
 namespace Litdex.Utilities.Base
 {
 	/// <summary>
-	/// Converts between binary data and an Ascii85-encoded string.
+	///		Converts between binary data and an Ascii85-encoded string.
 	/// </summary>
 	/// <remarks>See <a href="http://en.wikipedia.org/wiki/Ascii85">Ascii85 at Wikipedia</a>.</remarks>
-	public static class Ascii85
+	public static class Base85
 	{
 		/// <summary>
-		/// Encodes the specified byte array in Ascii85.
+		///		Encodes the specified byte array in Ascii85.
 		/// </summary>
-		/// <param name="bytes">The bytes to encode.</param>
-		/// <returns>An Ascii85-encoded string representing the input byte array.</returns>
+		/// <param name="bytes">
+		///		The bytes to encode.
+		///	</param>
+		/// <returns>
+		///		An Ascii85-encoded string representing the input byte array.
+		///	</returns>
 		public static string Encode(byte[] bytes)
 		{
 			if (bytes == null)
@@ -30,7 +34,7 @@ namespace Litdex.Utilities.Base
 			foreach (byte b in bytes)
 			{
 				// build a 32-bit value from the bytes
-				value |= ((uint) b) << (24 - (count * 8));
+				value |= ((uint)b) << (24 - (count * 8));
 				count++;
 
 				// every 32 bits, convert the previous 4 bytes into 5 Ascii85 characters
@@ -56,10 +60,14 @@ namespace Litdex.Utilities.Base
 		}
 
 		/// <summary>
-		/// Decodes the specified Ascii85 string into the corresponding byte array.
+		///		Decodes the specified Ascii85 string into the corresponding byte array.
 		/// </summary>
-		/// <param name="encoded">The Ascii85 string.</param>
-		/// <returns>The decoded byte array.</returns>
+		/// <param name="encoded">
+		///		The Ascii85 string.
+		///	</param>
+		/// <returns>
+		///		The decoded byte array.
+		///	</returns>
 		public static byte[] Decode(string encoded)
 		{
 			if (encoded == null)
@@ -89,13 +97,16 @@ namespace Litdex.Utilities.Base
 						// build a 32-bit value from the input characters
 						try
 						{
-							checked { value += (uint) (s_powersOf85[count] * (ch - c_firstCharacter)); }
+							checked
+							{
+								value += (uint)(s_powersOf85[count] * (ch - c_firstCharacter));
+							}
 						}
 						catch (OverflowException ex)
 						{
 							throw new FormatException("The current group of characters decodes to a value greater than UInt32.MaxValue.", ex);
 						}
-						
+
 						count++;
 
 						// every five characters, convert the characters into the equivalent byte array
@@ -119,7 +130,8 @@ namespace Litdex.Utilities.Base
 					{
 						try
 						{
-							checked { value += 84 * s_powersOf85[padding]; }
+							checked
+							{ value += 84 * s_powersOf85[padding]; }
 						}
 						catch (OverflowException ex)
 						{
@@ -141,7 +153,7 @@ namespace Litdex.Utilities.Base
 
 			for (var index = 4; index >= 0; index--)
 			{
-				encoded[index] = (char) ((value % 85) + c_firstCharacter);
+				encoded[index] = (char)((value % 85) + c_firstCharacter);
 				value /= 85;
 			}
 
@@ -154,22 +166,21 @@ namespace Litdex.Utilities.Base
 		// Writes the bytes of a 32-bit value to a stream.
 		private static void DecodeValue(Stream stream, uint value, int paddingChars)
 		{
-			stream.WriteByte((byte) (value >> 24));
+			stream.WriteByte((byte)(value >> 24));
 			if (paddingChars == 3)
 				return;
-			stream.WriteByte((byte) ((value >> 16) & 0xFF));
+			stream.WriteByte((byte)((value >> 16) & 0xFF));
 			if (paddingChars == 2)
 				return;
-			stream.WriteByte(((byte) ((value >> 8) & 0xFF)));
+			stream.WriteByte(((byte)((value >> 8) & 0xFF)));
 			if (paddingChars == 1)
 				return;
-			stream.WriteByte((byte) (value & 0xFF));
+			stream.WriteByte((byte)(value & 0xFF));
 		}
 
 		// the first and last characters used in the Ascii85 encoding character set
-		const char c_firstCharacter = '!';
-		const char c_lastCharacter = 'u';
-
-		static readonly uint[] s_powersOf85 = new uint[] { 85u * 85u * 85u * 85u, 85u * 85u * 85u, 85u * 85u, 85u, 1 };
+		private const char c_firstCharacter = '!';
+		private const char c_lastCharacter = 'u';
+		private static readonly uint[] s_powersOf85 = new uint[] { 85u * 85u * 85u * 85u, 85u * 85u * 85u, 85u * 85u, 85u, 1 };
 	}
 }
