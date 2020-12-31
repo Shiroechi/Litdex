@@ -1,6 +1,6 @@
 ﻿namespace Litdex.Security.Hash
 {
-	enum HashAlgorithm
+	internal enum HashAlgorithm
 	{
 		/// <summary>
 		/// Blake2b 256bit.
