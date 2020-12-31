@@ -1,26 +1,24 @@
 ﻿using System;
 
-//https://github.com/ssg/SimpleBase
-//https://github.com/KvanTTT/BaseNcoding
-//https://github.com/rodion73/BinaryToText
-//https://github.com/bwaldvogel/base91
-
 namespace Litdex.Utilities.Base
 {
 	/// <summary>
 	/// Encode and decode in base 16 (hexadecimal).
-	/// <para>
-	/// from https://github.com/CodesInChaos/Chaos.NaCl/blob/master/Chaos.NaCl/CryptoBytes.cs
-	/// </para>
 	/// </summary>
 	public static class Base16
 	{
 		/// <summary>
-		/// Encode byte array to hexadecimal string.
+		///		Encode <paramref name="data"/> to hexadecimal <see cref="string"/>.
 		/// </summary>
-		/// <param name="data">Byte array to encode.</param>
-		/// <param name="upper">Boolean upper character.</param>
-		/// <returns></returns>
+		/// <param name="data">
+		///		Arrays of <see cref="byte"/> to encode.
+		///	</param>
+		/// <param name="upper">
+		///		<see langword="true"/> Output <see cref="string"/> in upper case; <see langword="false"/> otherwise.
+		///	</param>
+		/// <returns>
+		///		Hexadecimal <see cref="string"/>.
+		/// </returns>
 		public static string Encode(byte[] data, bool upper = true)
 		{
 			if (upper)
