@@ -72,7 +72,7 @@
 		/// <param name="start_index">Offset into the output array the hash value is to start at.</param>
 		/// <returns></returns>
 		int DoFinal(byte[] output, int start_index);
-		
+
 		/// <summary>
 		/// Computes the hash value for the specified byte array.
 		/// </summary>
