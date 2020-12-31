@@ -43,7 +43,7 @@ namespace Litdex.Security.OTP
 		/// <param name="length">Output length.</param>
 		public TOTP(int length = 6) : this(length, 30, OTPHashMode.SHA1)
 		{
-			
+
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace Litdex.Security.OTP
 			{
 				throw new ArgumentException("Time valid can't lower or equal than 0 second.");
 			}
-			else if(time > 600) //600 second => 10 minutes
+			else if (time > 600) //600 second => 10 minutes
 			{
 				throw new ArgumentException("Time valid can't higher than 600 seconds.");
 			}
@@ -156,7 +156,7 @@ namespace Litdex.Security.OTP
 			for (var i = 1; i <= future; i++)
 			{
 				yield return initialFrame + this.FromSecondsToTicks(i);
-			}				
+			}
 		}
 
 		#endregion Protected Method
@@ -227,9 +227,9 @@ namespace Litdex.Security.OTP
 		public bool Verify2(string input, byte[] key, long ticks)
 		{
 			//previous time
-			for (var i = 0; i <= this._TimeFrame; i++) 
+			for (var i = 0; i <= this._TimeFrame; i++)
 			{
-				if (input == this.Generate(key, ticks - this.FromSecondsToTicks(i))) 
+				if (input == this.Generate(key, ticks - this.FromSecondsToTicks(i)))
 				{
 					return true;
 				}
