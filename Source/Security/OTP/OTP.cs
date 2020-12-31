@@ -15,7 +15,7 @@ namespace Litdex.Security.OTP
 	public abstract class OTP
 	{
 		#region Member
-		
+
 		/// <summary>
 		/// Custom One Time Password hash mode.
 		/// </summary>
@@ -66,7 +66,7 @@ namespace Litdex.Security.OTP
 		/// <param name="length">Number of digit to produce.</param>
 		public OTP(int length) : this(length, OTPHashMode.SHA1)
 		{
-			
+
 		}
 
 		/// <summary>
@@ -76,7 +76,7 @@ namespace Litdex.Security.OTP
 		/// <param name="length">Number of digit to produce.</param>
 		public OTP(int length, OTPHashMode mode)
 		{
-			if ((length < this._MinLength) || (length > this._MaxLength)) 
+			if ((length < this._MinLength) || (length > this._MaxLength))
 			{
 				throw new ArgumentException("Output length must be between " + this._MinLength + " and " + this._MaxLength + ".");
 			}
@@ -144,7 +144,7 @@ namespace Litdex.Security.OTP
 
 				default:
 					return new SHA1();
-			}				
+			}
 		}
 
 		/// <summary>
