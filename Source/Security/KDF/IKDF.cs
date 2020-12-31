@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Key derivation Function
 	/// </summary>
-	internal interface IKDF
+	public interface IKDF
 	{
 		/// <summary>
 		/// Return the name of the algorithm the KDF implements.
