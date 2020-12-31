@@ -59,7 +59,7 @@ namespace Litdex.Security.MAC
 		}
 
 		#region Private
-		
+
 		/// <summary>
 		/// Initialize the MAC.
 		/// </summary>
@@ -189,7 +189,7 @@ namespace Litdex.Security.MAC
 			//	this.KeyValue.Clear();
 			//	this.KeyValue = null;
 			//}
-			
+
 			// Initialise the digest
 			//this.digest.Update(inputPad, 0, inputPad.Length);
 		}
