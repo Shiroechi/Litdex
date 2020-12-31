@@ -7,12 +7,12 @@ namespace Litdex.Security.MAC
 	/// message authentication codes (MACs).
 	/// </summary>
 	public interface IMAC
-    {
-        /// <summary>
-        /// Initialise the MAC.
-        /// </summary>
-        /// <param name="key">key required by the MAC</param>
-        void Initialize(byte[] key);
+	{
+		/// <summary>
+		/// Initialise the MAC.
+		/// </summary>
+		/// <param name="key">key required by the MAC</param>
+		void Initialize(byte[] key);
 
 		/// <summary>
 		/// Return the name of the algorithm the MAC implements.
@@ -95,7 +95,7 @@ namespace Litdex.Security.MAC
 		/// <param name="inOff">index in the array the data begins at.</param>
 		/// <param name="len">length of the input starting at inOff.</param>
 		//void BlockUpdate(byte[] input, int inOff, int len);
-		
+
 		/// <summary>
 		/// Computes the HMAC value for the specified byte array.
 		/// </summary>
