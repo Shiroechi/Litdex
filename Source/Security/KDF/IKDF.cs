@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Key derivation Function
 	/// </summary>
-	interface IKDF
+	internal interface IKDF
 	{
 		/// <summary>
 		/// Return the name of the algorithm the KDF implements.
@@ -15,7 +15,7 @@
 		/// Reset the KDF.
 		/// </summary>
 		void Reset();
-		
+
 		/// <summary>
 		/// Computes the derived key for specified byte array. 
 		/// </summary>
