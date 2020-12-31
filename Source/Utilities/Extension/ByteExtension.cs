@@ -41,7 +41,7 @@ namespace Litdex.Utilities.Extension
 		{
 			return Objects.Serialize(obj);
 		}
-		
+
 		/// <summary>
 		/// Convert Base16 to byte[].
 		/// </summary>
