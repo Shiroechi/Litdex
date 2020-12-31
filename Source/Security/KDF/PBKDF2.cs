@@ -29,7 +29,7 @@ namespace Litdex.Security.KDF
 		private readonly IMAC _MACFunction;
 
 		#endregion Member
-		
+
 		/// <summary>
 		/// Default constructor.
 		/// with HMAC-SHA1.
@@ -89,7 +89,7 @@ namespace Litdex.Security.KDF
 		}
 
 		#region Private
-		
+
 		/// <summary>
 		/// Compute derived key with PBKDF2 Algortihm.
 		/// </summary>
