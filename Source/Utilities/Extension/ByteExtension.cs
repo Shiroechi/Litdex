@@ -69,7 +69,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Decoded byte[].</returns>
 		public static byte[] DecodeBase64(this byte[] data)
 		{
-			return Base64.Decode(data);
+			return Base64.Decode(data.GetString());
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Decoded byte[].</returns>
 		public static byte[] DecodeBase91(this byte[] data)
 		{
-			return Base91.Decode(data);
+			return Base91.Decode(data.GetString());
 		}
 
 		/// <summary>
