@@ -22,9 +22,11 @@
     <RepositoryUrl>https://github.com/Shiroechi/Litdex</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Shiroechi/Litdex</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH</PackageTags>
+    <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH Base16 Hex Hexadecimal Base91</PackageTags>
     <PackageReleaseNotes>- Integrate Litdex.Security.RNG v2.3.0
-- Update algorithm to decode hex (base16) string</PackageReleaseNotes>
+- Update algorithm text to byte.
+- FIx some documentation.
+</PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Copyright>Shiroechi</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
