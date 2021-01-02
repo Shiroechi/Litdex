@@ -25,8 +25,7 @@
     <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH Base16 Hex Hexadecimal Base91</PackageTags>
     <PackageReleaseNotes>- Integrate Litdex.Security.RNG v2.3.0
 - Update algorithm text to byte.
-- FIx some documentation.
-</PackageReleaseNotes>
+- Fix some documentation.</PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Copyright>Shiroechi</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
