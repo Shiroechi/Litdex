@@ -46,7 +46,7 @@ namespace Litdex.Security.Hash
 	public class Blake2b : IHash
 	{
 		#region Member
-		
+
 		private const int ROUNDS = 12; // to use for Catenas H'
 		private const int BLOCK_LENGTH_BYTES = 128;// bytes
 
@@ -65,11 +65,11 @@ namespace Litdex.Security.Hash
 		// in the Compress() function.
 		// For performance issues, long messages will not use this buffer.
 		private readonly byte[] buffer = null;// new byte[BLOCK_LENGTH_BYTES];
-									 // Position of last inserted byte:
+											  // Position of last inserted byte:
 		private int bufferPos = 0;// a value from 0 up to 128
 
 		private readonly ulong[] internalState = new ulong[16]; // In the Blake2b paper it is
-													   // called: v
+																// called: v
 		private ulong[] chainValue = null; // state vector, in the Blake2b paper it
 										   // is called: h
 
@@ -105,13 +105,13 @@ namespace Litdex.Security.Hash
 		};
 
 		#endregion Member
-		
+
 		/// <summary>
 		/// Constructor. 
 		/// </summary>
 		/// <param name="digestSize">Size of hash values in bits.</param>
 		public Blake2b(int digestSize = 512)
-        {
+		{
 			if (digestSize != 160 && digestSize != 256 && digestSize != 384 && digestSize != 512)
 			{
 				throw new ArgumentException("BLAKE2b hash function restricted to one of [160, 256, 384, 512] bits only.");
@@ -119,9 +119,9 @@ namespace Litdex.Security.Hash
 
 			this.buffer = new byte[BLOCK_LENGTH_BYTES];
 			this.keyLength = 0;
-            this.digestLength = digestSize / 8;
+			this.digestLength = digestSize / 8;
 			this.Init();
-        }
+		}
 
 		/// <summary>
 		/// Blake2b for authentication ("Prefix-MAC mode").
@@ -146,8 +146,8 @@ namespace Litdex.Security.Hash
 			}
 			this.digestLength = 64;
 			this.Init();
-        }
-		
+		}
+
 		/// <summary>
 		/// Blake2b with key, required digest length (in bytes), salt and personalization.
 		/// </summary>
@@ -279,7 +279,7 @@ namespace Litdex.Security.Hash
 				this.G(m[this.blake2b_sigma[round, 2]], m[this.blake2b_sigma[round, 3]], 1, 5, 9, 13);
 				this.G(m[this.blake2b_sigma[round, 4]], m[this.blake2b_sigma[round, 5]], 2, 6, 10, 14);
 				this.G(m[this.blake2b_sigma[round, 6]], m[this.blake2b_sigma[round, 7]], 3, 7, 11, 15);
-				
+
 				// G apply to diagonals of internalState:
 				this.G(m[this.blake2b_sigma[round, 8]], m[this.blake2b_sigma[round, 9]], 0, 5, 10, 15);
 				this.G(m[this.blake2b_sigma[round, 10]], m[this.blake2b_sigma[round, 11]], 1, 6, 11, 12);
@@ -317,7 +317,7 @@ namespace Litdex.Security.Hash
 
 		public string AlgorithmName()
 		{
-			return "Blake2b - " + (this.digestLength * 8); 
+			return "Blake2b - " + (this.digestLength * 8);
 		}
 
 		public void Reset()
@@ -529,5 +529,5 @@ namespace Litdex.Security.Hash
 		}
 
 		#endregion Public
-    }
+	}
 }

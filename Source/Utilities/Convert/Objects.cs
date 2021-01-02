@@ -23,7 +23,7 @@ namespace Litdex.Utilities.Convert
 			{
 				return null;
 			}
-			
+
 			try
 			{
 				BinaryFormatter bf = new BinaryFormatter();
@@ -50,7 +50,7 @@ namespace Litdex.Utilities.Convert
 			{
 				return null;
 			}
-			
+
 			try
 			{
 				using (var ms = new MemoryStream())
@@ -64,7 +64,7 @@ namespace Litdex.Utilities.Convert
 			catch
 			{
 				return null;
-			} 
+			}
 		}
 	}
 }

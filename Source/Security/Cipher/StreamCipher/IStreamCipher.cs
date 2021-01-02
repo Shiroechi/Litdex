@@ -1,6 +1,6 @@
 ﻿namespace Litdex.Security.Cipher.StreamCipher
 {
-	interface IStreamCipher
+	internal interface IStreamCipher
 	{
 		/// <summary>
 		/// The name of the algorithm this cipher implements.

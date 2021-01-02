@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-
-using Litdex.Utilities.Extension;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Litdex.Utilities.Base
 {
 	/// <summary>
-	/// Encode and decode in base91.
+	///		Encode and decode in base91.
 	/// </summary>
 	public static class Base91
 	{
@@ -41,20 +41,23 @@ namespace Litdex.Utilities.Base
 		}
 
 		/// <summary>
-		/// Convert to Base91 string.
-		/// Encoding UTF-8.
+		///		Convert to Base91 string.
 		/// </summary>
-		/// <param name="input">String to Encode.</param>
-		/// <returns>Encoded String.</returns>
-		public static string EncodeToString(string input)
+		/// <param name="input">
+		///		Array to convert.
+		///	</param>
+		/// <returns>
+		///		Encoded String.
+		///	</returns>
+		public static string Encode(byte[] input)
 		{
-			var output = "";
+			var sb = new StringBuilder();
 			var b = 0;
 			var n = 0;
 			var v = 0;
 			for (var i = 0; i < input.Length; i++)
 			{
-				b |= (byte)input[i] << n;
+				b |= (input[i] & 255) << n;
 				n += 8;
 				if (n > 13)
 				{
@@ -70,86 +73,36 @@ namespace Litdex.Utilities.Base
 						b >>= 14;
 						n -= 14;
 					}
-					output += EncodeTable[v % 91];
-					output += EncodeTable[v / 91];
+					int quotient = Math.DivRem(v, 91, out int remainder);
+					sb.Append(EncodeTable[remainder]);
+					sb.Append(EncodeTable[quotient]);
 				}
 			}
 
 			if (n != 0)
 			{
-				output += EncodeTable[b % 91];
+				int quotient = Math.DivRem(b, 91, out int remainder);
+				sb.Append(EncodeTable[remainder]);
 				if (n > 7 || b > 90)
 				{
-					output += EncodeTable[b / 91];
+					sb.Append(EncodeTable[quotient]);
 				}
 			}
-			return output;
+			return sb.ToString();
 		}
 
 		/// <summary>
-		/// Convert to Base91 string.
-		/// Encoding UTF-8.
+		///		Convert Base91 string to original byte[].
 		/// </summary>
-		/// <param name="input">byte[] to Encode.</param>
-		/// <returns>Encoded String.</returns>
-		public static string EncodeToString(byte[] input)
-		{
-			return EncodeToString(input.GetString());
-		}
-
-		/// <summary>
-		/// Convert to Base91 byte[].
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">byte[] to Encode.</param>
-		/// <returns>Encoded byte[].</returns>
-		public static byte[] Encode(string input)
-		{
-			return EncodeToString(input).GetBytes();
-		}
-
-		/// <summary>
-		/// Convert to Base91 byte[].
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">byte[] to Encode.</param>
-		/// <returns>Encoded byte[].</returns>
-		public static byte[] Encode(byte[] input)
-		{
-			return EncodeToString(input.GetString()).GetBytes();
-		}
-
-		/// <summary>
-		/// Convert Base91 string to byte[].
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">Base91 string.</param>
-		/// <returns>Decoded byte[].</returns>
+		/// <param name="input">
+		///		Base91 string.
+		///	</param>
+		/// <returns>
+		///		Decoded string.
+		///	</returns>
 		public static byte[] Decode(string input)
 		{
-			return DecodeToString(input).GetBytes();
-		}
-
-		/// <summary>
-		/// Convert Base91 byte[] to byte[].
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">Base91 byte[].</param>
-		/// <returns>Decoded byte[].</returns>
-		public static byte[] Decode(byte[] input)
-		{
-			return Decode(input.GetString());
-		}
-
-		/// <summary>
-		/// Convert Base91 string to original string.
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">Base91 string.</param>
-		/// <returns>Decoded string.</returns>
-		public static string DecodeToString(string input)
-		{
-			var output = "";
+			var output = new List<byte>();
 			var c = 0;
 			var v = -1;
 			var b = 0;
@@ -172,7 +125,7 @@ namespace Litdex.Utilities.Base
 					n += (v & 8191) > 88 ? 13 : 14;
 					do
 					{
-						output += (char)(b & 255);
+						output.Add((byte)(b & 255));
 						b >>= 8;
 						n -= 8;
 					} while (n > 7);
@@ -181,20 +134,9 @@ namespace Litdex.Utilities.Base
 			}
 			if (v + 1 != 0)
 			{
-				output += (char)((b | v << n) & 255);
+				output.Add((byte)((b | v << n) & 255));
 			}
-			return output;
-		}
-
-		/// <summary>
-		/// Convert Base91 byte[] to original string.
-		/// Encoding UTF-8.
-		/// </summary>
-		/// <param name="input">Base91 byte[].</param>
-		/// <returns>Decoded string.</returns>
-		public static string DecodeToString(byte[] input)
-		{
-			return DecodeToString(input.GetString());
+			return output.ToArray();
 		}
 	}
 }

@@ -55,7 +55,7 @@ namespace Litdex.License
 		/// </summary>
 		/// <param name="certificate_id"><see cref="Certificate"></see> Identifier.</param>
 		/// <param name="username">Licensee username.</param>
-		public Certificate(string certificate_id = "", string username="USERNAME")
+		public Certificate(string certificate_id = "", string username = "USERNAME")
 		{
 			this._CertificateID = certificate_id;
 			this._Username = username;
@@ -128,7 +128,7 @@ namespace Litdex.License
 		/// <param name="username">Licensee username.</param>
 		public void SetUsername(string username)
 		{
-			if (username == null) 
+			if (username == null)
 			{
 				return;
 			}
@@ -152,7 +152,7 @@ namespace Litdex.License
 		{
 			string combine = this.CombineVariable();
 
-			if (this._Checksum == "") 
+			if (this._Checksum == "")
 			{
 				this._Checksum = this.HashData(combine);
 			}
@@ -237,7 +237,7 @@ namespace Litdex.License
 			{
 				return false;
 			}
-			else if ((ulong)DateTime.UtcNow.Ticks > this.GetEndDate()) 
+			else if ((ulong)DateTime.UtcNow.Ticks > this.GetEndDate())
 			{
 				return true;
 			}
@@ -250,7 +250,7 @@ namespace Litdex.License
 		/// <returns></returns>
 		public bool IsValid()
 		{
-			if (this._Checksum == this.HashData(this.CombineVariable())) 
+			if (this._Checksum == this.HashData(this.CombineVariable()))
 			{
 				return true;
 			}
@@ -298,7 +298,7 @@ namespace Litdex.License
 
 			try
 			{
-				using (StreamWriter sw = new StreamWriter(location, false, System.Text.Encoding.UTF8)) 
+				using (StreamWriter sw = new StreamWriter(location, false, System.Text.Encoding.UTF8))
 				{
 					sw.WriteLine(this._CertificateID);
 					sw.WriteLine(this._Username);

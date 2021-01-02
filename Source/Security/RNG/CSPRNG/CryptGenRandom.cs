@@ -150,7 +150,7 @@ namespace Litdex.Security.RNG.CSPRNG
 			uint f = bytes[5];
 			uint g = bytes[6];
 			uint h = bytes[7];
-			return (a << 56) | (b << 48) | (c << 40) | (d << 32) | 
+			return (a << 56) | (b << 48) | (c << 40) | (d << 32) |
 				(e << 24) | (f << 16) | (g << 8) | h;
 		}
 

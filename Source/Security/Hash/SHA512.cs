@@ -23,7 +23,7 @@ namespace Litdex.Security.Hash
 	/// Implementation of SHA-2 512 bit.
 	/// </summary>
 	public class SHA512 : IHash
-    {
+	{
 		#region Member
 
 		private readonly int DigestLength = 64;
@@ -46,7 +46,7 @@ namespace Litdex.Security.Hash
 		/// Constructor.
 		/// </summary>
 		public SHA512()
-        {
+		{
 			this.Reset();
 		}
 
@@ -58,7 +58,7 @@ namespace Litdex.Security.Hash
 			this.Reset();
 			this.K.Clear();
 		}
-		
+
 		#region Private
 
 		/// <summary>
@@ -109,7 +109,7 @@ namespace Litdex.Security.Hash
 				this.ProcessBlock();
 			}
 		}
-		
+
 		/// <summary>
 		/// Adjust the byte counts so that byteCount2 represents the
 		/// upper long (less 3 bits) word of the byte count.

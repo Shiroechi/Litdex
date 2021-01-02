@@ -54,7 +54,7 @@ namespace Litdex.Security.OTP
 		/// <param name="length">Output digits.</param>
 		public HOTP(int length = 6) : this(length, OTPHashMode.SHA1)
 		{
-			
+
 		}
 
 		/// <summary>

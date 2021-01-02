@@ -46,7 +46,7 @@ namespace Litdex.Utilities.Arrays
 		}
 
 		[Obsolete("Use 'AreEqual' method instead")]
-		public static bool AreSame(byte[] a, byte[]	b)
+		public static bool AreSame(byte[] a, byte[] b)
 		{
 			return AreEqual(a, b);
 		}
@@ -123,7 +123,7 @@ namespace Litdex.Utilities.Arrays
 			return true;
 		}
 
-		private static bool HaveSameContents(byte[]	a, byte[]	b)
+		private static bool HaveSameContents(byte[] a, byte[] b)
 		{
 			int i = a.Length;
 			if (i != b.Length)
@@ -137,7 +137,7 @@ namespace Litdex.Utilities.Arrays
 			return true;
 		}
 
-		private static bool HaveSameContents(int[] a,int[] b)
+		private static bool HaveSameContents(int[] a, int[] b)
 		{
 			int i = a.Length;
 			if (i != b.Length)
@@ -364,10 +364,10 @@ namespace Litdex.Utilities.Arrays
 			return data == null ? null : (long[])data.Clone();
 		}
 
-	   // [CLSCompliantAttribute(false)]
+		// [CLSCompliantAttribute(false)]
 		public static ulong[] Clone(ulong[] data)
 		{
-			return data == null ? null : (ulong[]) data.Clone();
+			return data == null ? null : (ulong[])data.Clone();
 		}
 
 		//[CLSCompliantAttribute(false)]
@@ -415,7 +415,7 @@ namespace Litdex.Utilities.Arrays
 			return false;
 		}
 
-		public static void Fill(byte[]	buf, byte b)
+		public static void Fill(byte[] buf, byte b)
 		{
 			int i = buf.Length;
 			while (i > 0)

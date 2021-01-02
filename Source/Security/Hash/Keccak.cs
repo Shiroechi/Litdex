@@ -13,7 +13,7 @@ namespace Litdex.Security.Hash
 	/// Following the naming conventions used in the C source code to enable easy review of the implementation.
 	/// </remarks>
 	public class Keccak : IHash
-    {
+	{
 		#region Member
 
 		private static readonly ulong[] KeccakRoundConstants = new ulong[]
@@ -42,9 +42,9 @@ namespace Litdex.Security.Hash
 		/// </summary>
 		/// <param name="bitLength">Hash value length.</param>
 		public Keccak(int bitLength = 512)
-        {
-            this.InitLength(bitLength);
-        }
+		{
+			this.InitLength(bitLength);
+		}
 
 		/// <summary>
 		/// Destructor.
@@ -169,11 +169,31 @@ namespace Litdex.Security.Hash
 				ulong d4 = (c4 << 1 | c4 >> -1) ^ c2;
 				ulong d0 = (c0 << 1 | c0 >> -1) ^ c3;
 
-				a00 ^= d1; a05 ^= d1; a10 ^= d1; a15 ^= d1; a20 ^= d1;
-				a01 ^= d2; a06 ^= d2; a11 ^= d2; a16 ^= d2; a21 ^= d2;
-				a02 ^= d3; a07 ^= d3; a12 ^= d3; a17 ^= d3; a22 ^= d3;
-				a03 ^= d4; a08 ^= d4; a13 ^= d4; a18 ^= d4; a23 ^= d4;
-				a04 ^= d0; a09 ^= d0; a14 ^= d0; a19 ^= d0; a24 ^= d0;
+				a00 ^= d1;
+				a05 ^= d1;
+				a10 ^= d1;
+				a15 ^= d1;
+				a20 ^= d1;
+				a01 ^= d2;
+				a06 ^= d2;
+				a11 ^= d2;
+				a16 ^= d2;
+				a21 ^= d2;
+				a02 ^= d3;
+				a07 ^= d3;
+				a12 ^= d3;
+				a17 ^= d3;
+				a22 ^= d3;
+				a03 ^= d4;
+				a08 ^= d4;
+				a13 ^= d4;
+				a18 ^= d4;
+				a23 ^= d4;
+				a04 ^= d0;
+				a09 ^= d0;
+				a14 ^= d0;
+				a19 ^= d0;
+				a24 ^= d0;
 
 				// rho/pi
 				c1 = a01 << 1 | a01 >> 63;
@@ -247,11 +267,31 @@ namespace Litdex.Security.Hash
 				a00 ^= KeccakRoundConstants[i];
 			}
 
-			A[0] = a00; A[1] = a01; A[2] = a02; A[3] = a03; A[4] = a04;
-			A[5] = a05; A[6] = a06; A[7] = a07; A[8] = a08; A[9] = a09;
-			A[10] = a10; A[11] = a11; A[12] = a12; A[13] = a13; A[14] = a14;
-			A[15] = a15; A[16] = a16; A[17] = a17; A[18] = a18; A[19] = a19;
-			A[20] = a20; A[21] = a21; A[22] = a22; A[23] = a23; A[24] = a24;
+			A[0] = a00;
+			A[1] = a01;
+			A[2] = a02;
+			A[3] = a03;
+			A[4] = a04;
+			A[5] = a05;
+			A[6] = a06;
+			A[7] = a07;
+			A[8] = a08;
+			A[9] = a09;
+			A[10] = a10;
+			A[11] = a11;
+			A[12] = a12;
+			A[13] = a13;
+			A[14] = a14;
+			A[15] = a15;
+			A[16] = a16;
+			A[17] = a17;
+			A[18] = a18;
+			A[19] = a19;
+			A[20] = a20;
+			A[21] = a21;
+			A[22] = a22;
+			A[23] = a23;
+			A[24] = a24;
 		}
 
 		#endregion Private
@@ -395,7 +435,7 @@ namespace Litdex.Security.Hash
 		{
 			return this.fixedOutputLength >> 3;
 		}
-		
+
 		public int GetByteLength()
 		{
 			return this.rate >> 3;

@@ -201,7 +201,7 @@ namespace Litdex.Security.Cipher.StreamCipher
 			this.NextState();
 			this.NextState();
 		}
-		
+
 		/// <summary>
 		/// Set up a key.
 		/// </summary>

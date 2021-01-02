@@ -9,14 +9,14 @@ namespace Litdex.Network
 	/// 
 	/// </summary>
 	public class InternetConnection
-    {
+	{
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-        private InternetConnection()
-        {
+		private InternetConnection()
+		{
 
-        }
+		}
 
 		/// <summary>
 		/// Desctructor.
@@ -26,44 +26,44 @@ namespace Litdex.Network
 
 		}
 
-        /// <summary>
-        /// Check internet connection from http request.
-        /// </summary>
-        /// <returns>
-        /// True, if there's internet connection.
-        /// False, otherwise.
-        /// </returns>
-        public static bool InternetConnecion()
-        {
+		/// <summary>
+		/// Check internet connection from http request.
+		/// </summary>
+		/// <returns>
+		/// True, if there's internet connection.
+		/// False, otherwise.
+		/// </returns>
+		public static bool InternetConnecion()
+		{
 			if (InternetConnection.CheckNetworkAdapter() == false)
 			{
 				return false;
 			}
 
-            try
-            {
-                using (var client = new WebClient())
-                {
-                    using (client.OpenRead("http://clients3.google.com/generate_204"))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch
-            {
-                return false;
-            }
+			try
+			{
+				using (var client = new WebClient())
+				{
+					using (client.OpenRead("http://clients3.google.com/generate_204"))
+					{
+						return true;
+					}
+				}
+			}
+			catch
+			{
+				return false;
+			}
 
-            //[DllImport("wininet.dll")]
-            //private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+			//[DllImport("wininet.dll")]
+			//private extern static bool InternetGetConnectedState(out int description, int reservedValue);
 
-            //public static bool IsInternetAvailable()
-            //{
-            //    int description;
-            //    return InternetGetConnectedState(out description, 0);
-            //}
-        }
+			//public static bool IsInternetAvailable()
+			//{
+			//    int description;
+			//    return InternetGetConnectedState(out description, 0);
+			//}
+		}
 
 		/// <summary>
 		/// Check is there avaible network adapter to this device.
@@ -74,28 +74,28 @@ namespace Litdex.Network
 			return System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
 		}
 
-        /// <summary>
-        /// Get public IP of your connected network.
-        /// </summary>
-        /// <returns></returns>
-        public static string PublicIP()
-        {
-            try
-            {
-                string externalIP;
-                using (var client = new WebClient())
-                {
-                    externalIP = client.DownloadString("http://checkip.dyndns.org/");
-                }
-                
-                externalIP = (new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")).Matches(externalIP)[0].ToString();
-                return externalIP;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+		/// <summary>
+		/// Get public IP of your connected network.
+		/// </summary>
+		/// <returns></returns>
+		public static string PublicIP()
+		{
+			try
+			{
+				string externalIP;
+				using (var client = new WebClient())
+				{
+					externalIP = client.DownloadString("http://checkip.dyndns.org/");
+				}
+
+				externalIP = (new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")).Matches(externalIP)[0].ToString();
+				return externalIP;
+			}
+			catch
+			{
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// Get local IP that assigned to your device.
@@ -142,38 +142,38 @@ namespace Litdex.Network
 		/// </summary>
 		/// <returns></returns>
 		public static string DefaultGateway()
-        {
-            IPAddress result = null;            
-            var cards = NetworkInterface.GetAllNetworkInterfaces().ToList();
-            if (cards.Any())
-            {
-                foreach (var card in cards)
-                {
-                    var props = card.GetIPProperties();
-                    if (props == null)
-                    {
-                        continue;
-                    }
+		{
+			IPAddress result = null;
+			var cards = NetworkInterface.GetAllNetworkInterfaces().ToList();
+			if (cards.Any())
+			{
+				foreach (var card in cards)
+				{
+					var props = card.GetIPProperties();
+					if (props == null)
+					{
+						continue;
+					}
 
-                    var gateways = props.GatewayAddresses;
-                    if (!gateways.Any())
-                    {
-                        continue;
-                    }
+					var gateways = props.GatewayAddresses;
+					if (!gateways.Any())
+					{
+						continue;
+					}
 
-                    var gateway = gateways.FirstOrDefault(g => g.Address.AddressFamily.ToString() == "InterNetwork");
-                    if (gateway == null)
-                    {
-                        continue;
-                    }
+					var gateway = gateways.FirstOrDefault(g => g.Address.AddressFamily.ToString() == "InterNetwork");
+					if (gateway == null)
+					{
+						continue;
+					}
 
-                    result = gateway.Address;
-                    break;
-                }
-            }
-			
-            return result.ToString();
-        }
+					result = gateway.Address;
+					break;
+				}
+			}
+
+			return result.ToString();
+		}
 
 		/// <summary>
 		/// Get MAC Address from this computer.
@@ -183,5 +183,5 @@ namespace Litdex.Network
 		{
 			return "";
 		}
-    }
+	}
 }

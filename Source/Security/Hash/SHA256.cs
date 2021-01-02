@@ -47,15 +47,15 @@ namespace Litdex.Security.Hash
 		{
 			this.InitializeHashValue();
 		}
-		
+
 		/// <summary>
 		/// Destructor.
 		/// </summary>
-        ~SHA256()
-        {
-            this.Reset();
+		~SHA256()
+		{
+			this.Reset();
 			this.K.Clear();
-        }
+		}
 
 		#region Private
 
@@ -242,7 +242,7 @@ namespace Litdex.Security.Hash
 			bs[off + 2] = (byte)(n >> 8);
 			bs[off + 3] = (byte)(n);
 		}
-		
+
 		/// <summary>
 		/// SHA-256 Constants.
 		/// represent the first 32 bits 

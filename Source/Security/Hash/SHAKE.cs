@@ -16,15 +16,15 @@ namespace Litdex.Security.Hash
 	/// Following the naming conventions used in the C source code to enable easy review of the implementation.
 	/// </remarks>
 	public class SHAKE : Keccak, IHashExtend
-    {
+	{
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="bitLength">Output byte.</param>
-        public SHAKE(int bitLength = 256) : base(CheckBitLength(bitLength))
-        {
+		public SHAKE(int bitLength = 256) : base(CheckBitLength(bitLength))
+		{
 
-        }
+		}
 
 		/// <summary>
 		/// Destructor.
@@ -51,7 +51,7 @@ namespace Litdex.Security.Hash
 		#endregion Private
 
 		#region Protected
-		
+
 		[Obsolete]
 		protected virtual int DoOutput(byte[] output, int outOff, int outLen)
 		{

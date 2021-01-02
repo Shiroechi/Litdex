@@ -69,7 +69,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Base16 string.</returns>
 		public static string EncodeBase16(this string str)
 		{
-			return Base16.EncodeUpper(str.GetBytes());
+			return Base16.Encode(str.GetBytes());
 		}
 
 		/// <summary>
@@ -91,7 +91,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Base64 string.</returns>
 		public static string EncodeBase64(this string data)
 		{
-			return Base64.EncodeToString(data);
+			return Base64.Encode(data.GetBytes());
 		}
 
 		/// <summary>
@@ -102,7 +102,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Base64 string.</returns>
 		public static string EncodeBase64(this byte[] data)
 		{
-			return Base.Base64.EncodeToString(data);
+			return Base.Base64.Encode(data);
 		}
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Base91 string.</returns>
 		public static string EncodeBase91(this string data)
 		{
-			return Base.Base91.EncodeToString(data);
+			return Base.Base91.Encode(data.GetBytes());
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace Litdex.Utilities.Extension
 		/// <returns>Base91 string.</returns>
 		public static string EncodeBase91(this byte[] data)
 		{
-			return Base.Base91.EncodeToString(data);
+			return Base.Base91.Encode(data);
 		}
 
 		public static long ToInteger(this string str)
