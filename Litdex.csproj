@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
     <ApplicationIcon />
     <OutputType>Library</OutputType>
     <StartupObject />
@@ -9,23 +9,21 @@
     <Company>Litdex</Company>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>2.3.0</Version>
-    <Description>My personal library.</Description>
+    <Version>3.0.0</Version>
+    <Description>A collection of Litdex submodule.</Description>
     <Product></Product>
     <DelaySign>false</DelaySign>
     <RootNamespace>Litdex</RootNamespace>
     <AssemblyName>Litdex</AssemblyName>
-    <AssemblyVersion>2.3.0.0</AssemblyVersion>
-    <FileVersion>2.3.0.0</FileVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
     <RepositoryUrl>https://github.com/Shiroechi/Litdex</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Shiroechi/Litdex</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Security RNG PRNG CSPRNG OTP HOTP TOTP HASH Base16 Hex Hexadecimal Base91</PackageTags>
-    <PackageReleaseNotes>- Integrate Litdex.Security.RNG v2.3.0
-- Update algorithm text to byte.
-- Fix some documentation.</PackageReleaseNotes>
+    <PackageTags>Litdex Security RNG TRNG</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Copyright>Shiroechi</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -47,6 +45,12 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Litdex.Security.RNG" Version="2.5.1" />
+    <PackageReference Include="Litdex.Security.RNG.TRNG" Version="1.1.1" />
+    <PackageReference Include="Litdex.Utilities" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
