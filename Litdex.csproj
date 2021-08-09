@@ -48,7 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Litdex.Security.RNG" Version="2.5.1" />
+    <PackageReference Include="Litdex.Security.RNG" Version="2.6.0" />
     <PackageReference Include="Litdex.Security.RNG.TRNG" Version="1.1.1" />
     <PackageReference Include="Litdex.Utilities" Version="1.1.0" />
   </ItemGroup>
